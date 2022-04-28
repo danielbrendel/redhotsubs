@@ -8,7 +8,7 @@
 		<meta name="description" content="{{ env('APP_DESCRIPTION') }}">
 		<meta name="tags" content="{{ env('APP_TAGS') }}">
 		
-		<title>{{ env('APP_NAME') }}</title>
+		<title>{{ env('APP_TITLE') }}</title>
 
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}"/>
 		<link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}"/>
@@ -19,6 +19,8 @@
 		<script src="{{ asset('js/vue.min.js') }}"></script>
 		@endif
 		<script src="{{ asset('js/fontawesome.js') }}"></script>
+
+		
 	</head>
 	
 	<body>
