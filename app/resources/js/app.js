@@ -1,0 +1,210 @@
+/**
+ * app.js
+ * 
+ * Put here your application specific JavaScript implementations
+ */
+
+ import './../sass/app.scss';
+
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+ window.vue = new Vue({
+    el: '#main',
+
+    data: {
+        defaultSub: ''
+    },
+
+    methods: {
+        initNavbar: function() {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach( el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        },
+
+        ajaxRequest: function (method, url, data = {}, successfunc = function(data){}, finalfunc = function(){}, config = {})
+        {
+            let func = window.axios.get;
+            if (method == 'post') {
+                func = window.axios.post;
+            } else if (method == 'patch') {
+                func = window.axios.patch;
+            } else if (method == 'delete') {
+                func = window.axios.delete;
+            }
+
+            func(url, data, config)
+                .then(function(response){
+                    successfunc(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function(){
+                        finalfunc();
+                    }
+                );
+        },
+
+        handleCookieConsent: function () {
+            let cookies = document.cookie.split(';');
+            let foundCookie = false;
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('cookieconsent') !== -1) {
+                    foundCookie = true;
+                    break;
+                }
+            }
+
+            if (foundCookie === false) {
+                document.getElementById('cookie-consent').style.display = 'inline-block';
+            }
+        },
+
+        clickedCookieConsentButton: function () {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
+
+            document.getElementById('cookie-consent').style.display = 'none';
+        },
+
+        getPostSorting: function () {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('post_sorting') !== -1) {
+                    return cookies[i].substr(cookies[i].indexOf('=') + 1);
+                }
+            }
+
+            return 'hot';
+        },
+
+        setPostSorting: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'post_sorting=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        getSubSelection: function () {
+            let result = window.vue.defaultSub;
+
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('sub_selection') !== -1) {
+                    result = cookies[i].substr(cookies[i].indexOf('=') + 1);
+                    break;
+                }
+            }
+
+            let selLabel = document.getElementById('current-sub');
+            if (selLabel) {
+                selLabel.innerHTML = '<a class="link-dark" href="">' + result.substr(0, result.length - 1) + '</a>';
+            }
+
+            return result;
+        },
+
+        setSubSelection: function(value) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'sub_selection=' + value + '; expires=' + expDate.toUTCString() + ';';
+        },
+
+        setSortingUnderline: function(ident) {
+            document.getElementById('link-sorting-hot').style.textDecoration = 'unset';
+            document.getElementById('link-sorting-top').style.textDecoration = 'unset';
+            document.getElementById('link-sorting-new').style.textDecoration = 'unset';
+
+            document.getElementById('link-sorting-' + ident).style.textDecoration = 'underline';
+        },
+
+        fetchPosts: function(sub, sorting, target) {
+            if (document.getElementById('loadmore')) {
+                document.getElementById('loadmore').remove();
+            }
+
+            target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i></center></div>';
+
+            window.vue.ajaxRequest('post', window.location.origin + '/content/fetch', { sub: sub, sorting: sorting, after: window.fetch_item_after }, function(response){
+                if (response.code == 200) {
+                    if (document.getElementById('spinner')) {
+                        document.getElementById('spinner').remove();
+                    }
+
+                    response.data.forEach(function(elem, index){
+                        let html = window.vue.renderPost(elem);
+
+                        target.innerHTML += html;
+                    });
+
+                    window.fetch_item_after = response.data[response.data.length - 1].all.name;
+
+                    target.innerHTML += `<div id="loadmore"><center><br/><a href="javascript:void(0);" onclick="window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">Load more</a><br/><br/></center></div>`;
+                }
+            });
+        },
+
+        renderIFrame: function(target, src, title) {
+            let html = `<iframe id="media-player" class="media-video" src="` + src + `" title="` + title + `"></iframe>`;
+
+            target.innerHTML = html;
+        },
+
+        renderPost: function(elem) {
+            let mediaContent = '';
+
+            if (elem.all.domain === 'redgifs.com') {
+                mediaContent = `<center>
+                    <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elem.all.id + `'), 'https://www.redditmedia.com/mediaembed/` + elem.all.id + `', '` + elem.title + `');" style="background-image: url('` + elem.all.thumbnail + `');">
+                        <div class="media-video-preview-overlay">    
+                            <div class="media-video-preview-inner">
+                                <i class="fas fa-play-circle"></i>&nbsp;Play
+                            </div>
+                        </div>
+                    </div></center>
+                `;
+            } else {
+                mediaContent = `<a href="` + elem.media + `" target="_blank"><img src="` + elem.media + `" alt="` + elem.title + `"/></a>`;
+            }
+
+            let html = `
+                <div class="item">
+                    <div class="item-header">
+                        <div class="item-author">
+                            By <a href="https://www.reddit.com/user/` + elem.author + `">u/` + elem.author + `</a>
+                        </div>
+            
+                        <div class="item-date">
+                            ` + elem.diffForHumans + `
+                        </div>
+                    </div>
+            
+                    <div class="item-title">` + elem.title + `</div>
+            
+                    <div class="item-media" id="item-media-` + elem.all.id + `">
+                        ` + mediaContent + `
+                    </div>
+            
+                    <div class="item-footer">
+                        <div class="item-comments"><i class="far fa-comments"></i>&nbsp;` + elem.comment_amount + `</div>
+                        <div class="item-subscribers"><i class="far fa-grin-stars"></i>&nbsp;` + elem.upvote_amount + `</div>
+                        <div class="item-goto"><a href="`+ elem.link + `">View post</a></div>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
+    }
+ });

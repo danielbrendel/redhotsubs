@@ -1,0 +1,57 @@
+<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item navbar-item-brand is-title-font" href="{{ url('/') }}">
+            <img src="{{ asset('img/logo.png') }}" alt="Logo"/>&nbsp;{{ env('APP_NAME') }}
+        </a>
+
+        <a id="burger-action" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start"></div>
+
+        <div class="navbar-options">
+            <center>
+                <div class="navbar-item is-navbar-button is-inline-block">
+                    <a id="link-sorting-hot" class="button is-danger" href="javascript:void(0);" onclick="window.vue.setPostSorting('hot'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('hot'); document.getElementById('burger-action').click();">
+                        Hot
+                    </a>
+                </div>
+
+                <div class="navbar-item is-inline-block">
+                    <a id="link-sorting-top" class="navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('top'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('top'); document.getElementById('burger-action').click();">
+                        <i class="fas fa-star star-color"></i>&nbsp;Top
+                    </a>
+                </div>
+
+                <div class="navbar-item is-inline-block">
+                    <a id="link-sorting-new" class="navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('new'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('new'); document.getElementById('burger-action').click();">
+                        New
+                    </a>
+                </div>
+            </center>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    Subs
+                </a>
+
+                <div class="navbar-dropdown">
+                    @if (isset($subs))
+                        @for ($i = 0; $i < $subs->count(); $i++)
+                            <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.setSubSelection('{{ $subs->get($i)->get('sub_ident') }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); document.getElementById('burger-action').click();">
+                                {{ $subs->get($i)->get('sub_ident') }}
+                            </a>
+                        @endfor
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
