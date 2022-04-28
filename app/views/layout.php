@@ -20,7 +20,15 @@
 		@endif
 		<script src="{{ asset('js/fontawesome.js') }}"></script>
 
-		
+		@if (env('APP_GOOGLEANALYTICS') !== null)
+			<script async src="https://www.googletagmanager.com/gtag/js?id={{ env('APP_GOOGLEANALYTICS') }}"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('config', '{{ env('APP_GOOGLEANALYTICS') }}', { 'anonymize_ip': true} );
+			</script>
+		@endif
 	</head>
 	
 	<body>
