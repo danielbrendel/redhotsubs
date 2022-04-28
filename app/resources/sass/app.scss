@@ -205,9 +205,19 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
 
 .footer-frame {
     width: 100%;
+    @media screen and (min-width: 769px) {
+        height: 52px;
+    }
 }
 
 .footer-content {
+    position: relative;
+    @media screen and (min-width: 769px) {
+        top: 9px;
+    }
+    @media screen and (max-width: 768px) {
+        top: -3px;
+    }
     text-align: center;
 }
 
