@@ -156,7 +156,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         },
 
         renderIFrame: function(target, src, title) {
-            let html = `<iframe id="media-player" class="media-video" src="` + src + `" title="` + title + `"></iframe>`;
+            let html = `<iframe id="media-player" class="media-video" src="` + src + `"></iframe>`;
 
             target.innerHTML = html;
         },
@@ -166,7 +166,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
             if (elem.all.domain === 'redgifs.com') {
                 mediaContent = `<center>
-                    <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elem.all.id + `'), 'https://www.redditmedia.com/mediaembed/` + elem.all.id + `', '` + elem.title + `');" style="background-image: url('` + elem.all.thumbnail + `');">
+                    <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elem.all.id + `'), 'https://www.redditmedia.com/mediaembed/` + elem.all.id + `');" style="background-image: url('` + elem.all.thumbnail + `');">
                         <div class="media-video-preview-overlay">    
                             <div class="media-video-preview-inner">
                                 <i class="fas fa-play-circle"></i>&nbsp;Play
