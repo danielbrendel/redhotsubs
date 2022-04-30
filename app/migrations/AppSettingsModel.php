@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class ViewCountModel_Migration
+ * Class AppSettingsModel_Migration
  */
-class ViewCountModel_Migration
+class AppSettingsModel_Migration
 {
     private $database = null;
     private $connection = null;
@@ -26,10 +26,11 @@ class ViewCountModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('viewcount', $this->connection);
+        $this->database = new Asatru\Database\Migration('appsettings', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
-        $this->database->add('token VARCHAR(512) NOT NULL');
+        $this->database->add('imprint TEXT NOT NULL');
+        $this->database->add('privacy TEXT NOT NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }

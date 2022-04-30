@@ -68,4 +68,46 @@ class IndexController extends BaseController {
 			]);
 		}
 	}
+
+	/**
+	 * Handles URL: /imprint
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function imprint($request)
+	{
+		//Generate and return a view by using the helper
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['content', 'page'],
+			['footer', 'footer']
+		], [
+			'page_title' => 'Imprint',
+			'page_content' => AppSettingsModel::getImprint(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
+	 * Handles URL: /imprint
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function privacy($request)
+	{
+		//Generate and return a view by using the helper
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['content', 'page'],
+			['footer', 'footer']
+		], [
+			'page_title' => 'Privacy policy',
+			'page_content' => AppSettingsModel::getPrivacyPolicy(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
 }

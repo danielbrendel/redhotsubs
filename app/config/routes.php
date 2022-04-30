@@ -19,5 +19,7 @@ return [
     array('/', 'GET', 'index@index'),
     array('/index', 'GET', 'index@index'),
 	array('/content/fetch', 'ANY', 'index@queryContent'),
+    array('/imprint', 'GET', 'index@imprint'),
+    array('/privacy', 'GET', 'index@privacy'),
     array('$404', 'ANY', 'error404@index')
 ];

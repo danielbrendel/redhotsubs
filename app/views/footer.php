@@ -5,7 +5,7 @@
         <div class="column is-8">
             <div class="footer-frame">
                 <div class="footer-content">
-                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} | Total visits: {{ $view_count }}
+                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} | <a class="link-light-dark" href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/privacy') }}">Privacy policy</a> | Visits: {{ $view_count }}
                 </div>
             </div>
         </div>

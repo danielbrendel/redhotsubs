@@ -34,6 +34,14 @@ a:hover {
     color: rgb(120, 120, 120);
 }
 
+.link-light-dark {
+    color: rgb(150, 150, 150);
+}
+
+.link-light-dark:hover {
+    color: rgb(180, 180, 180);
+}
+
 .is-title-font {
     font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1.5em;
@@ -201,6 +209,18 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     border-radius: 45%;
     padding: 12px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.page {
+    padding: 20px;
+}
+
+.page h1 {
+    font-size: 1.5em;
+}
+
+.page-content {
+    margin-top: 20px;
 }
 
 .footer-frame {
