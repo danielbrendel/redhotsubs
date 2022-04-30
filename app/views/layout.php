@@ -23,6 +23,15 @@
 		@if (env('APP_GOOGLEANALYTICS') !== null)
 			<script async src="https://www.googletagmanager.com/gtag/js?id={{ env('APP_GOOGLEANALYTICS') }}"></script>
 			<script>
+				var gaProperty = '{{ env('APP_GOOGLEANALYTICS') }}';
+				var disableStr = 'ga-disable-' + gaProperty;
+				window.gaOptOut = function() {
+					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = true;
+				};
+				if (document.cookie.indexOf(disableStr + '=true') > -1) {
+					window[disableStr] = true;
+				}
 				window.dataLayer = window.dataLayer || [];
 				function gtag(){dataLayer.push(arguments);}
 				gtag('js', new Date());
