@@ -15,7 +15,7 @@
         <div class="navbar-start"></div>
 
         @if (isset($subs))
-        <div class="navbar-options">
+        <div class="navbar-options nav-hidden-desktop">
             <center>
                 <div class="navbar-item is-navbar-button is-inline-block">
                     <a id="link-sorting-hot" class="button is-danger" href="javascript:void(0);" onclick="window.vue.setPostSorting('hot'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('hot'); document.getElementById('burger-action').click();">
