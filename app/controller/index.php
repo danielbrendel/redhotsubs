@@ -91,7 +91,7 @@ class IndexController extends BaseController {
 	}
 
 	/**
-	 * Handles URL: /imprint
+	 * Handles URL: /privacy
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
 	 * @return Asatru\View\ViewHandler
@@ -107,6 +107,25 @@ class IndexController extends BaseController {
 		], [
 			'page_title' => 'Privacy policy',
 			'page_content' => AppSettingsModel::getPrivacyPolicy(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
+	 * Handles URL: /news
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function news($request)
+	{
+		//Generate and return a view by using the helper
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['content', 'news'],
+			['footer', 'footer']
+		], [
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);
 	}

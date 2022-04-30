@@ -14,6 +14,7 @@
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start"></div>
 
+        @if (isset($subs))
         <div class="navbar-options">
             <center>
                 <div class="navbar-item is-navbar-button is-inline-block">
@@ -35,8 +36,16 @@
                 </div>
             </center>
         </div>
+        @endif
 
         <div class="navbar-end">
+            @if (env('APP_TWITTERFEED') !== null)
+            <a class="navbar-item" href="{{ url('/news') }}">
+                News
+            </a>
+            @endif
+
+            @if (isset($subs))
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
                     Subs
@@ -52,6 +61,11 @@
                     @endif
                 </div>
             </div>
+            @else
+            <a class="navbar-item" href="{{ url('/') }}">
+                Browse
+            </a>
+            @endif
         </div>
     </div>
 </nav>

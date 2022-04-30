@@ -21,5 +21,6 @@ return [
 	array('/content/fetch', 'ANY', 'index@queryContent'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
+    array('/news', 'GET', 'index@news'),
     array('$404', 'ANY', 'error404@index')
 ];
