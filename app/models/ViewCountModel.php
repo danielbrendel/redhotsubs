@@ -18,7 +18,9 @@ class ViewCountModel extends \Asatru\Database\Model
             ViewCountModel::raw('INSERT INTO `' . self::tableName() . '` (token) VALUES(?)', [$token]);
         }
 
-        return ViewCountModel::count()->get();
+        $count = ViewCountModel::raw('SELECT COUNT(*) FROM `' . self::tableName() . '`');
+        
+        return $count->get(0)->get(0);
     }
 
     /**
