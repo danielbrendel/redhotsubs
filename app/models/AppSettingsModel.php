@@ -32,6 +32,19 @@ class AppSettingsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return string
+     */
+    public static function getAgeConsent()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('age_consent');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

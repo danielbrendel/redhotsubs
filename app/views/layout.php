@@ -53,6 +53,22 @@
 						{%content%}
 
 						{%footer%}
+
+						<div class="modal" :class="{'is-active': bShowAgeConsent}">
+							<div class="modal-background is-almost-not-transparent"></div>
+							<div class="modal-card">
+								<header class="modal-card-head is-stretched">
+									<p class="modal-card-title">Please verify your age</p>
+									<!--button class="delete" aria-label="close" onclick="vue.bShowAgeConsent = false;"></button-->
+								</header>
+								<section class="modal-card-body is-stretched">
+									{!! AppSettingsModel::getAgeConsent() !!}
+								</section>
+								<footer class="modal-card-foot is-stretched">
+									<button class="button is-success" onclick="window.vue.markAgeConsent();">Confirm and continue</button>
+								</footer>
+							</div>
+						</div>
 					</div>
 
 					<div class="column is-2 non-mobile"></div>
@@ -76,6 +92,12 @@
 				} else if (window.vue.getPostSorting() == 'new') {
 					document.getElementById('link-sorting-new').style.textDecoration = 'underline';
 				}
+
+				@if (env('APP_SHOWAGECONSENT'))
+					if (!window.vue.isAgeConsentMarked()) {
+						window.vue.bShowAgeConsent = true;
+					}
+				@endif
 
 				window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));
 			});

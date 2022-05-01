@@ -13,7 +13,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     el: '#main',
 
     data: {
-        defaultSub: ''
+        defaultSub: '',
+        bShowAgeConsent: false
     },
 
     methods: {
@@ -77,6 +78,25 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
 
             document.getElementById('cookie-consent').style.display = 'none';
+        },
+
+        markAgeConsent: function() {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'ageconsent=1; expires=' + expDate.toUTCString() + ';';
+
+            this.bShowAgeConsent = false;
+        },
+
+        isAgeConsentMarked: function() {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('ageconsent=1') !== -1) {
+                    return true;
+                }
+            }
+
+            return false;
         },
 
         getPostSorting: function () {
