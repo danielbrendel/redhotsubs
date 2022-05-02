@@ -91,6 +91,19 @@ class IndexController extends BaseController {
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
 		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
 		
+		//Set meta if enabled
+		if (env('TWITTERBOT_ENABLEMETA')) {
+			$additional_meta = [
+				'twitter:card' => 'summary',
+				'twitter:title' => $data->title,
+				'twitter:site' => url('/'),
+				'twitter:description' => env('APP_DESCRIPTION'),
+				'twitter:image' => $data->media,
+			];
+		} else {
+			$additional_meta = null;
+		}
+
 		//Generate and return a view by using the helper
 		return parent::view([
 			['navbar', 'navbar'],
@@ -100,13 +113,7 @@ class IndexController extends BaseController {
 			['footer', 'footer']
 		], [
 			'post_data' => $data,
-			'additional_meta' => [
-				'twitter:card' => 'summary',
-				'twitter:title' => $data->title,
-				'twitter:site' => url('/'),
-				'twitter:description' => env('APP_DESCRIPTION'),
-				'twitter:image' => $data->media,
-			],
+			'additional_meta' => $additional_meta,
 			'subs' => SubsModel::getAllSubs(),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);

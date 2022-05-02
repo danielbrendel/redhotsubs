@@ -8,7 +8,7 @@
 		<meta name="description" content="{{ env('APP_DESCRIPTION') }}">
 		<meta name="tags" content="{{ env('APP_TAGS') }}">
 
-		@if (isset($additional_meta))
+		@if ((isset($additional_meta)) && (is_array($additional_meta)))
 			@foreach ($additional_meta as $key => $value)
 				<meta name="{{ $key }}" content="{{ $value }}">
 			@endforeach
