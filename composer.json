@@ -22,7 +22,8 @@
 		"danielbrendel/asatru-php-framework": "^1.0",
         "phpmailer/phpmailer": "^6.1",
         "nesbot/carbon": "^2.0",
-        "danielbrendel/rfcrawler": "dev-main"
+        "danielbrendel/rfcrawler": "dev-main",
+        "abraham/twitteroauth": "^4.0"
     },
 	"scripts": {
 		"post-root-package-install": [

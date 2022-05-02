@@ -19,8 +19,10 @@ return [
     array('/', 'GET', 'index@index'),
     array('/index', 'GET', 'index@index'),
 	array('/content/fetch', 'ANY', 'index@queryContent'),
+    array('/p/{ident}', 'GET', 'index@showPost'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),
+    array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),
     array('$404', 'ANY', 'error404@index')
 ];

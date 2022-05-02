@@ -16,7 +16,8 @@ class CrawlerModule
         $types = [
             'top' => RFCrawler::FETCH_TYPE_TOP,
             'hot' => RFCrawler::FETCH_TYPE_HOT,
-            'new' => RFCrawler::FETCH_TYPE_NEW
+            'new' => RFCrawler::FETCH_TYPE_NEW,
+            'ignore' => RFCrawler::FETCH_TYPE_IGNORE
         ];
 
         if (isset($types[$type])) {

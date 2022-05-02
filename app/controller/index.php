@@ -70,6 +70,40 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /p/{ident}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function showPost($request)
+	{
+		//Query and convert parameter
+		$ident = $request->arg('ident');
+		$ident = base64_decode($ident);
+
+		//Fetch specific post data
+		$data = CrawlerModule::fetchContent($ident, 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+		
+		$data = $data[0];
+		
+		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
+		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
+		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
+		
+		//Generate and return a view by using the helper
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['content', 'post'],
+			['footer', 'footer']
+		], [
+			'post_data' => $data,
+			'subs' => SubsModel::getAllSubs(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
 	 * Handles URL: /imprint
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
@@ -128,5 +162,53 @@ class IndexController extends BaseController {
 		], [
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);
+	}
+
+	/**
+	 * Handles URL: /cronjob/twitter/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function twitter_cronjob($request)
+	{
+		try {
+			if (!env('TWITTERBOT_ENABLE')) {
+				throw new Exception('Twitter Bot is currently disabled');
+			}
+
+			if ($request->arg('pw') !== env('TWITTERBOT_CRONPW')) {
+				throw new Exception('The passwords do not match');
+			}
+
+			$subs = SubsModel::getAllSubs();
+			$rndsel = rand(0, $subs->count() - 1);
+			
+			$data = CrawlerModule::fetchContent($subs->get($rndsel)->get('sub_ident') . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+			
+			$posted = null;
+
+			for ($i = 0; $i < 5; $i++) {
+				$item = rand(0, count($data) - 1);
+				
+				if (!TwitterHistoryModel::addIfNotAlready($data[$item]->all->name)) {
+					$encoded = base64_encode($data[$item]->all->permalink);
+					TwitterModule::postToTwitter($data[$item]->title, url('/p/' . $encoded));
+					$posted = $encoded;
+
+					break;
+				}
+			}
+			
+			return json([
+				'code' => 200,
+				'posted' => $posted
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
 	}
 }
