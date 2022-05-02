@@ -32,6 +32,7 @@ class AppSettingsModel_Migration
         $this->database->add('imprint TEXT NOT NULL');
         $this->database->add('privacy TEXT NOT NULL');
         $this->database->add('age_consent TEXT NOT NULL');
+        $this->database->add('info TEXT NOT NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }

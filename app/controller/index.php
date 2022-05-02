@@ -28,6 +28,7 @@ class IndexController extends BaseController {
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
+			['info', 'info'],
 			['content', 'index'],
 			['footer', 'footer']
 		], [
@@ -94,6 +95,7 @@ class IndexController extends BaseController {
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
+			['info', 'info'],
 			['content', 'post'],
 			['footer', 'footer']
 		], [
@@ -115,6 +117,7 @@ class IndexController extends BaseController {
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
+			['info', 'info'],
 			['content', 'page'],
 			['footer', 'footer']
 		], [
@@ -136,6 +139,7 @@ class IndexController extends BaseController {
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
+			['info', 'info'],
 			['content', 'page'],
 			['footer', 'footer']
 		], [
@@ -157,6 +161,7 @@ class IndexController extends BaseController {
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
+			['info', 'info'],
 			['content', 'news'],
 			['footer', 'footer']
 		], [

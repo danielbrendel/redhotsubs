@@ -50,6 +50,7 @@
 						{%navbar%}
 
 						{%cookies%}
+						{%info%}
 						{%content%}
 
 						{%footer%}

@@ -45,6 +45,32 @@ class AppSettingsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return bool
+     */
+    public static function hasInfo()
+    {
+        try {
+            $info = static::getInfo();
+            return ($info !== null) && (is_string($info)) && (strlen($info) > 0);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public static function getInfo()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('info');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

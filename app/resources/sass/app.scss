@@ -134,6 +134,25 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     top: 5px;
 }
 
+.info {
+    position: relative;
+    border: 3px solid rgb(20, 143, 25);
+}
+
+.info-title {
+    padding: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: rgb(200, 200, 200);
+    background-color: rgba(31, 220, 40, 0.3);
+}
+
+.info-content {
+    padding: 20px;
+    color: rgb(150, 150, 150);
+    background-color: rgba(31, 220, 40, 0.1);
+}
+
 .media-frame {
     width: 100%;
     min-height: 400px;
