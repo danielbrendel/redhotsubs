@@ -100,6 +100,13 @@ class IndexController extends BaseController {
 			['footer', 'footer']
 		], [
 			'post_data' => $data,
+			'additional_meta' => [
+				'twitter:card' => 'summary',
+				'twitter:title' => $data->title,
+				'twitter:site' => url('/'),
+				'twitter:description' => env('APP_DESCRIPTION'),
+				'twitter:image' => $data->media,
+			],
 			'subs' => SubsModel::getAllSubs(),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);

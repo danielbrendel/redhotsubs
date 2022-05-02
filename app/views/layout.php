@@ -7,6 +7,12 @@
 		<meta name="author" content="{{ env('APP_AUTHOR') }}">
 		<meta name="description" content="{{ env('APP_DESCRIPTION') }}">
 		<meta name="tags" content="{{ env('APP_TAGS') }}">
+
+		@if (isset($additional_meta))
+			@foreach ($additional_meta as $key => $value)
+				<meta name="{{ $key }}" content="{{ $value }}">
+			@endforeach
+		@endif
 		
 		<title>{{ env('APP_TITLE') }}</title>
 
