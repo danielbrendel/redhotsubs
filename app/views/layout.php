@@ -93,11 +93,14 @@
 				window.fetch_item_after = null;
 
 				if (window.vue.getPostSorting() == 'hot') {
-					document.getElementById('link-sorting-hot').style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-hot')[0].style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-hot')[1].style.textDecoration = 'underline';
 				} else if (window.vue.getPostSorting() == 'top') {
-					document.getElementById('link-sorting-top').style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-top')[0].style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-top')[1].style.textDecoration = 'underline';
 				} else if (window.vue.getPostSorting() == 'new') {
-					document.getElementById('link-sorting-new').style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-new')[0].style.textDecoration = 'underline';
+					document.getElementsByClassName('link-sorting-new')[1].style.textDecoration = 'underline';
 				}
 
 				@if (env('APP_SHOWAGECONSENT'))
@@ -106,7 +109,9 @@
 					}
 				@endif
 
-				window.vue.renderCardImages();
+				if (document.getElementById('media-cards')) {
+					window.vue.renderCardImages();
+				}
 			});
 		</script>
 	</body>

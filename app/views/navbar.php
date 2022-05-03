@@ -18,19 +18,19 @@
         <div class="navbar-options nav-hidden-desktop">
             <center>
                 <div class="navbar-item is-navbar-button is-inline-block">
-                    <a id="link-sorting-hot" class="button is-danger" href="javascript:void(0);" onclick="window.vue.setPostSorting('hot'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('hot'); document.getElementById('burger-action').click();">
+                    <a id="link-sorting-hot" class="link-sorting-hot button is-danger" href="javascript:void(0);" onclick="window.vue.setPostSorting('hot'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('hot'); document.getElementById('burger-action').click();">
                         Hot
                     </a>
                 </div>
 
                 <div class="navbar-item is-inline-block">
-                    <a id="link-sorting-top" class="navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('top'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('top'); document.getElementById('burger-action').click();">
+                    <a id="link-sorting-top" class="link-sorting-top navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('top'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('top'); document.getElementById('burger-action').click();">
                         <i class="fas fa-star star-color"></i>&nbsp;Top
                     </a>
                 </div>
 
                 <div class="navbar-item is-inline-block">
-                    <a id="link-sorting-new" class="navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('new'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('new'); document.getElementById('burger-action').click();">
+                    <a id="link-sorting-new" class="link-sorting-new navbar-item" href="javascript:void(0);" onclick="window.vue.setPostSorting('new'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); window.vue.setSortingUnderline('new'); document.getElementById('burger-action').click();">
                         New
                     </a>
                 </div>

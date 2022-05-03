@@ -142,11 +142,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         },
 
         setSortingUnderline: function(ident) {
-            document.getElementById('link-sorting-hot').style.textDecoration = 'unset';
-            document.getElementById('link-sorting-top').style.textDecoration = 'unset';
-            document.getElementById('link-sorting-new').style.textDecoration = 'unset';
+            document.getElementsByClassName('link-sorting-hot')[0].style.textDecoration = 'unset';
+            document.getElementsByClassName('link-sorting-top')[0].style.textDecoration = 'unset';
+            document.getElementsByClassName('link-sorting-new')[0].style.textDecoration = 'unset';
 
-            document.getElementById('link-sorting-' + ident).style.textDecoration = 'underline';
+            document.getElementsByClassName('link-sorting-hot')[1].style.textDecoration = 'unset';
+            document.getElementsByClassName('link-sorting-top')[1].style.textDecoration = 'unset';
+            document.getElementsByClassName('link-sorting-new')[1].style.textDecoration = 'unset';
+
+            document.getElementsByClassName('link-sorting-' + ident)[0].style.textDecoration = 'underline';
+            document.getElementsByClassName('link-sorting-' + ident)[1].style.textDecoration = 'underline';
         },
 
         fetchPosts: function(sub, sorting, target) {
