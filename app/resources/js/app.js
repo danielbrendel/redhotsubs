@@ -154,6 +154,13 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 document.getElementById('loadmore').remove();
             }
 
+            let refresh = document.getElementById('media-settings');
+            if (refresh) {
+                if (refresh.classList.contains('is-hidden')) {
+                    refresh.classList.remove('is-hidden');
+                }
+            }
+
             target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i></center></div>';
 
             window.vue.ajaxRequest('post', window.location.origin + '/content/fetch', { sub: sub, sorting: sorting, after: window.fetch_item_after }, function(response){
@@ -225,6 +232,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             `;
 
             return html;
+        },
+
+        renderCardImages: function() {
+            let elems = document.getElementsByClassName('media-card-item-image');
+
+            for (let i = 0; i < elems.length; i++) {
+                let sub = elems[i].title;
+
+                this.ajaxRequest('post', window.location.origin + '/content/sub/image', { sub: sub }, function(response) {
+                    if (response.code == 200) {
+                        elems[i].innerHTML = '';
+                        elems[i].style.backgroundImage = 'url(\"' + response.data.image + '\")';
+                    }
+                });
+            }
         },
     }
  });

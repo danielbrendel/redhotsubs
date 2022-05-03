@@ -5,6 +5,9 @@
  */ 
 class SubsModel extends \Asatru\Database\Model
 {
+    const SUB_FEATURED =  true;
+    const SUB_UNFEATURED = false;
+
     /**
      * @return array
      */
@@ -12,6 +15,19 @@ class SubsModel extends \Asatru\Database\Model
     {
         try {
             return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` ORDER BY sub_ident ASC');
+        } catch (Exception $e) {
+            return array();
+        }
+    }
+
+    /**
+     * @param bool $which
+     * @return array
+     */
+    public static function  getFeatureSubs($which)
+    {
+        try {
+            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE featured = ? ORDER BY sub_ident ASC', [$which]);
         } catch (Exception $e) {
             return array();
         }

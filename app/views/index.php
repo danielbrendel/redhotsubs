@@ -21,11 +21,41 @@
 		</center>
 	</div>
 
-	<div class="media-settings">
+	<div class="media-settings is-hidden" id="media-settings">
 		<a href="javascript:void(0);" onclick="document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));"><i class="fas fa-sync-alt"></i>&nbsp;Refresh</a>&nbsp;<span id="current-sub"></span>
 	</div>
 
-	<div class="media-content" id="media-content"></div>
+	<div class="media-content" id="media-content">
+		<div class="media-info">
+			{!! AppSettingsModel::getAbout() !!}
+		</div>
+
+		<div class="media-cards" id="media-cards">
+			@foreach ($featured as $item)
+				<div class="media-card-item" onclick="window.vue.setSubSelection('{{ $item }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">
+					<div class="media-card-item-title">
+						{{ $item }}
+					</div>
+
+					<div class="media-card-item-image" title="{{ $item }}">
+						<i class="fas fa-spinner fa-spin"></i>
+					</div>
+				</div>
+			@endforeach
+		</div>
+
+		<div class="media-list">
+			@for ($i = 0; $i < $subs->count(); $i++)
+				@if ($subs->get($i)->get('featured') == SubsModel::SUB_UNFEATURED)
+					<div class="media-list-item">
+						<a class="" href="javascript:void(0);" onclick="window.vue.setSubSelection('{{ $subs->get($i)->get('sub_ident') }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">
+							{{ $subs->get($i)->get('sub_ident') }}
+						</a>
+					</div>
+				@endif
+			@endfor
+		</div>
+	</div>
 
 	<div class="scroll-to-top">
 		<div class="scroll-to-top-inner">

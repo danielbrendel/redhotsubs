@@ -31,6 +31,7 @@ class AppSettingsModel_Migration
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('imprint TEXT NOT NULL');
         $this->database->add('privacy TEXT NOT NULL');
+        $this->database->add('about TEXT NOT NULL');
         $this->database->add('age_consent TEXT NOT NULL');
         $this->database->add('info TEXT NOT NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');

@@ -7,6 +7,7 @@ class AppSettingsModel extends \Asatru\Database\Model
 {
     /**
      * @return string
+     * @throws Exception
      */
     public static function getImprint()
     {
@@ -20,6 +21,7 @@ class AppSettingsModel extends \Asatru\Database\Model
 
     /**
      * @return string
+     * @throws Exception
      */
     public static function getPrivacyPolicy()
     {
@@ -33,6 +35,21 @@ class AppSettingsModel extends \Asatru\Database\Model
 
     /**
      * @return string
+     * @throws Exception
+     */
+    public static function getAbout()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('about');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @return string
+     * @throws Exception
      */
     public static function getAgeConsent()
     {
@@ -59,6 +76,7 @@ class AppSettingsModel extends \Asatru\Database\Model
 
     /**
      * @return string
+     * @throws Exception
      */
     public static function getInfo()
     {

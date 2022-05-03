@@ -24,7 +24,15 @@ class IndexController extends BaseController {
 	 */
 	public function index($request)
 	{
-		//Generate and return a view by using the helper
+		$subs = SubsModel::getAllSubs();
+
+		$featured = array();
+		for ($i = 0; $i < $subs->count(); $i++) {
+			if ($subs->get($i)->get('featured') == 1) {
+				$featured[] = $subs->get($i)->get('sub_ident');
+			}
+		}
+		
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -32,7 +40,8 @@ class IndexController extends BaseController {
 			['content', 'index'],
 			['footer', 'footer']
 		], [
-			'subs' => SubsModel::getAllSubs(),
+			'subs' => $subs,
+			'featured' => $featured,
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);
 	}
@@ -61,6 +70,41 @@ class IndexController extends BaseController {
 			return json([
 				'code' => 200,
 				'data' => (array)$content
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
+	 * Handles URL: /content/sub/image
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function querySubImage($request)
+	{
+		try {
+			$sub = $request->params()->query('sub');
+			
+			$content = CrawlerModule::fetchContent($sub . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+
+			if (count($content) > 0) {
+				return json([
+					'code' => 200,
+					'data' => [
+						'sub' => $sub,
+						'image' => $content[0]->all->thumbnail
+					]
+				]);
+			}
+
+			return json([
+				'code' => 404,
+				'data' => null
 			]);
 		} catch (Exception $e) {
 			return json([

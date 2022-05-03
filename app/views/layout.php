@@ -106,7 +106,7 @@
 					}
 				@endif
 
-				window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));
+				window.vue.renderCardImages();
 			});
 		</script>
 	</body>

@@ -129,6 +129,15 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     margin-right: 10px;
 }
 
+.nav-sorting-item a {
+    color: rgb(190, 190, 190);
+}
+
+.nav-sorting-item a:hover {
+    color: rgb(190, 190, 190);
+    text-decoration: underline;
+}
+
 .nav-sorting-item-top {
     position: relative;
     top: 5px;
@@ -167,6 +176,76 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
 }
 
 .media-content {
+}
+
+.media-info {
+    padding: 20px;
+    color: rgb(150, 150, 150);
+}
+
+.media-info h2 {
+    font-size: 1.3em;
+}
+
+.media-info p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.media-cards {
+    padding: 20px;
+}
+
+.media-card-item {
+    position: relative;
+    display: inline-block;
+    width: 192px;
+    height: 192px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(150, 150, 150);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.media-card-item:hover {
+    border: 1px solid rgb(250, 250, 250);
+}
+
+.media-card-item-title {
+    padding: 10px;
+    font-size: 1.2em;
+    color: rgb(200, 200, 200);
+    background-color: rgb(100, 100, 100);
+}
+
+.media-card-item-image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 74%;
+}
+
+.media-list {
+    padding: 20px;
+}
+
+.media-list-item {
+    position: relative;
+    display: inline-block;
+    font-size: 1.2em;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.media-list-item a {
+    color: rgb(150, 150, 150);
+}
+
+.media-list-item a:hover {
+    color: rgb(180, 180, 180);
 }
 
 .item {
