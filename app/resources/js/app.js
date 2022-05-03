@@ -166,7 +166,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 }
             }
 
-            target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i></center></div>';
+            target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
 
             window.vue.ajaxRequest('post', window.location.origin + '/content/fetch', { sub: sub, sorting: sorting, after: window.fetch_item_after }, function(response){
                 if (response.code == 200) {
