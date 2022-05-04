@@ -34,6 +34,20 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $sub
+     * @return bool
+     */
+    public static function subExists($sub)
+    {
+        try {
+            $result = SubsModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE sub_ident = ?', [$sub]);
+            return $result->get(0)->get('count') > 0;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

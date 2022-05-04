@@ -21,6 +21,7 @@ return [
 	array('/content/fetch', 'ANY', 'index@queryContent'),
     array('/content/sub/image', 'ANY', 'index@querySubImage'),
     array('/p/{ident}', 'GET', 'index@showPost'),
+    array('/r/{sub}', 'GET', 'index@showSub'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),

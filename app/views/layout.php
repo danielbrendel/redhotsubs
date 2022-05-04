@@ -98,6 +98,21 @@
 				window.vue.defaultSub = '{{ env('APP_DEFAULTSUB') }}';
 				window.fetch_item_after = null;
 
+				@if (env('APP_SHOWAGECONSENT'))
+					if (!window.vue.isAgeConsentMarked()) {
+						window.vue.bShowAgeConsent = true;
+					}
+				@endif
+
+				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))
+					document.getElementById('media-content').innerHTML = '';
+					window.vue.fetchPosts('{{ $show_sub }}/', window.vue.getSubSelection(), document.getElementById('media-content'));
+				@else
+					if (document.getElementById('media-cards')) {
+						window.vue.renderCardImages();
+					}
+				@endif
+
 				if (window.vue.getPostSorting() == 'hot') {
 					document.getElementsByClassName('link-sorting-hot')[0].style.textDecoration = 'underline';
 					document.getElementsByClassName('link-sorting-hot')[1].style.textDecoration = 'underline';
@@ -107,16 +122,6 @@
 				} else if (window.vue.getPostSorting() == 'new') {
 					document.getElementsByClassName('link-sorting-new')[0].style.textDecoration = 'underline';
 					document.getElementsByClassName('link-sorting-new')[1].style.textDecoration = 'underline';
-				}
-
-				@if (env('APP_SHOWAGECONSENT'))
-					if (!window.vue.isAgeConsentMarked()) {
-						window.vue.bShowAgeConsent = true;
-					}
-				@endif
-
-				if (document.getElementById('media-cards')) {
-					window.vue.renderCardImages();
 				}
 			});
 		</script>

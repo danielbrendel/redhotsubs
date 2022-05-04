@@ -169,7 +169,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
             target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
 
-            let displaySub = sub.substr(0, sub.length - 1);
+            let displaySub = (sub[sub.length - 1] === '/') ? sub.substr(0, sub.length - 1) : sub;
             document.title = this.appName + ' - ' + displaySub;
             window.history.pushState({page: displaySub}, this.appName + ' - ' + displaySub, window.location.origin + '/' + displaySub);
             window.gtag('set', 'page_path', displaySub);

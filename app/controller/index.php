@@ -122,11 +122,9 @@ class IndexController extends BaseController {
 	 */
 	public function showPost($request)
 	{
-		//Query and convert parameter
 		$ident = $request->arg('ident');
 		$ident = base64_decode($ident);
 
-		//Fetch specific post data
 		$data = CrawlerModule::fetchContent($ident, 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
 		
 		$data = $data[0];
@@ -135,7 +133,6 @@ class IndexController extends BaseController {
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
 		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
 		
-		//Set meta if enabled
 		if (env('TWITTERBOT_ENABLEMETA')) {
 			$additional_meta = [
 				'twitter:card' => 'summary',
@@ -148,7 +145,6 @@ class IndexController extends BaseController {
 			$additional_meta = null;
 		}
 
-		//Generate and return a view by using the helper
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -164,6 +160,43 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /r/{sub}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function showSub($request)
+	{
+		$subs = SubsModel::getAllSubs();
+
+		$featured = array();
+		for ($i = 0; $i < $subs->count(); $i++) {
+			if ($subs->get($i)->get('featured') == 1) {
+				$featured[] = $subs->get($i)->get('sub_ident');
+			}
+		}
+
+		$sub = $request->arg('sub');
+		$sub = 'r/' . $sub;
+		if (!SubsModel::subExists($sub)) {
+			$sub = null;
+		}
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'index'],
+			['footer', 'footer']
+		], [
+			'show_sub' => $sub,
+			'subs' => $subs,
+			'featured' => $featured,
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
 	 * Handles URL: /imprint
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
@@ -171,7 +204,6 @@ class IndexController extends BaseController {
 	 */
 	public function imprint($request)
 	{
-		//Generate and return a view by using the helper
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -193,7 +225,6 @@ class IndexController extends BaseController {
 	 */
 	public function privacy($request)
 	{
-		//Generate and return a view by using the helper
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -215,7 +246,6 @@ class IndexController extends BaseController {
 	 */
 	public function news($request)
 	{
-		//Generate and return a view by using the helper
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
