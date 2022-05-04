@@ -14,7 +14,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
     data: {
         appName: '',
-        defaultSub: '',
         bShowAgeConsent: false
     },
 
@@ -118,8 +117,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
         },
 
         getSubSelection: function () {
-            let result = window.vue.defaultSub;
-
+            let result = '';
             let cookies = document.cookie.split(';');
 
             for (let i = 0; i < cookies.length; i++) {

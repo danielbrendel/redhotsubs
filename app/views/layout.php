@@ -101,7 +101,6 @@
 				window.vue.initNavbar();
 				window.vue.handleCookieConsent();
 
-				window.vue.defaultSub = '{{ env('APP_DEFAULTSUB') }}';
 				window.fetch_item_after = null;
 
 				@if (env('APP_SHOWAGECONSENT'))
@@ -112,6 +111,7 @@
 
 				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))
 					document.getElementById('media-content').innerHTML = '';
+					document.getElementById('current-sub').innerHTML = '{{ $show_sub }}';
 					window.vue.fetchPosts('{{ $show_sub }}/', window.vue.getPostSorting(), document.getElementById('media-content'));
 				@else
 					if (document.getElementById('media-cards')) {
