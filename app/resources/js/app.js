@@ -131,7 +131,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
             let selLabel = document.getElementById('current-sub');
             if (selLabel) {
-                selLabel.innerHTML = '<a class="link-dark" href="">' + result.substr(0, result.length - 1) + '</a>';
+                selLabel.innerHTML = result.substr(0, result.length - 1);
             }
 
             return result;

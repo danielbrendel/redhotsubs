@@ -14,7 +14,13 @@
 			@endforeach
 		@endif
 		
-		<title>{{ env('APP_TITLE') }}</title>
+		<title>
+			@if ((isset($page_title)) && (is_string($page_title)) && (strlen($page_title) > 0))
+				{{ env('APP_NAME') . ' - ' . $page_title }}
+			@else
+				{{ env('APP_TITLE') }}
+			@endif
+		</title>
 
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}"/>
 		<link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}"/>
@@ -106,7 +112,7 @@
 
 				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))
 					document.getElementById('media-content').innerHTML = '';
-					window.vue.fetchPosts('{{ $show_sub }}/', window.vue.getSubSelection(), document.getElementById('media-content'));
+					window.vue.fetchPosts('{{ $show_sub }}/', window.vue.getPostSorting(), document.getElementById('media-content'));
 				@else
 					if (document.getElementById('media-cards')) {
 						window.vue.renderCardImages();
