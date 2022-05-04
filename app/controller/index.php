@@ -132,6 +132,11 @@ class IndexController extends BaseController {
 		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
 		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
+
+		$media = $data->media;
+		if ((strpos($media, 'redgifs.com') !== false) || (strpos($media, '.gif') !== false)) {
+			$media = $data->all->thumbnail;
+		}
 		
 		if (env('TWITTERBOT_ENABLEMETA')) {
 			$additional_meta = [
@@ -139,7 +144,7 @@ class IndexController extends BaseController {
 				'twitter:title' => $data->title,
 				'twitter:site' => url('/'),
 				'twitter:description' => env('APP_DESCRIPTION'),
-				'twitter:image' => $data->media,
+				'twitter:image' => $media,
 			];
 		} else {
 			$additional_meta = null;
