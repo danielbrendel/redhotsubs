@@ -13,6 +13,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
     el: '#main',
 
     data: {
+        appName: '',
         defaultSub: '',
         bShowAgeConsent: false
     },
@@ -169,8 +170,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
             target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
 
             let displaySub = sub.substr(0, sub.length - 1);
-            document.title = 'RedHotSubs - ' + displaySub;
-            window.history.pushState({page: displaySub}, 'RedHotSubs - ' + displaySub, displaySub);
+            document.title = this.appName + ' - ' + displaySub;
+            window.history.pushState({page: displaySub}, this.appName + ' - ' + displaySub, displaySub);
             window.gtag('set', 'page_path', displaySub);
             window.gtag('event', 'page_view');
             

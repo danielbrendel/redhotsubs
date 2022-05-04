@@ -90,6 +90,8 @@
 		<script src="{{ asset('js/app.js') }}"></script>
 		<script>
 			document.addEventListener('DOMContentLoaded', function(){
+				window.vue.appName = '{{ env('APP_NAME') }}';
+
 				window.vue.initNavbar();
 				window.vue.handleCookieConsent();
 
