@@ -39,9 +39,13 @@
 					window[disableStr] = true;
 				}
 				window.dataLayer = window.dataLayer || [];
-				function gtag(){dataLayer.push(arguments);}
+				window.gtag = function(){dataLayer.push(arguments);};
 				gtag('js', new Date());
 				gtag('config', '{{ env('APP_GOOGLEANALYTICS') }}', { 'anonymize_ip': true} );
+			</script>
+		@else
+			<script>
+				window.gtag = function(){};
 			</script>
 		@endif
 	</head>

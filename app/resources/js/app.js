@@ -168,6 +168,12 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
             target.innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
 
+            let displaySub = sub.substr(0, sub.length - 1);
+            document.title = 'RedHotSubs - ' + displaySub;
+            window.history.pushState({page: displaySub}, 'RedHotSubs - ' + displaySub, displaySub);
+            window.gtag('set', 'page_path', displaySub);
+            window.gtag('event', 'page_view');
+            
             window.vue.ajaxRequest('post', window.location.origin + '/content/fetch', { sub: sub, sorting: sorting, after: window.fetch_item_after }, function(response){
                 if (response.code == 200) {
                     if (document.getElementById('spinner')) {
