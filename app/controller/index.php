@@ -58,7 +58,7 @@ class IndexController extends BaseController {
 			$sub = $request->params()->query('sub');
 			$sorting = $request->params()->query('sorting');
 			$after = $request->params()->query('after');
-			
+
 			$content = CrawlerModule::fetchContent($sub, $sorting, $after, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
 
 			foreach ($content as &$item) {

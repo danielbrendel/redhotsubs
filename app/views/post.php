@@ -3,7 +3,7 @@
         <div class="item">
             <div class="item-header">
                 <div class="item-author">
-                    By <a href="https://www.reddit.com/user/{{ $post_data->author }}">u/{{ $post_data->author }}</a>
+                    By <a href="{{ url('/user/' . $post_data->author) }}">u/{{ $post_data->author }}</a>
                 </div>
     
                 <div class="item-date">

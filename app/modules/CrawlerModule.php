@@ -44,7 +44,7 @@ class CrawlerModule
             }
 
             $crawler = new RFCrawler($sub, env('APP_USERAGENT'));
-            $content = $crawler->fetchFromJson($sorting, $after, $exclude, $include);
+            $content = $crawler->fetchFromJson($ft, $after, $exclude, $include);
             
             return $content;
         } catch (Exception $e) {
