@@ -171,7 +171,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
             let displaySub = sub.substr(0, sub.length - 1);
             document.title = this.appName + ' - ' + displaySub;
-            window.history.pushState({page: displaySub}, this.appName + ' - ' + displaySub, displaySub);
+            window.history.pushState({page: displaySub}, this.appName + ' - ' + displaySub, window.location.origin + '/' + displaySub);
             window.gtag('set', 'page_path', displaySub);
             window.gtag('event', 'page_view');
             
