@@ -197,6 +197,40 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /user/{ident}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function showUser($request)
+	{
+		$subs = SubsModel::getAllSubs();
+
+		$featured = array();
+		for ($i = 0; $i < $subs->count(); $i++) {
+			if ($subs->get($i)->get('featured') == 1) {
+				$featured[] = $subs->get($i)->get('sub_ident');
+			}
+		}
+
+		$user = $request->arg('ident');
+		$user = 'user/' . $user;
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'index'],
+			['footer', 'footer']
+		], [
+			'show_sub' => $user,
+			'subs' => $subs,
+			'featured' => $featured,
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
 	 * Handles URL: /imprint
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

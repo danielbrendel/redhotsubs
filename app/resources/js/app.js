@@ -75,14 +75,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         clickedCookieConsentButton: function () {
             let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'cookieconsent=1; expires=' + expDate.toUTCString() + ';';
+            document.cookie = 'cookieconsent=1; path=/; expires=' + expDate.toUTCString() + ';';
 
             document.getElementById('cookie-consent').style.display = 'none';
         },
 
         markAgeConsent: function() {
             let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'ageconsent=1; expires=' + expDate.toUTCString() + ';';
+            document.cookie = 'ageconsent=1; path=/; expires=' + expDate.toUTCString() + ';';
 
             this.bShowAgeConsent = false;
         },
@@ -113,7 +113,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         setPostSorting: function(value) {
             let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'post_sorting=' + value + '; expires=' + expDate.toUTCString() + ';';
+            document.cookie = 'post_sorting=' + value + '; path=/; expires=' + expDate.toUTCString() + ';';
         },
 
         getSubSelection: function () {
@@ -137,7 +137,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
         setSubSelection: function(value) {
             let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'sub_selection=' + value + '; expires=' + expDate.toUTCString() + ';';
+            document.cookie = 'sub_selection=' + value + '; path=/; expires=' + expDate.toUTCString() + ';';
         },
 
         setSortingUnderline: function(ident) {
@@ -219,7 +219,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                 <div class="item">
                     <div class="item-header">
                         <div class="item-author">
-                            By <a href="https://www.reddit.com/user/` + elem.author + `">u/` + elem.author + `</a>
+                            By <a href="` + window.location.origin + `/user/` + elem.author + `">u/` + elem.author + `</a>
                         </div>
             
                         <div class="item-date">

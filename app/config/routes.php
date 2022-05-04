@@ -22,6 +22,7 @@ return [
     array('/content/sub/image', 'ANY', 'index@querySubImage'),
     array('/p/{ident}', 'GET', 'index@showPost'),
     array('/r/{sub}', 'GET', 'index@showSub'),
+    array('/user/{ident}', 'GET', 'index@showUser'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),
