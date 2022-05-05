@@ -32,15 +32,17 @@
 
 		<div class="media-cards" id="media-cards">
 			@foreach ($featured as $item)
-				<div class="media-card-item" onclick="window.vue.setSubSelection('{{ $item }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">
-					<div class="media-card-item-title">
-						{{ $item }}
-					</div>
+				<a href="{{ url('/' . $item) }}">
+					<div class="media-card-item">
+						<div class="media-card-item-title">
+							{{ $item }}
+						</div>
 
-					<div class="media-card-item-image" title="{{ $item }}">
-						<i class="fas fa-spinner fa-spin"></i>
+						<div class="media-card-item-image" title="{{ $item }}">
+							<i class="fas fa-spinner fa-spin"></i>
+						</div>
 					</div>
-				</div>
+				</a>
 			@endforeach
 		</div>
 
@@ -48,7 +50,7 @@
 			@for ($i = 0; $i < $subs->count(); $i++)
 				@if ($subs->get($i)->get('featured') == SubsModel::SUB_UNFEATURED)
 					<div class="media-list-item">
-						<a class="" href="javascript:void(0);" onclick="window.vue.setSubSelection('{{ $subs->get($i)->get('sub_ident') }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">
+						<a class="" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
 							{{ $subs->get($i)->get('sub_ident') }}
 						</a>
 					</div>

@@ -35,7 +35,7 @@ class CrawlerModule
      * @param $include
      * @return mixed
      */
-    public static function fetchContent($sub, $sorting, $after, $exclude, $include)
+    public static function fetchContent($sub, $sorting, $after, $exclude, $include, $sortStyle = 'url')
     {
         try {
             $ft = static::fetchType($sorting);
@@ -45,8 +45,10 @@ class CrawlerModule
 
             $args = [];
             
-            if ($sorting !== '') {
-                $args['sort'] = $sorting;
+            if ($sortStyle === 'param') {
+                if ($sorting !== '') {
+                    $args['sort'] = $sorting;
+                }
             }
 
             if ($after !== '') {
@@ -54,7 +56,15 @@ class CrawlerModule
             }
 
             $crawler = new RFCrawler($sub, env('APP_USERAGENT'), $args);
-            $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
+            $content = [];
+
+            if ($sortStyle === 'url') {
+                $content = $crawler->fetchFromJson($ft, $exclude, $include);
+            } else if ($sortStyle === 'param') {
+                $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
+            } else {
+                throw new Exception('Invalid sorting style: ' . $sortStyle);
+            }
             
             return $content;
         } catch (Exception $e) {

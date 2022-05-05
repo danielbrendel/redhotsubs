@@ -54,7 +54,7 @@
                 <div class="navbar-dropdown">
                     @if (isset($subs))
                         @for ($i = 0; $i < $subs->count(); $i++)
-                            <a class="navbar-item" href="javascript:void(0);" onclick="window.vue.setSubSelection('{{ $subs->get($i)->get('sub_ident') }}/'); document.getElementById('media-content').innerHTML = ''; window.fetch_item_after = null; window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content')); document.getElementById('burger-action').click();">
+                            <a class="navbar-item" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
                                 {{ $subs->get($i)->get('sub_ident') }}
                             </a>
                         @endfor

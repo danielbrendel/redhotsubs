@@ -58,8 +58,24 @@ class IndexController extends BaseController {
 			$sub = $request->params()->query('sub');
 			$sorting = $request->params()->query('sorting');
 			$after = $request->params()->query('after');
+			
+			if (substr($sub, -1) === '/') {
+				$sub = substr($sub, 0, strlen($sub) - 1);
+			}
 
-			$content = CrawlerModule::fetchContent($sub, $sorting, $after, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+			if (strpos($sub, 'r/') === 0) {
+				$subData = SubsModel::getSubData($sub);
+				if ((!$subData->get(0)) || ($subData->get(0)->get('sub_ident') !== $sub)) {
+					throw new Exception('Sub not valid: ' . $sub);
+				}
+
+				$sortStyle = 'url';
+				$sub .= '/';
+			} else {
+				$sortStyle = 'param';
+			}
+			
+			$content = CrawlerModule::fetchContent($sub, $sorting, $after, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'), $sortStyle);
 
 			foreach ($content as &$item) {
 				$item->diffForHumans = (new Carbon($item->all->created_utc))->diffForHumans();

@@ -48,6 +48,21 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $ident
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getSubData($ident)
+    {
+        try {
+            $result = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE sub_ident = ?', [$ident]);
+            return $result;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

@@ -113,7 +113,7 @@
 					document.getElementById('media-content').innerHTML = '';
 					document.getElementById('current-sub').innerHTML = '{{ $show_sub }}';
 					window.vue.setSubSelection('{{ $show_sub }}/');
-					window.vue.fetchPosts('{{ $show_sub }}/', window.vue.getPostSorting(), document.getElementById('media-content'));
+					window.vue.fetchPosts('{{ $show_sub }}', window.vue.getPostSorting(), document.getElementById('media-content'));
 				@else
 					if (document.getElementById('media-cards')) {
 						window.vue.renderCardImages();
