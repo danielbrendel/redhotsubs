@@ -24,6 +24,21 @@ class ViewCountModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $start
+     * @param $end
+     * @return mixed
+     */
+    public static function getVisitsPerDay($start, $end)
+    {
+        $data = ViewCountModel::raw('SELECT DATE(created_at), COUNT(token) FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? GROUP BY DATE(created_at)', [$start, $end]);
+        if ($data->count() === 0) {
+            return null;
+        }
+
+        return $data;
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string
