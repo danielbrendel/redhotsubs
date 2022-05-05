@@ -193,12 +193,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/danielbrendel/rfcrawler.git",
-                "reference": "5ca3035af43db33b8fc2346000ca5c87541cfe53"
+                "reference": "58f0c3dce963e68cfa31b1ca05720289ad9f7d69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/danielbrendel/rfcrawler/zipball/5ca3035af43db33b8fc2346000ca5c87541cfe53",
-                "reference": "5ca3035af43db33b8fc2346000ca5c87541cfe53",
+                "url": "https://api.github.com/repos/danielbrendel/rfcrawler/zipball/58f0c3dce963e68cfa31b1ca05720289ad9f7d69",
+                "reference": "58f0c3dce963e68cfa31b1ca05720289ad9f7d69",
                 "shasum": ""
             },
             "require": {
@@ -235,7 +235,7 @@
                 "issues": "https://github.com/danielbrendel/rfcrawler/issues",
                 "source": "https://github.com/danielbrendel/rfcrawler/tree/main"
             },
-            "time": "2022-05-01T23:15:22+00:00"
+            "time": "2022-05-04T23:54:30+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -368,16 +368,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.57.0",
+            "version": "2.58.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "4a54375c21eea4811dbd1149fe6b246517554e78"
+                "reference": "97a34af22bde8d0ac20ab34b29d7bfe360902055"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4a54375c21eea4811dbd1149fe6b246517554e78",
-                "reference": "4a54375c21eea4811dbd1149fe6b246517554e78",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/97a34af22bde8d0ac20ab34b29d7bfe360902055",
+                "reference": "97a34af22bde8d0ac20ab34b29d7bfe360902055",
                 "shasum": ""
             },
             "require": {
@@ -395,7 +395,8 @@
                 "phpmd/phpmd": "^2.9",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12.54 || ^1.0",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.14",
+                "phpunit/php-file-iterator": "^2.0.5",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23",
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "bin": [
@@ -460,7 +461,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-13T18:13:33+00:00"
+            "time": "2022-04-25T19:31:17+00:00"
         },
         {
             "name": "phar-io/manifest",

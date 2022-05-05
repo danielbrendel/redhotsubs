@@ -43,8 +43,18 @@ class CrawlerModule
                 throw new Exception('Invalid sorting type: ' . $sorting);
             }
 
-            $crawler = new RFCrawler($sub, env('APP_USERAGENT'));
-            $content = $crawler->fetchFromJson($ft, $after, $exclude, $include);
+            $args = [];
+            
+            if ($sorting !== '') {
+                $args['sort'] = $sorting;
+            }
+
+            if ($after !== '') {
+                $args['after'] = $after;
+            }
+
+            $crawler = new RFCrawler($sub, env('APP_USERAGENT'), $args);
+            $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
             
             return $content;
         } catch (Exception $e) {
