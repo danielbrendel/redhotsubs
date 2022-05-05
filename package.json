@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "chart.js": "^3.7.1",
     "style-loader": "^1.2.1"
   }
 }

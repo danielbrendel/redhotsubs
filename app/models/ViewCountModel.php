@@ -30,7 +30,7 @@ class ViewCountModel extends \Asatru\Database\Model
      */
     public static function getVisitsPerDay($start, $end)
     {
-        $data = ViewCountModel::raw('SELECT DATE(created_at), COUNT(token) FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? GROUP BY DATE(created_at)', [$start, $end]);
+        $data = ViewCountModel::raw('SELECT DATE(created_at) AS created_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? GROUP BY DATE(created_at) ORDER BY created_at ASC', [$start, $end]);
         if ($data->count() === 0) {
             return null;
         }

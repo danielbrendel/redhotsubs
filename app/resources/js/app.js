@@ -9,6 +9,8 @@
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
+import Chart from 'chart.js/auto';
+
  window.vue = new Vue({
     el: '#main',
 
@@ -257,6 +259,76 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
                     }
                 });
             }
+        },
+
+        renderStats: function(pw, elem, start) {
+            window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start }, function(response){
+                if (response.code == 200) {
+                    let content = document.getElementById(elem);
+                    if (content) {
+                        let labels = [];
+                        let data = [];
+
+                        let day = 60 * 60 * 24 * 1000;
+                        let dt = new Date(Date.parse(start));
+
+                        for (let i = 1; i <= 30; i++) {
+                            let curDate = new Date(dt.getTime() + day * i);
+                            let curDay = curDate.getDate();
+                            let curMonth = curDate.getMonth() + 1;
+
+                            if (curDay < 10) {
+                                curDay = '0' + curDay;
+                            }
+
+                            if (curMonth < 10) {
+                                curMonth = '0' + curMonth;
+                            }
+
+                            labels.push(curDate.getFullYear() + '-' + curMonth + '-' + curDay);
+                            data.push(0);
+                        }
+
+                        response.data.forEach(function(elem, index) {
+                            labels.forEach(function(lblElem, lblIndex){
+                                if (lblElem == elem.date) {
+                                    data[lblIndex] = parseInt(elem.count);
+                                }
+                            });
+                        });
+
+                        const config = {
+                            type: 'line',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Visitors the last 30 days',
+                                    backgroundColor: 'rgb(255, 99, 132)',
+                                    borderColor: 'rgb(255, 99, 132)',
+                                    data: data,
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: function(value) {if (value % 1 === 0) {return value;}}
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        
+                        const myChart = new Chart(
+                            content,
+                            config
+                        );
+                    }
+                } else {
+                    alert(response.msg);
+                }
+            });
         },
     }
  });

@@ -121,15 +121,28 @@
 				@endif
 
 				if (window.vue.getPostSorting() == 'hot') {
-					document.getElementsByClassName('link-sorting-hot')[0].style.textDecoration = 'underline';
-					document.getElementsByClassName('link-sorting-hot')[1].style.textDecoration = 'underline';
+					let linkSortingHot = document.getElementsByClassName('link-sorting-hot');
+					if ((linkSortingHot) && (linkSortingHot.length == 2)) {
+						linkSortingHot[0].style.textDecoration = 'underline';
+						linkSortingHot[1].style.textDecoration = 'underline';
+					}
 				} else if (window.vue.getPostSorting() == 'top') {
-					document.getElementsByClassName('link-sorting-top')[0].style.textDecoration = 'underline';
-					document.getElementsByClassName('link-sorting-top')[1].style.textDecoration = 'underline';
+					let linkSortingTop = document.getElementsByClassName('link-sorting-top');
+					if ((linkSortingTop) && (linkSortingTop.length == 2)) {
+						linkSortingTop[0].style.textDecoration = 'underline';
+						linkSortingTop[1].style.textDecoration = 'underline';
+					}
 				} else if (window.vue.getPostSorting() == 'new') {
-					document.getElementsByClassName('link-sorting-new')[0].style.textDecoration = 'underline';
-					document.getElementsByClassName('link-sorting-new')[1].style.textDecoration = 'underline';
+					let linkSortingNew = document.getElementsByClassName('link-sorting-new');
+					if ((linkSortingNew) && (linkSortingNew.length == 2)) {
+						linkSortingNew[0].style.textDecoration = 'underline';
+						linkSortingNew[1].style.textDecoration = 'underline';
+					}
 				}
+
+				@if ((isset($render_stats_to)) && (isset($render_stats_pw)))
+					window.vue.renderStats('{{ $render_stats_pw }}', '{{ $render_stats_to }}', '{{ $render_stats_start }}');
+				@endif
 			});
 		</script>
 	</body>

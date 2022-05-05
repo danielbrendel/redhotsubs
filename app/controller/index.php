@@ -314,6 +314,82 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /stats/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function stats($request)
+	{
+		if ($request->arg('pw') !== env('APP_STATSPASSWORD')) {
+			throw new Exception('Invalid password');
+		}
+
+		$start = date('Y-m-d', strtotime('-30 days'));
+		$end = date('Y-m-d');
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'stats'],
+			['footer', 'footer']
+		], [
+			'render_stats_to' => 'visitor-stats',
+			'render_stats_start' => $start,
+			'render_stats_end' => $end,
+			'render_stats_pw' => $request->arg('pw'),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
+	 * Handles URL: /stats/query/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function queryStats($request)
+	{
+		try {
+			if ($request->arg('pw') !== env('APP_STATSPASSWORD')) {
+				throw new Exception('Invalid password');
+			}
+
+			$start = $request->params()->query('start');
+			if ($start === '') {
+				$start = date('Y-m-d', strtotime('-30 days'));
+			}
+
+			$end = $request->params()->query('end');
+			if ($end === '') {
+				$end = date('Y-m-d');
+			}
+
+			$data = [];
+
+			$visits = ViewCountModel::getVisitsPerDay($start, $end);
+
+			for ($i = 0; $i < $visits->count(); $i++) {
+				$data[] = [
+					'date' => $visits->get($i)->get('created_at'),
+					'count' => $visits->get($i)->get('count')
+				];
+			}
+
+			return json([
+				'code' => 200,
+				'data' => $data
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /cronjob/twitter/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
