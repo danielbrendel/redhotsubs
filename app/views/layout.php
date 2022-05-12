@@ -23,6 +23,7 @@
 		</title>
 
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bulma.css') }}"/>
+		{!! ThemeModule::includeThemeAsHtml() !!}
 		<link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}"/>
 
 		@if (env('APP_DEBUG'))
