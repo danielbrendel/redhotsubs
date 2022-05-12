@@ -16,6 +16,8 @@ class ViewCountModel extends \Asatru\Database\Model
         
         if ($exists->get(0)->get(0) == 0) {
             ViewCountModel::raw('INSERT INTO `' . self::tableName() . '` (token) VALUES(?)', [$token]);
+        } else {
+            ViewCountModel::raw('UPDATE `' . self::tableName() . '` SET updated_at = CURRENT_TIMESTAMP WHERE token = ?', [$token]);
         }
 
         $count = ViewCountModel::raw('SELECT COUNT(*) FROM `' . self::tableName() . '`');
@@ -26,16 +28,17 @@ class ViewCountModel extends \Asatru\Database\Model
     /**
      * @param $start
      * @param $end
-     * @return mixed
+     * @return array
      */
     public static function getVisitsPerDay($start, $end)
     {
-        $data = ViewCountModel::raw('SELECT DATE(created_at) AS created_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? GROUP BY DATE(created_at) ORDER BY created_at ASC', [$start, $end]);
-        if ($data->count() === 0) {
-            return null;
-        }
+        $new_visits = ViewCountModel::raw('SELECT DATE(created_at) AS created_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? GROUP BY DATE(created_at) ORDER BY created_at ASC', [$start, $end]);
+        $recurring_visits = ViewCountModel::raw('SELECT DATE(updated_at) AS updated_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(updated_at) >= ? AND DATE(updated_at) <= ? AND DATE(updated_at) <> DATE(created_at) GROUP BY DATE(updated_at) ORDER BY updated_at ASC', [$start, $end]);
 
-        return $data;
+        return [
+            'new' => $new_visits,
+            'recurring' => $recurring_visits
+        ];
     }
 
     /**

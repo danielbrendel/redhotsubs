@@ -370,10 +370,17 @@ class IndexController extends BaseController {
 
 			$visits = ViewCountModel::getVisitsPerDay($start, $end);
 
-			for ($i = 0; $i < $visits->count(); $i++) {
-				$data[] = [
-					'date' => $visits->get($i)->get('created_at'),
-					'count' => $visits->get($i)->get('count')
+			for ($i = 0; $i < $visits['new']->count(); $i++) {
+				$data['new'][] = [
+					'date' => $visits['new']->get($i)->get('created_at'),
+					'count' => $visits['new']->get($i)->get('count')
+				];
+			}
+
+			for ($i = 0; $i < $visits['recurring']->count(); $i++) {
+				$data['recurring'][] = [
+					'date' => $visits['recurring']->get($i)->get('updated_at'),
+					'count' => $visits['recurring']->get($i)->get('count')
 				];
 			}
 

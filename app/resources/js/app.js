@@ -267,7 +267,8 @@ import Chart from 'chart.js/auto';
                     let content = document.getElementById(elem);
                     if (content) {
                         let labels = [];
-                        let data = [];
+                        let data_new = [];
+                        let data_recurring = [];
 
                         let day = 60 * 60 * 24 * 1000;
                         let dt = new Date(Date.parse(start));
@@ -286,13 +287,22 @@ import Chart from 'chart.js/auto';
                             }
 
                             labels.push(curDate.getFullYear() + '-' + curMonth + '-' + curDay);
-                            data.push(0);
+                            data_new.push(0);
+                            data_recurring.push(0);
                         }
 
-                        response.data.forEach(function(elem, index) {
+                        response.data.new.forEach(function(elem, index) {
                             labels.forEach(function(lblElem, lblIndex){
                                 if (lblElem == elem.date) {
-                                    data[lblIndex] = parseInt(elem.count);
+                                    data_new[lblIndex] = parseInt(elem.count);
+                                }
+                            });
+                        });
+
+                        response.data.recurring.forEach(function(elem, index) {
+                            labels.forEach(function(lblElem, lblIndex){
+                                if (lblElem == elem.date) {
+                                    data_recurring[lblIndex] = parseInt(elem.count);
                                 }
                             });
                         });
@@ -301,12 +311,20 @@ import Chart from 'chart.js/auto';
                             type: 'line',
                             data: {
                                 labels: labels,
-                                datasets: [{
-                                    label: 'Visitors the last 30 days',
-                                    backgroundColor: 'rgb(255, 99, 132)',
-                                    borderColor: 'rgb(255, 99, 132)',
-                                    data: data,
-                                }]
+                                datasets: [
+                                    {
+                                        label: 'New visitors',
+                                        backgroundColor: 'rgb(255, 99, 132)',
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        data: data_new,
+                                    },
+                                    {
+                                        label: 'Recurring visitors',
+                                        backgroundColor: 'rgb(163, 73, 164)',
+                                        borderColor: 'rgb(163, 73, 164)',
+                                        data: data_recurring,
+                                    }
+                                ]
                             },
                             options: {
                                 scales: {
