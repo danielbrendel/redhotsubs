@@ -413,10 +413,11 @@ class IndexController extends BaseController {
 				throw new Exception('The passwords do not match');
 			}
 
-			$subs = SubsModel::getAllSubs();
+			$subs = SubsModel::getSubsForTwitter();
 			$rndsel = rand(0, $subs->count() - 1);
+			$selsub = $subs->get($rndsel)->get('sub_ident');
 			
-			$data = CrawlerModule::fetchContent($subs->get($rndsel)->get('sub_ident') . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+			$data = CrawlerModule::fetchContent($selsub . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
 			
 			$posted = null;
 
@@ -434,6 +435,7 @@ class IndexController extends BaseController {
 			
 			return json([
 				'code' => 200,
+				'sub' => $selsub,
 				'posted' => $posted
 			]);
 		} catch (Exception $e) {

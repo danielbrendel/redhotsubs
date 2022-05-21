@@ -9,27 +9,39 @@ class SubsModel extends \Asatru\Database\Model
     const SUB_UNFEATURED = false;
 
     /**
-     * @return array
+     * @return mixed
      */
     public static function getAllSubs()
     {
         try {
             return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` ORDER BY sub_ident ASC');
         } catch (Exception $e) {
-            return array();
+            return null;
         }
     }
 
     /**
      * @param bool $which
-     * @return array
+     * @return mixed
      */
     public static function  getFeatureSubs($which)
     {
         try {
             return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE featured = ? ORDER BY sub_ident ASC', [$which]);
         } catch (Exception $e) {
-            return array();
+            return null;
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getSubsForTwitter()
+    {
+        try {
+            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE twitter_posting = 1 ORDER BY sub_ident ASC');
+        } catch (Exception $e) {
+            return null;
         }
     }
 
