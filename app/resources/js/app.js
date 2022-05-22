@@ -267,6 +267,7 @@ import Chart from 'chart.js/auto';
                     document.getElementById('range').innerHTML = response.start + ' - ' + response.end;
                     document.getElementById('count-new').innerHTML = response.count_new;
                     document.getElementById('count-recurring').innerHTML = response.count_recurring;
+                    document.getElementById('count-total').innerHTML = response.count_total;
 
                     let content = document.getElementById(elem);
                     if (content) {

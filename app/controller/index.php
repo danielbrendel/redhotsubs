@@ -396,6 +396,7 @@ class IndexController extends BaseController {
 				'data' => $data,
 				'count_new' => $visits_new,
 				'count_recurring' => $visits_recurring,
+				'count_total' => $visits_new + $visits_recurring,
 				'start' => $start,
 				'end' => $end
 			]);
