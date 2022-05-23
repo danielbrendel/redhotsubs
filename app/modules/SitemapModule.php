@@ -23,23 +23,31 @@ class SitemapModule
     }
 
     /**
+     * @return string
+     */
+    private function url($to)
+    {
+        return env('APP_URL') . $to;
+    }
+
+    /**
      * @return void
      */
     private function generateUrls()
     {
         $this->sites = [];
 
-        $this->sites[] = url('/');
-        $this->sites[] = url('/imprint');
-        $this->sites[] = url('/privacy');
+        $this->sites[] = $this->url('/');
+        $this->sites[] = $this->url('/imprint');
+        $this->sites[] = $this->url('/privacy');
 
         if (env('APP_TWITTERFEED') !== null) {
-            $this->sites[] = url('/news');
+            $this->sites[] = $this->url('/news');
         }
 
         $subs = SubsModel::getAllSubs();
         for ($i = 0; $i < $subs->count(); $i++) {
-            $this->sites[] = url('/' . $subs->get($i)->get('sub_ident'));
+            $this->sites[] = $this->url('/' . $subs->get($i)->get('sub_ident'));
         }
     }
 
