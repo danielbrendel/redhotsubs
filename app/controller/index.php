@@ -457,4 +457,15 @@ class IndexController extends BaseController {
 			]);
 		}
 	}
+
+	/**
+	 * Handles URL: /sitemap
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\CustomHandler
+	 */
+	public function sitemap($request)
+	{
+		return custom('text/xml', SitemapModule::get());
+	}
 }

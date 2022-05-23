@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Class SitemapModule
+ */
+class SitemapModule
+{
+    /**
+     * @var array
+     */
+    private $sites = [];
+
+    /**
+     * @var string
+     */
+    private $xml = '';
+
+    /**
+     * @return void
+     */
+    public function __construct()
+    {
+    }
+
+    /**
+     * @return void
+     */
+    private function generateUrls()
+    {
+        $this->sites = [];
+
+        $this->sites[] = url('/');
+        $this->sites[] = url('/imprint');
+        $this->sites[] = url('/privacy');
+
+        if (env('APP_TWITTERFEED') !== null) {
+            $this->sites[] = url('/news');
+        }
+
+        $subs = SubsModel::getAllSubs();
+        for ($i = 0; $i < $subs->count(); $i++) {
+            $this->sites[] = url('/' . $subs->get($i)->get('sub_ident'));
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function generateXml()
+    {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{%URLS%}</urlset>';
+        $node = '<url><loc>{%URL%}</loc></url>';
+
+        $all_urls = '';
+
+        foreach ($this->sites as $url) {
+            $all_urls .= str_replace('{%URL%}', $url, $node);
+        }
+
+        $xml = str_replace('{%URLS%}', $all_urls, $xml);
+
+        $this->xml = $xml;
+    }
+
+    /**
+     * @return void
+     */
+    public function render()
+    {
+        header('Content-Type: text/xml');
+        echo $this->xml;
+        exit(0);
+    }
+
+    /**
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->xml;
+    }
+
+    /**
+     * @return string
+     */
+    public static function get()
+    {
+        $obj = new self();
+        $obj->generateUrls();
+        $obj->generateXml();
+
+        return $obj->getContent();
+    }
+}

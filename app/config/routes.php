@@ -29,5 +29,6 @@ return [
     array('/stats/{pw}', 'GET', 'index@stats'),
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
     array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),
+    array('/sitemap', 'GET', 'index@sitemap'),
     array('$404', 'ANY', 'error404@index')
 ];
