@@ -433,12 +433,10 @@ class IndexController extends BaseController {
 			
 			$posted = null;
 
-			for ($i = 0; $i < 5; $i++) {
-				$item = rand(0, count($data) - 1);
-				
-				if (!TwitterHistoryModel::addIfNotAlready($data[$item]->all->name)) {
-					$encoded = base64_encode($data[$item]->all->permalink);
-					TwitterModule::postToTwitter($data[$item]->title, url('/p/' . $encoded));
+			for ($i = count($data) - 1; $i >= 0; $i--) {
+				if (TwitterHistoryModel::addIfNotAlready($data[$i]->all->name)) {
+					$encoded = base64_encode($data[$i]->all->permalink);
+					TwitterModule::postToTwitter($data[$i]->title, url('/p/' . $encoded));
 					$posted = $encoded;
 
 					break;
