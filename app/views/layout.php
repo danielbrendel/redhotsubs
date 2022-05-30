@@ -55,6 +55,8 @@
 				window.gtag = function(){};
 			</script>
 		@endif
+
+		{!! AppSettingsModel::getHeadCode() !!}
 	</head>
 	
 	<body>

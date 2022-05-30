@@ -45,6 +45,12 @@
             </a>
             @endif
 
+            @if (env('APP_ENABLEAPPPAGE'))
+            <a class="navbar-item" href="{{ url('/app') }}">
+                App
+            </a>
+            @endif
+
             @if (isset($subs))
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">

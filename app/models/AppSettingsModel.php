@@ -62,6 +62,34 @@ class AppSettingsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return string
+     * @throws Exception
+     */
+    public static function getAppContent()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('app');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public static function getHeadCode()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('head_code');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * @return bool
      */
     public static function hasInfo()

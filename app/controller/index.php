@@ -297,7 +297,7 @@ class IndexController extends BaseController {
 	 * Handles URL: /news
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
-	 * @return Asatru\View\ViewHandler
+	 * @return mixed
 	 */
 	public function news($request)
 	{
@@ -309,6 +309,33 @@ class IndexController extends BaseController {
 			['footer', 'footer']
 		], [
 			'page_title' => 'Newsfeed',
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
+	 * Handles URL: /app
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function app($request)
+	{
+		if (!env('APP_ENABLEAPPPAGE')) {
+			return redirect('/');
+		}
+
+		$app_content = str_replace('${DOWNLOAD_LINK}', asset('download/' . env('APP_APPDOWNLOADNAME')), AppSettingsModel::getAppContent());
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'page'],
+			['footer', 'footer']
+		], [
+			'page_title' => 'Newsfeed',
+			'page_content' => $app_content,
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);
 	}
