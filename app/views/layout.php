@@ -105,6 +105,7 @@
 				window.vue.handleCookieConsent();
 
 				window.fetch_item_after = null;
+				window.statsChart = null;
 
 				@if (env('APP_SHOWAGECONSENT'))
 					if (!window.vue.isAgeConsentMarked()) {

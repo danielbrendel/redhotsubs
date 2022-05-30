@@ -394,8 +394,12 @@ class IndexController extends BaseController {
 			}
 
 			$data = [];
+			$data['new'] = [];
+			$data['recurring'] = [];
 
 			$visits = ViewCountModel::getVisitsPerDay($start, $end);
+
+			$dayDiff = (new DateTime($end))->diff((new DateTime($start)))->format('%a');
 
 			$visits_new = 0;
 			$visits_recurring = 0;
@@ -425,7 +429,8 @@ class IndexController extends BaseController {
 				'count_recurring' => $visits_recurring,
 				'count_total' => $visits_new + $visits_recurring,
 				'start' => $start,
-				'end' => $end
+				'end' => $end,
+				'day_diff' => $dayDiff
 			]);
 		} catch (Exception $e) {
 			return json([

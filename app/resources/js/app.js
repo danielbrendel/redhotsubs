@@ -261,10 +261,12 @@ import Chart from 'chart.js/auto';
             }
         },
 
-        renderStats: function(pw, elem, start) {
-            window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start }, function(response){
+        renderStats: function(pw, elem, start, end = '') {
+            window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start, end: end }, function(response){
+                console.log(response);
                 if (response.code == 200) {
-                    document.getElementById('range').innerHTML = response.start + ' - ' + response.end;
+                    document.getElementById('inp-date-from').value = response.start;
+                    document.getElementById('inp-date-till').value = response.end;
                     document.getElementById('count-new').innerHTML = response.count_new;
                     document.getElementById('count-recurring').innerHTML = response.count_recurring;
                     document.getElementById('count-total').innerHTML = response.count_total;
@@ -278,7 +280,7 @@ import Chart from 'chart.js/auto';
                         let day = 60 * 60 * 24 * 1000;
                         let dt = new Date(Date.parse(start));
 
-                        for (let i = 0; i <= 30; i++) {
+                        for (let i = 0; i <= response.day_diff; i++) {
                             let curDate = new Date(dt.getTime() + day * i);
                             let curDay = curDate.getDate();
                             let curMonth = curDate.getMonth() + 1;
@@ -342,8 +344,12 @@ import Chart from 'chart.js/auto';
                                 }
                             }
                         };
+
+                        if (window.statsChart !== null) {
+                            window.statsChart.destroy();
+                        }
                         
-                        const myChart = new Chart(
+                        window.statsChart = new Chart(
                             content,
                             config
                         );
