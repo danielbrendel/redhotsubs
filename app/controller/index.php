@@ -131,12 +131,66 @@ class IndexController extends BaseController {
 	}
 
 	/**
-	 * Handles URL: /p/{ident}
+	 * Handles URL: /p/{sub}/{ident}/{title}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
 	 * @return Asatru\View\JsonHandler
 	 */
 	public function showPost($request)
+	{
+		$sub = $request->arg('sub');
+		$ident = $request->arg('ident');
+		$title = $request->arg('title');
+
+		$post = TwitterHistoryModel::getByIdentAndSub($ident, $sub);
+
+		$data = CrawlerModule::fetchContent($post->get(0)->get('permalink'), 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+		$data = $data[0];
+		
+		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
+		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
+		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
+
+		$media = $data->media;
+		if ((strpos($media, 'redgifs.com') !== false) || (strpos($media, '.gif') !== false)) {
+			$media = $data->all->thumbnail;
+		}
+		
+		if (env('TWITTERBOT_ENABLEMETA')) {
+			$additional_meta = [
+				'twitter:card' => 'summary',
+				'twitter:title' => $data->title,
+				'twitter:site' => url('/'),
+				'twitter:description' => env('APP_DESCRIPTION'),
+				'twitter:image' => $media,
+			];
+		} else {
+			$additional_meta = null;
+		}
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'post'],
+			['footer', 'footer']
+		], [
+			'post_data' => $data,
+			'additional_meta' => $additional_meta,
+			'page_title' => $data->title,
+			'subs' => SubsModel::getAllSubs(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+		]);
+	}
+
+	/**
+	 * Handles URL: /p/{ident}
+	 * 
+	 * @deprecated Use new showPost with sub and ident
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function showPostOld($request)
 	{
 		$ident = $request->arg('ident');
 		$ident = base64_decode($ident);
@@ -175,6 +229,7 @@ class IndexController extends BaseController {
 		], [
 			'post_data' => $data,
 			'additional_meta' => $additional_meta,
+			'page_title' => $data->title,
 			'subs' => SubsModel::getAllSubs(),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);
@@ -465,11 +520,17 @@ class IndexController extends BaseController {
 			
 			$posted = null;
 
+			$selsub = substr($selsub, strpos($selsub, '/') + 1);
+
 			for ($i = count($data) - 1; $i >= 0; $i--) {
-				if (TwitterHistoryModel::addIfNotAlready($data[$i]->all->name)) {
-					$encoded = base64_encode($data[$i]->all->permalink);
-					TwitterModule::postToTwitter($data[$i]->title, url('/p/' . $encoded));
-					$posted = $encoded;
+				$lnkname = substr($data[$i]->all->name, strpos($data[$i]->all->name, '_') + 1);
+				$pltitle = substr($data[$i]->all->permalink, strpos($data[$i]->all->permalink, $lnkname . '/') + strlen($lnkname . '/'));
+				$pltitle = substr($pltitle, 0, strlen($pltitle) - 1);
+
+				if (TwitterHistoryModel::addIfNotAlready($data[$i]->all->name, $selsub, $data[$i]->all->permalink, $pltitle)) {
+					$url = url('/p/' . $selsub . '/' . $data[$i]->all->name . '/' . $pltitle);
+					TwitterModule::postToTwitter($data[$i]->title, $url);
+					$posted = $url;
 
 					break;
 				}
@@ -477,7 +538,6 @@ class IndexController extends BaseController {
 			
 			return json([
 				'code' => 200,
-				'sub' => $selsub,
 				'posted' => $posted
 			]);
 		} catch (Exception $e) {
