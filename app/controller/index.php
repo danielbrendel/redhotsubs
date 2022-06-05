@@ -389,7 +389,7 @@ class IndexController extends BaseController {
 			['content', 'page'],
 			['footer', 'footer']
 		], [
-			'page_title' => 'Newsfeed',
+			'page_title' => 'App',
 			'page_content' => $app_content,
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
 		]);

@@ -45,6 +45,10 @@ class SitemapModule
             $this->sites[] = $this->url('/news');
         }
 
+        if (env('APP_ENABLEAPPPAGE')) {
+            $this->sites[] = $this->url('/app');
+        }
+
         $subs = SubsModel::getAllSubs();
         for ($i = 0; $i < $subs->count(); $i++) {
             $this->sites[] = $this->url('/' . $subs->get($i)->get('sub_ident'));
