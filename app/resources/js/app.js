@@ -174,9 +174,13 @@ import Chart from 'chart.js/auto';
             window.history.pushState({page: displaySub}, this.appName + ' - ' + displaySub, window.location.origin + '/' + displaySub);
             window.gtag('set', 'page_path', displaySub);
             window.gtag('event', 'page_view');
+
+            window.inFetchingProgress = true;
             
             window.vue.ajaxRequest('post', window.location.origin + '/content/fetch', { sub: sub, sorting: sorting, after: window.fetch_item_after }, function(response){
                 if (response.code == 200) {
+                    window.inFetchingProgress = false;
+
                     if (document.getElementById('spinner')) {
                         document.getElementById('spinner').remove();
                     }
@@ -189,7 +193,17 @@ import Chart from 'chart.js/auto';
 
                     window.fetch_item_after = response.data[response.data.length - 1].all.name;
 
-                    target.innerHTML += `<div id="loadmore"><center><br/><a href="javascript:void(0);" onclick="window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">Load more</a><br/><br/></center></div>`;
+                    target.innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">Load more</a><br/><br/></center></div>`;
+                    
+                    window.onscroll = function(ev) {
+                        if ((window.scrollY + window.innerHeight) >= document.body.scrollHeight - 10) {
+                            if (document.getElementById('loadmore-anchor')) {
+                                if (!window.inFetchingProgress) {
+                                    document.getElementById('loadmore-anchor').click();
+                                }
+                            }
+                        }
+                    };
                 }
             });
         },
