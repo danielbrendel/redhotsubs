@@ -16,7 +16,8 @@ import Chart from 'chart.js/auto';
 
     data: {
         appName: '',
-        bShowAgeConsent: false
+        bShowAgeConsent: false,
+        bScrollAutoLoad: false
     },
 
     methods: {
@@ -195,15 +196,17 @@ import Chart from 'chart.js/auto';
 
                     target.innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchPosts(window.vue.getSubSelection(), window.vue.getPostSorting(), document.getElementById('media-content'));">Load more</a><br/><br/></center></div>`;
                     
-                    window.onscroll = function(ev) {
-                        if ((window.scrollY + window.innerHeight) >= document.body.scrollHeight - 10) {
-                            if (document.getElementById('loadmore-anchor')) {
-                                if (!window.inFetchingProgress) {
-                                    document.getElementById('loadmore-anchor').click();
+                    if (window.vue.bScrollAutoLoad) {
+                        window.onscroll = function(ev) {
+                            if ((window.scrollY + window.innerHeight) >= document.body.scrollHeight - 10) {
+                                if (document.getElementById('loadmore-anchor')) {
+                                    if (!window.inFetchingProgress) {
+                                        document.getElementById('loadmore-anchor').click();
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
+                    }
                 }
             });
         },
