@@ -83,6 +83,10 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     top: -6px;
 }
 
+.is-underline {
+    text-decoration: underline;
+}
+
 .cookie-consent {
     position: relative;
     display: none;
@@ -95,21 +99,15 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
 
 .cookie-consent-inner {
     position: relative;
-    display: inline-block;
     width: auto;
-    @media screen and (max-width: 1279px) {
-        width: 76%;
-    }
     text-align: center;
     padding: 24px;
 }
 
 .cookie-consent-button {
     position: relative;
-    display: inline-block;
-    float: right;
     margin-right: 25px;
-    padding: 24px;
+    padding-bottom: 24px;
 }
 
 .cookie-consent-button a:hover {

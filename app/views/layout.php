@@ -42,8 +42,16 @@
 					document.cookie = disableStr + '=true; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
 					window[disableStr] = true;
 				};
+				window.gaOptIn = function() {
+					document.cookie = disableStr + '=false; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+					window[disableStr] = false;
+				}
 				if (document.cookie.indexOf(disableStr + '=true') > -1) {
 					window[disableStr] = true;
+				} else if (document.cookie.indexOf(disableStr + '=false') > -1) {
+					window[disableStr] = false;
+				} else if (document.cookie.indexOf(disableStr) == -1) {
+					window.gaOptOut();
 				}
 				window.dataLayer = window.dataLayer || [];
 				window.gtag = function(){dataLayer.push(arguments);};
