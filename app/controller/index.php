@@ -66,7 +66,13 @@ class IndexController extends BaseController {
 			if (strpos($sub, 'r/') === 0) {
 				$subData = SubsModel::getSubData($sub);
 				if ((!$subData->get(0)) || ($subData->get(0)->get('sub_ident') !== $sub)) {
-					throw new Exception('Sub not valid: ' . $sub);
+					if (env('APP_ALLOWCUSTOMSUBS')) {
+						if ((!isset($_COOKIE['custom_sub']) || ($_COOKIE['custom_sub'] !== $sub))) {
+							throw new Exception('Sub not valid: ' . $sub);
+						}
+					} else {
+						throw new Exception('Sub not valid: ' . $sub);
+					}
 				}
 
 				$sortStyle = 'url';
@@ -255,7 +261,9 @@ class IndexController extends BaseController {
 		$sub = $request->arg('sub');
 		$sub = 'r/' . $sub;
 		if (!SubsModel::subExists($sub)) {
-			$sub = null;
+			if ((!env('APP_ALLOWCUSTOMSUBS')) || ((!isset($_COOKIE['custom_sub']) || ($_COOKIE['custom_sub'] !== $sub)))) {
+				$sub = null;
+			}
 		}
 
 		return parent::view([

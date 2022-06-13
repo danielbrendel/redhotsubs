@@ -211,6 +211,11 @@ import Chart from 'chart.js/auto';
             });
         },
 
+        customSub: function(ident) {
+            document.cookie = 'custom_sub=r/' + ident + '; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/';
+            location.href = window.location.origin + '/r/' + ident;
+        },
+
         renderIFrame: function(target, src, title) {
             let html = `<iframe id="media-player" class="media-video" src="` + src + `"></iframe>`;
 

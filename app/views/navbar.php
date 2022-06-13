@@ -65,6 +65,10 @@
                             </a>
                         @endfor
                     @endif
+
+                    @if (env('APP_ALLOWCUSTOMSUBS'))
+                        <span class="navbar-item">r/<input type="text" class="input-dark" placeholder="name" onkeypress="if (event.which === 13) { window.vue.customSub(this.value); }"></span>
+                    @endif
                 </div>
             </div>
             @else

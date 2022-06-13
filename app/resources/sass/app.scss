@@ -87,6 +87,11 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     text-decoration: underline;
 }
 
+.input-dark {
+    background-color: rgb(50, 50, 48);
+    color: rgb(150, 150, 150);
+}
+
 .cookie-consent {
     position: relative;
     display: none;
