@@ -298,6 +298,7 @@ import Chart from 'chart.js/auto';
                         let labels = [];
                         let data_new = [];
                         let data_recurring = [];
+                        let data_total = [];
 
                         let day = 60 * 60 * 24 * 1000;
                         let dt = new Date(Date.parse(start));
@@ -318,6 +319,7 @@ import Chart from 'chart.js/auto';
                             labels.push(curDate.getFullYear() + '-' + curMonth + '-' + curDay);
                             data_new.push(0);
                             data_recurring.push(0);
+                            data_total.push(0);
                         }
 
                         response.data.new.forEach(function(elem, index) {
@@ -332,6 +334,14 @@ import Chart from 'chart.js/auto';
                             labels.forEach(function(lblElem, lblIndex){
                                 if (lblElem == elem.date) {
                                     data_recurring[lblIndex] = parseInt(elem.count);
+                                }
+                            });
+                        });
+
+                        response.data.total.forEach(function(elem, index) {
+                            labels.forEach(function(lblElem, lblIndex){
+                                if (lblElem == elem.date) {
+                                    data_total[lblIndex] = parseInt(elem.count);
                                 }
                             });
                         });
@@ -352,6 +362,12 @@ import Chart from 'chart.js/auto';
                                         backgroundColor: 'rgb(163, 73, 164)',
                                         borderColor: 'rgb(163, 73, 164)',
                                         data: data_recurring,
+                                    },
+                                    {
+                                        label: 'Total visitors',
+                                        backgroundColor: 'rgb(0, 155, 223)',
+                                        borderColor: 'rgb(0, 155, 223)',
+                                        data: data_total,
                                     }
                                 ]
                             },

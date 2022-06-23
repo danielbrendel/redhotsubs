@@ -459,6 +459,7 @@ class IndexController extends BaseController {
 			$data = [];
 			$data['new'] = [];
 			$data['recurring'] = [];
+			$data['total'] = [];
 
 			$visits = ViewCountModel::getVisitsPerDay($start, $end);
 
@@ -482,6 +483,13 @@ class IndexController extends BaseController {
 				$data['recurring'][] = [
 					'date' => $visits['recurring']->get($i)->get('updated_at'),
 					'count' => $visits['recurring']->get($i)->get('count')
+				];
+			}
+
+			for ($i = 0; $i < $visits['total']->count(); $i++) {
+				$data['total'][] = [
+					'date' => $visits['total']->get($i)->get('updated_at'),
+					'count' => $visits['total']->get($i)->get('count')
 				];
 			}
 

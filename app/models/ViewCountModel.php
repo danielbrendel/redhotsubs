@@ -34,10 +34,12 @@ class ViewCountModel extends \Asatru\Database\Model
     {
         $new_visits = ViewCountModel::raw('SELECT DATE(created_at) AS created_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(created_at) >= ? AND DATE(created_at) <= ? AND DATE(created_at) = DATE(updated_at) GROUP BY DATE(created_at) ORDER BY created_at ASC', [$start, $end]);
         $recurring_visits = ViewCountModel::raw('SELECT DATE(updated_at) AS updated_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(updated_at) >= ? AND DATE(updated_at) <= ? AND DATE(updated_at) <> DATE(created_at) GROUP BY DATE(updated_at) ORDER BY updated_at ASC', [$start, $end]);
-        
+        $total_visits = ViewCountModel::raw('SELECT DATE(updated_at) AS updated_at, COUNT(token) AS count FROM `' . self::tableName() . '` WHERE DATE(updated_at) >= ? AND DATE(updated_at) <= ? GROUP BY DATE(updated_at) ORDER BY updated_at ASC', [$start, $end]);
+
         return [
             'new' => $new_visits,
             'recurring' => $recurring_visits,
+            'total' => $total_visits
         ];
     }
 
