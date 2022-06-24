@@ -44,6 +44,18 @@ class ViewCountModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $minute_limit
+     * @return int
+     */
+    public static function getOnlineCount($minute_limit = '30')
+    {
+        $date_limit = date('Y-m-d H:i:s', strtotime('-' . $minute_limit . ' minutes'));
+        $data = ViewCountModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE updated_at >= ?', [$date_limit]);
+
+        return $data->get(0)->get('count');
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

@@ -429,7 +429,8 @@ class IndexController extends BaseController {
 			'render_stats_start' => $start,
 			'render_stats_end' => $end,
 			'render_stats_pw' => $request->arg('pw'),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR'])),
+			'online_count' => UtilsModule::countAsString(ViewCountModel::getOnlineCount(env('APP_ONLINEMINUTELIMIT', '30')))
 		]);
 	}
 
