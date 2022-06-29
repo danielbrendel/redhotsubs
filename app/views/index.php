@@ -46,7 +46,7 @@
 			@endforeach
 		</div>
 
-		@if ($featUser->count() > 0)
+		@if ((is_object($featUser)) && ($featUser->count() > 0))
 			<div class="media-cards" id="media-cards">
 				@for ($i = 0; $i < $featUser->count(); $i++)
 					<a href="{{ url('/user/' . $featUser->get($i)->get('username')) }}">
