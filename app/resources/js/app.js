@@ -274,6 +274,10 @@ import Chart from 'chart.js/auto';
             for (let i = 0; i < elems.length; i++) {
                 let sub = elems[i].title;
 
+                if (sub.indexOf('u/') == 0) {
+                    sub = sub.replace('u/', 'user/');
+                }
+                
                 this.ajaxRequest('post', window.location.origin + '/content/sub/image', { sub: sub }, function(response) {
                     if (response.code == 200) {
                         elems[i].innerHTML = '';

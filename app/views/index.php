@@ -46,6 +46,24 @@
 			@endforeach
 		</div>
 
+		@if ($featUser->count() > 0)
+			<div class="media-cards" id="media-cards">
+				@for ($i = 0; $i < $featUser->count(); $i++)
+					<a href="{{ url('/user/' . $featUser->get($i)->get('username')) }}">
+						<div class="media-card-item">
+							<div class="media-card-item-title">
+								u/{{ $featUser->get($i)->get('username') }}
+							</div>
+
+							<div class="media-card-item-image" title="u/{{ $featUser->get($i)->get('username') }}">
+								<i class="fas fa-spinner fa-spin"></i>
+							</div>
+						</div>
+					</a>
+				@endfor
+			</div>
+		@endif
+
 		<div class="media-list">
 			@for ($i = 0; $i < $subs->count(); $i++)
 				@if ($subs->get($i)->get('featured') == SubsModel::SUB_UNFEATURED)

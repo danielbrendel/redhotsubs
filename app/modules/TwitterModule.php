@@ -27,7 +27,7 @@ class TwitterModule
                 $title = substr($title, 0, env('TWITTERBOT_MAX_TITLE_LENGTH', self::MAX_TITLE_LENGTH)) . '...';
             }
 
-            $status = $title . ' ' . $link . ' ' . env('TWITTERBOT_TAGS');
+            $status = $title . "\n\n" . $link . "\n\n" . env('TWITTERBOT_TAGS');
 
             $parameters = [
                 'status' => $status
