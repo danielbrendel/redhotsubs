@@ -419,6 +419,15 @@ class IndexController extends BaseController {
 		$start = date('Y-m-d', strtotime('-30 days'));
 		$end = date('Y-m-d');
 
+		$predefined_dates = [
+			'Last week' => date('Y-m-d', strtotime('-7 days')),
+			'Last two weeks' => date('Y-m-d', strtotime('-14 days')),
+			'Last month' => date('Y-m-d', strtotime('-1 month')),
+			'Last three months' => date('Y-m-d', strtotime('-3 months')),
+			'Last year' => date('Y-m-d', strtotime('-1 year')),
+			'Lifetime' => date('Y-m-d', strtotime(ViewCountModel::getInitialStartDate()))
+		];
+
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -430,6 +439,7 @@ class IndexController extends BaseController {
 			'render_stats_start' => $start,
 			'render_stats_end' => $end,
 			'render_stats_pw' => $request->arg('pw'),
+			'predefined_dates' => $predefined_dates,
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR'])),
 			'online_count' => UtilsModule::countAsString(ViewCountModel::getOnlineCount(env('APP_ONLINEMINUTELIMIT', '30')))
 		]);

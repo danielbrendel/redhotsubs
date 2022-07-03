@@ -56,6 +56,15 @@ class ViewCountModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return string
+     */
+    public static function getInitialStartDate()
+    {
+        $data = ViewCountModel::raw('SELECT created_at FROM `' . self::tableName() . '` WHERE id = 1');
+        return $data->get(0)->get('created_at');
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string
