@@ -293,15 +293,11 @@ import Chart from 'chart.js/auto';
                 if (response.code == 200) {
                     document.getElementById('inp-date-from').value = response.start;
                     document.getElementById('inp-date-till').value = response.end;
-                    document.getElementById('count-new').innerHTML = response.count_new;
-                    document.getElementById('count-recurring').innerHTML = response.count_recurring;
                     document.getElementById('count-total').innerHTML = response.count_total;
 
                     let content = document.getElementById(elem);
                     if (content) {
                         let labels = [];
-                        let data_new = [];
-                        let data_recurring = [];
                         let data_total = [];
 
                         let day = 60 * 60 * 24 * 1000;
@@ -321,28 +317,10 @@ import Chart from 'chart.js/auto';
                             }
 
                             labels.push(curDate.getFullYear() + '-' + curMonth + '-' + curDay);
-                            data_new.push(0);
-                            data_recurring.push(0);
                             data_total.push(0);
                         }
 
-                        response.data.new.forEach(function(elem, index) {
-                            labels.forEach(function(lblElem, lblIndex){
-                                if (lblElem == elem.date) {
-                                    data_new[lblIndex] = parseInt(elem.count);
-                                }
-                            });
-                        });
-
-                        response.data.recurring.forEach(function(elem, index) {
-                            labels.forEach(function(lblElem, lblIndex){
-                                if (lblElem == elem.date) {
-                                    data_recurring[lblIndex] = parseInt(elem.count);
-                                }
-                            });
-                        });
-
-                        response.data.total.forEach(function(elem, index) {
+                        response.data.forEach(function(elem, index) {
                             labels.forEach(function(lblElem, lblIndex){
                                 if (lblElem == elem.date) {
                                     data_total[lblIndex] = parseInt(elem.count);
@@ -356,21 +334,9 @@ import Chart from 'chart.js/auto';
                                 labels: labels,
                                 datasets: [
                                     {
-                                        label: 'New visitors',
-                                        backgroundColor: 'rgb(255, 99, 132)',
-                                        borderColor: 'rgb(255, 99, 132)',
-                                        data: data_new,
-                                    },
-                                    {
-                                        label: 'Recurring visitors',
+                                        label: 'Visitors',
                                         backgroundColor: 'rgb(163, 73, 164)',
                                         borderColor: 'rgb(163, 73, 164)',
-                                        data: data_recurring,
-                                    },
-                                    {
-                                        label: 'Total visitors',
-                                        backgroundColor: 'rgb(0, 155, 223)',
-                                        borderColor: 'rgb(0, 155, 223)',
                                         data: data_total,
                                     }
                                 ]

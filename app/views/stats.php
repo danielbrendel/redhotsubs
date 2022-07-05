@@ -17,9 +17,7 @@
             &nbsp;<a class="button is-dark" href="javascript:void(0);" onclick="window.vue.renderStats('{{ $render_stats_pw }}', '{{ $render_stats_to }}', document.getElementById('inp-date-from').value, document.getElementById('inp-date-till').value);">Go</a>
         </div>
         
-        <div>New visitors: <div class="is-inline-block" id="count-new"></div></div>
-        <div>Recurring visitors: <div class="is-inline-block" id="count-recurring"></div></div>
-        <div>Total visitors: <div class="is-inline-block" id="count-total"></div></div>
+        <div>Visitors: <div class="is-inline-block" id="count-total"></div></div>
     </div>
 
     <div class="page-content">

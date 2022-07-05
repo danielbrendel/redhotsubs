@@ -469,48 +469,25 @@ class IndexController extends BaseController {
 			}
 
 			$data = [];
-			$data['new'] = [];
-			$data['recurring'] = [];
-			$data['total'] = [];
+			$visits_total = 0;
 
 			$visits = ViewCountModel::getVisitsPerDay($start, $end);
 
 			$dayDiff = (new DateTime($end))->diff((new DateTime($start)))->format('%a');
 
-			$visits_new = 0;
-			$visits_recurring = 0;
+			for ($i = 0; $i < $visits->count(); $i++) {
+				$visits_total += $visits->get($i)->get('count');
 
-			for ($i = 0; $i < $visits['new']->count(); $i++) {
-				$visits_new += $visits['new']->get($i)->get('count');
-
-				$data['new'][] = [
-					'date' => $visits['new']->get($i)->get('created_at'),
-					'count' => $visits['new']->get($i)->get('count')
-				];
-			}
-
-			for ($i = 0; $i < $visits['recurring']->count(); $i++) {
-				$visits_recurring += $visits['recurring']->get($i)->get('count');
-
-				$data['recurring'][] = [
-					'date' => $visits['recurring']->get($i)->get('updated_at'),
-					'count' => $visits['recurring']->get($i)->get('count')
-				];
-			}
-
-			for ($i = 0; $i < $visits['total']->count(); $i++) {
-				$data['total'][] = [
-					'date' => $visits['total']->get($i)->get('updated_at'),
-					'count' => $visits['total']->get($i)->get('count')
+				$data[] = [
+					'date' => $visits->get($i)->get('created_at'),
+					'count' => $visits->get($i)->get('count')
 				];
 			}
 
 			return json([
 				'code' => 200,
 				'data' => $data,
-				'count_new' => $visits_new,
-				'count_recurring' => $visits_recurring,
-				'count_total' => $visits_new + $visits_recurring,
+				'count_total' => $visits_total,
 				'start' => $start,
 				'end' => $end,
 				'day_diff' => $dayDiff
