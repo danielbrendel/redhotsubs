@@ -289,7 +289,6 @@ import Chart from 'chart.js/auto';
 
         renderStats: function(pw, elem, start, end = '') {
             window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start, end: end }, function(response){
-                console.log(response);
                 if (response.code == 200) {
                     document.getElementById('inp-date-from').value = response.start;
                     document.getElementById('inp-date-till').value = response.end;
