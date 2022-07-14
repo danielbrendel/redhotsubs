@@ -17,7 +17,6 @@
 
 return [
     array('/', 'GET', 'index@index'),
-    array('/index', 'GET', 'index@index'),
 	array('/content/fetch', 'ANY', 'index@queryContent'),
     array('/content/sub/image', 'ANY', 'index@querySubImage'),
     array('/p/{sub}/{ident}/{title}', 'GET', 'index@showPost'),
