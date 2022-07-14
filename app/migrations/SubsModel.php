@@ -30,6 +30,7 @@ class SubsModel_Migration
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('sub_ident VARCHAR(512) NOT NULL');
+        $this->database->add('category VARCHAR(512) NOT NULL');
         $this->database->add('featured BOOLEAN NOT NULL DEFAULT 0');
         $this->database->add('twitter_posting BOOLEAN NOT NULL DEFAULT 0');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');

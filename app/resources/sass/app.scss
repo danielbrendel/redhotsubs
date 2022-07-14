@@ -83,6 +83,15 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     top: -6px;
 }
 
+.is-nav-category {
+    color: rgb(150, 150, 150);
+    font-weight: bold;
+}
+
+.is-nav-item {
+    margin-left: 10px;
+}
+
 .is-underline {
     text-decoration: underline;
 }

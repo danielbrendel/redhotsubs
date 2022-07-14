@@ -59,15 +59,25 @@
 
                 <div class="navbar-dropdown">
                     @if (isset($subs))
+                        <?php $lastCat = ''; ?>
                         @for ($i = 0; $i < $subs->count(); $i++)
-                            <a class="navbar-item" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
+                            <?php 
+                                if ($lastCat !== $subs->get($i)->get('category')) {
+                                    $lastCat = $subs->get($i)->get('category');
+
+                                    echo '<div class="navbar-item is-nav-category">' . $subs->get($i)->get('category') . '</div>';
+                                } 
+                            ?>
+
+                            <a class="navbar-item is-nav-item" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
                                 {{ $subs->get($i)->get('sub_ident') }}
                             </a>
                         @endfor
                     @endif
 
                     @if (env('APP_ALLOWCUSTOMSUBS'))
-                        <span class="navbar-item">r/<input type="text" class="input-dark" placeholder="name" onkeypress="if (event.which === 13) { window.vue.customSub(this.value); }"></span>
+                        <div class="navbar-item is-nav-category">Custom</div>
+                        <span class="navbar-item is-nav-item">r/<input type="text" class="input-dark" placeholder="name" onkeypress="if (event.which === 13) { window.vue.customSub(this.value); }"></span>
                     @endif
                 </div>
             </div>
