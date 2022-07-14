@@ -1,1 +1,1 @@
-Web project of RedHotSubs.com
+Web project of RedHotSubs.com - an NSFW client for Reddit
