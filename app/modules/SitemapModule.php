@@ -46,7 +46,7 @@ class SitemapModule
         }
 
         if (env('APP_ENABLEAPPPAGE')) {
-            $this->sites[] = $this->url('/app');
+            $this->sites[] = $this->url('/getapp');
         }
 
         $subs = SubsModel::getAllSubs();

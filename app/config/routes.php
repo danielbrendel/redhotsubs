@@ -27,7 +27,7 @@ return [
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),
-    array('/app', 'GET', 'index@app'),
+    array('/getapp', 'GET', 'index@app'),
     array('/stats/{pw}', 'GET', 'index@stats'),
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
     array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),

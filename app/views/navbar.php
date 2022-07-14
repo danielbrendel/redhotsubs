@@ -46,7 +46,7 @@
             @endif
 
             @if (env('APP_ENABLEAPPPAGE'))
-            <a class="navbar-item" href="{{ url('/app') }}">
+            <a class="navbar-item" href="{{ url('/getapp') }}">
                 App
             </a>
             @endif
