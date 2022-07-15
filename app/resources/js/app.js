@@ -120,7 +120,7 @@ import Chart from 'chart.js/auto';
         },
 
         getSubSelection: function () {
-            let result = '';
+            /*let result = '';
             let cookies = document.cookie.split(';');
 
             for (let i = 0; i < cookies.length; i++) {
@@ -128,7 +128,9 @@ import Chart from 'chart.js/auto';
                     result = cookies[i].substr(cookies[i].indexOf('=') + 1);
                     break;
                 }
-            }
+            }*/
+
+            let result = window.currentSelectedSub;
 
             let selLabel = document.getElementById('current-sub');
             if (selLabel) {
@@ -139,8 +141,9 @@ import Chart from 'chart.js/auto';
         },
 
         setSubSelection: function(value) {
-            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
-            document.cookie = 'sub_selection=' + value + '; path=/; expires=' + expDate.toUTCString() + ';';
+            /*let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+            document.cookie = 'sub_selection=' + value + '; path=/; expires=' + expDate.toUTCString() + ';';*/
+            window.currentSelectedSub = value;
         },
 
         setSortingUnderline: function(ident) {
