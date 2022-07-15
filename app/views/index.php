@@ -65,8 +65,17 @@
 		@endif
 
 		<div class="media-list">
+			<?php $lastCat = ''; ?>
 			@for ($i = 0; $i < $subs->count(); $i++)
 				@if ($subs->get($i)->get('featured') == SubsModel::SUB_UNFEATURED)
+					<?php 
+						if ($lastCat !== $subs->get($i)->get('category')) {
+							$lastCat = $subs->get($i)->get('category');
+
+							echo '<div class="navbar-item is-nav-category">' . $subs->get($i)->get('category') . '</div>';
+						} 
+					?>
+
 					<div class="media-list-item">
 						<a class="" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
 							{{ $subs->get($i)->get('sub_ident') }}
