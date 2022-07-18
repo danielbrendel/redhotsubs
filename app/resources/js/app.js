@@ -219,6 +219,10 @@ import Chart from 'chart.js/auto';
             location.href = window.location.origin + '/r/' + ident;
         },
 
+        customUser: function(ident) {
+            location.href = window.location.origin + '/user/' + ident;
+        },
+
         renderIFrame: function(target, src, title) {
             let html = `<iframe id="media-player" class="media-video" src="` + src + `"></iframe>`;
 
