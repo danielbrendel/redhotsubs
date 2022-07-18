@@ -79,6 +79,25 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     }
 }
 
+.navbar-item.is-active .navbar-dropdown, .navbar-item.is-hoverable:hover .navbar-dropdown {
+    @media screen and (min-width: 1088px) {
+        display: none;
+    }
+}
+
+.navbar-desktop {
+    position: relative;
+    display: none;
+    left: 0;
+    width: 100%;
+    height: auto;
+    background-color: rgb(50, 50, 50);
+    box-shadow: 0 8px 8px rgba(10, 10, 10, 0.1);
+    @media screen and (max-width: 1088px) {
+        display: none;
+    }
+}
+
 .is-navbar-button {
     top: -6px;
 }

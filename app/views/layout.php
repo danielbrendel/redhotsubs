@@ -75,6 +75,7 @@
 
 					<div class="column is-8 no-bottom-padding">
 						{%navbar%}
+						{%navdesktop%}
 
 						{%cookies%}
 						{%info%}
@@ -114,6 +115,63 @@
 
 				window.fetch_item_after = null;
 				window.statsChart = null;
+
+				window.isInSubsDropdown = false;
+				window.isInDeskNavbar = false;
+
+				let elMain = document.getElementById('main');
+				if (elMain) {
+					elMain.onclick = function() {
+						if ((window.innerWidth >= 1088) && (!window.isInSubsDropdown) && (!window.isInDeskNavbar)) {
+							let elNavbarDesktop = document.getElementById('navbar-desktop');
+							if (elNavbarDesktop) {
+								if (elNavbarDesktop.style.display === 'block') {
+									elNavbarDesktop.style.display = 'none';
+								}
+							}
+						}
+					};
+				}
+
+				let elDropdown = document.getElementById('navbar-subs-dropdown');
+				if (elDropdown) {
+					elDropdown.onclick = function() {
+						if (window.innerWidth >= 1088) {
+							let elNavbarDesktop = document.getElementById('navbar-desktop');
+							if (elNavbarDesktop) {
+								if ((elNavbarDesktop.style.display === 'none') || (elNavbarDesktop.style.display == '')) {
+									elNavbarDesktop.style.display = 'block';
+								} else {
+									elNavbarDesktop.style.display = 'none';
+								}
+							}
+						}
+					};
+					elDropdown.onmouseover = function() {
+						if (window.innerWidth >= 1088) {
+							window.isInSubsDropdown = true;
+						}
+					};
+					elDropdown.onmouseout = function() {
+						if (window.innerWidth >= 1088) {
+							window.isInSubsDropdown = false;
+						}
+					};
+				}
+
+				let elNavbarDesktop = document.getElementById('navbar-desktop');
+				if (elNavbarDesktop) {
+					elNavbarDesktop.onmouseover = function() {
+						if (window.innerWidth >= 1088) {
+							window.isInDeskNavbar = true;
+						}
+					};
+					elNavbarDesktop.onmouseout = function() {
+						if (window.innerWidth >= 1088) {
+							window.isInDeskNavbar = false;
+						}
+					};
+				}
 
 				@if (env('APP_SHOWAGECONSENT'))
 					if (!window.vue.isAgeConsentMarked()) {

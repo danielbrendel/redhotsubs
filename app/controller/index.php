@@ -38,7 +38,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'index'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'subs' => $subs,
 			'featured' => $featured,
@@ -180,7 +181,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'post'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'post_data' => $data,
 			'additional_meta' => $additional_meta,
@@ -232,7 +234,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'post'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'post_data' => $data,
 			'additional_meta' => $additional_meta,
@@ -272,7 +275,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'index'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'show_sub' => $sub,
 			'subs' => $subs,
@@ -306,7 +310,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'index'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'show_sub' => $user,
 			'subs' => $subs,
@@ -328,7 +333,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'page'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Imprint',
 			'page_content' => AppSettingsModel::getImprint(),
@@ -349,7 +355,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'page'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Privacy policy',
 			'page_content' => AppSettingsModel::getPrivacyPolicy(),
@@ -370,7 +377,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'news'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Newsfeed',
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
@@ -396,7 +404,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'page'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'App',
 			'page_content' => $app_content,
@@ -433,7 +442,8 @@ class IndexController extends BaseController {
 			['cookies', 'cookies'],
 			['info', 'info'],
 			['content', 'stats'],
-			['footer', 'footer']
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
 		], [
 			'render_stats_to' => 'visitor-stats',
 			'render_stats_start' => $start,
