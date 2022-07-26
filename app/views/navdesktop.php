@@ -21,8 +21,8 @@
     @if (env('APP_ALLOWCUSTOMSUBS'))
         <div class="navbar-item is-nav-category">Custom</div>
         <div>
-            <div class="navbar-item is-nav-item">r/<input type="text" class="input-dark" placeholder="sub" onkeypress="if (event.which === 13) { window.vue.customSub(this.value); }"></div>
-            <div class="navbar-item is-nav-item">u/<input type="text" class="input-dark" placeholder="user" onkeypress="if (event.which === 13) { window.vue.customUser(this.value); }"></div>
+            <form><div class="navbar-item is-nav-item">r/<input type="text" class="input-dark" placeholder="sub" onkeypress="if (event.which === 13) { event.preventDefault(); window.vue.customSub(this.value); }"></div></form>
+            <form><div class="navbar-item is-nav-item">u/<input type="text" class="input-dark" placeholder="user" onkeypress="if (event.which === 13) { event.preventDefault(); window.vue.customUser(this.value); }"></div></form>
         </div>
     @endif
 </div>
