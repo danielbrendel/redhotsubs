@@ -445,6 +445,7 @@ class IndexController extends BaseController {
 			['footer', 'footer'],
 			['navdesktop', 'navdesktop']
 		], [
+			'page_title' => 'Statistics',
 			'render_stats_to' => 'visitor-stats',
 			'render_stats_start' => $start,
 			'render_stats_end' => $end,
