@@ -14,7 +14,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function getAllSubs()
     {
         try {
-            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` ORDER BY cat_order ASC');
+            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` ORDER BY cat_order, sub_ident ASC');
         } catch (Exception $e) {
             return null;
         }
