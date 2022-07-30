@@ -17,7 +17,9 @@
             &nbsp;<a class="button is-dark" href="javascript:void(0);" onclick="window.vue.renderStats('{{ $render_stats_pw }}', '{{ $render_stats_to }}', document.getElementById('inp-date-from').value, document.getElementById('inp-date-till').value);">Go</a>
         </div>
         
-        <div>Visitors: <div class="is-inline-block" id="count-total"></div></div>
+        <div>Sum: <div class="is-inline-block" id="count-total"></div></div>
+        <div>Avg per day: <div class="is-inline-block" id="count-avg-day"></div></div>
+        <div>Avg per hour: <div class="is-inline-block" id="count-avg-hour"></div></div>
     </div>
 
     <div class="page-content">

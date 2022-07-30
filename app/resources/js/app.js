@@ -300,6 +300,8 @@ import Chart from 'chart.js/auto';
                     document.getElementById('inp-date-from').value = response.start;
                     document.getElementById('inp-date-till').value = response.end;
                     document.getElementById('count-total').innerHTML = response.count_total;
+                    document.getElementById('count-avg-day').innerHTML = Math.round(response.count_total / response.day_diff);
+                    document.getElementById('count-avg-hour').innerHTML = Math.round(response.count_total / response.day_diff / 24);
 
                     let content = document.getElementById(elem);
                     if (content) {
