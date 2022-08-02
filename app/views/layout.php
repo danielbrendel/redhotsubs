@@ -113,6 +113,8 @@
 				window.vue.initNavbar();
 				window.vue.handleCookieConsent();
 
+				window.vue.defaultSub = '{{ env('APP_DEFAULTSUB') }}';
+
 				window.fetch_item_after = null;
 				window.statsChart = null;
 

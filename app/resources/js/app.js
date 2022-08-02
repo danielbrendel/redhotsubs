@@ -16,6 +16,7 @@ import Chart from 'chart.js/auto';
 
     data: {
         appName: '',
+        defaultSub: '',
         bShowAgeConsent: false,
         bScrollAutoLoad: false
     },
@@ -131,6 +132,10 @@ import Chart from 'chart.js/auto';
             }*/
 
             let result = window.currentSelectedSub;
+            
+            if (typeof result === 'undefined') {
+                result = this.defaultSub;
+            }
 
             let selLabel = document.getElementById('current-sub');
             if (selLabel) {
