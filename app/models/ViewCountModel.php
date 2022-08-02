@@ -6,10 +6,20 @@
 class ViewCountModel extends \Asatru\Database\Model
 {
     /**
-     * @param $addr
      * @return int
      */
-    public static function acquireCount($addr)
+    public static function acquireCount()
+    {
+        $count = ViewCountModel::raw('SELECT COUNT(*) FROM `' . self::tableName() . '`');
+        
+        return $count->get(0)->get(0);
+    }
+
+    /**
+     * @param $addr
+     * @return void
+     */
+    public static function addToCount($addr)
     {
         $token = md5($addr);
         $curdate = date('Y-m-d');
@@ -20,10 +30,6 @@ class ViewCountModel extends \Asatru\Database\Model
         } else {
             ViewCountModel::raw('UPDATE `' . self::tableName() . '` SET updated_at = CURRENT_TIMESTAMP WHERE token = ? AND DATE(created_at) = ?', [$token, $curdate]);
         }
-
-        $count = ViewCountModel::raw('SELECT COUNT(*) FROM `' . self::tableName() . '`');
-        
-        return $count->get(0)->get(0);
     }
 
     /**

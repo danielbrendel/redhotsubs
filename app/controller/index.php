@@ -44,7 +44,7 @@ class IndexController extends BaseController {
 			'subs' => $subs,
 			'featured' => $featured,
 			'featUser' => FeaturedUserModel::getSelection(env('APP_FEATUREDUSERCOUNT', 3)),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 	
@@ -188,7 +188,7 @@ class IndexController extends BaseController {
 			'additional_meta' => $additional_meta,
 			'page_title' => $data->title,
 			'subs' => SubsModel::getAllSubs(),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -241,7 +241,7 @@ class IndexController extends BaseController {
 			'additional_meta' => $additional_meta,
 			'page_title' => $data->title,
 			'subs' => SubsModel::getAllSubs(),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -281,7 +281,7 @@ class IndexController extends BaseController {
 			'show_sub' => $sub,
 			'subs' => $subs,
 			'featured' => $featured,
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -316,7 +316,7 @@ class IndexController extends BaseController {
 			'show_sub' => $user,
 			'subs' => $subs,
 			'featured' => $featured,
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -338,7 +338,7 @@ class IndexController extends BaseController {
 		], [
 			'page_title' => 'Imprint',
 			'page_content' => AppSettingsModel::getImprint(),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -360,7 +360,7 @@ class IndexController extends BaseController {
 		], [
 			'page_title' => 'Privacy policy',
 			'page_content' => AppSettingsModel::getPrivacyPolicy(),
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -381,7 +381,7 @@ class IndexController extends BaseController {
 			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Newsfeed',
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -409,7 +409,7 @@ class IndexController extends BaseController {
 		], [
 			'page_title' => 'App',
 			'page_content' => $app_content,
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR']))
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
 
@@ -451,7 +451,7 @@ class IndexController extends BaseController {
 			'render_stats_end' => $end,
 			'render_stats_pw' => $request->arg('pw'),
 			'predefined_dates' => $predefined_dates,
-			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount($_SERVER['REMOTE_ADDR'])),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount()),
 			'online_count' => UtilsModule::countAsString(ViewCountModel::getOnlineCount(env('APP_ONLINEMINUTELIMIT', '30')))
 		]);
 	}

@@ -22,6 +22,8 @@ class BaseController extends Asatru\Controller\Controller {
 		if ($layout !== '') {
 			$this->layout = $layout;
 		}
+
+		ViewCountModel::addToCount($_SERVER['REMOTE_ADDR']);
 	}
 
 	/**
