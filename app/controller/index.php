@@ -426,7 +426,7 @@ class IndexController extends BaseController {
 		}
 
 		$start = date('Y-m-d', strtotime('-30 days'));
-		$end = date('Y-m-d');
+		$end = date('Y-m-d', strtotime('-1 day'));
 
 		$predefined_dates = [
 			'Last week' => date('Y-m-d', strtotime('-7 days')),
@@ -476,7 +476,7 @@ class IndexController extends BaseController {
 
 			$end = $request->params()->query('end');
 			if ($end === '') {
-				$end = date('Y-m-d');
+				$end = date('Y-m-d', strtotime('-1 day'));
 			}
 
 			$data = [];
