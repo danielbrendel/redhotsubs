@@ -562,6 +562,29 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /stats/query/{pw}/online
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function queryOnlineCount($request)
+	{
+		try {
+			$online_count = UtilsModule::countAsString(ViewCountModel::getOnlineCount(env('APP_ONLINEMINUTELIMIT', '30')));
+
+			return json([
+				'code' => 200,
+				'count' => $online_count 
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /cronjob/twitter/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

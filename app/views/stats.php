@@ -2,7 +2,7 @@
 	<h1>Stats</h1>
 
     <div class="paragraph">
-        Currently online: {{ $online_count }}
+        Currently online: <span id="stats-online-count">{{ $online_count }}</span>
     </div>
 
     <div class="visitor-summary">

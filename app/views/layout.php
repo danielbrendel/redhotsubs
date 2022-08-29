@@ -239,6 +239,10 @@
 
 				@if ((isset($render_stats_to)) && (isset($render_stats_pw)))
 					window.vue.renderStats('{{ $render_stats_pw }}', '{{ $render_stats_to }}', '{{ $render_stats_start }}');
+
+					setTimeout(function() {
+						window.vue.updateOnlineCount('stats-online-count', '{{ $render_stats_pw }}');
+					}, 10000);
 				@endif
 			});
 		</script>

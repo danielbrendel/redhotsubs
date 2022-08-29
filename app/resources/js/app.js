@@ -447,5 +447,18 @@ import Chart from 'chart.js/auto';
                 }
             });
         },
+
+        updateOnlineCount: function(target, pw) {
+            window.vue.ajaxRequest('get', window.location.origin + '/stats/query/' + pw + '/online', {}, function(response) {
+                if (response.code == 200) {
+                    let elem = document.getElementById(target);
+                    if (elem) {
+                        elem.innerHTML = response.count;
+                    }
+                }
+            });
+
+            setTimeout(function() { window.vue.updateOnlineCount(target, pw); }, 10000);
+        },
     }
  });
