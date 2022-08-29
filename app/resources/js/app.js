@@ -309,7 +309,7 @@ import Chart from 'chart.js/auto';
             
             this.ajaxRequest('get', window.location.origin + '/content/video?categories=' + catstr, {}, function(response) {
                 if (response.code == 200) {
-                    document.getElementById(target).innerHTML = '<center><iframe id="media-player" class="media-video" src="https://www.redditmedia.com/mediaembed/' + response.data.all.id + '"></iframe></center>';
+                    document.getElementById(target).innerHTML = '<center><iframe id="media-player" class="media-video" src="https://www.redditmedia.com/mediaembed/' + ((typeof response.data.all.crosspost_parent_list !== 'undefined') ? response.data.all.crosspost_parent_list[0].id : response.data.all.id) + '"></iframe></center>';
                     document.getElementById(link).href = response.data.link;
                     document.getElementById(link).innerHTML = response.data.title;
                 } else {
