@@ -513,6 +513,18 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     font-size: 1.2em;
 }
 
+.video-swiper {
+    position: absolute;
+    margin-top: 54px;
+    z-index: 3;
+    width: 100%;
+    height: 383px;
+    background: transparent;
+    @media screen and (min-width: 1089px) {
+        display: none;
+    }
+}
+
 .video-content {
 }
 

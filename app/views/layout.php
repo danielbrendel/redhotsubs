@@ -121,6 +121,8 @@
 				window.isInSubsDropdown = false;
 				window.isInDeskNavbar = false;
 
+				window.enableVideoSwipe = {{ env('APP_ENABLEVIDEOSWIPE', false) ? 'true' : 'false' }};
+
 				let elMain = document.getElementById('main');
 				if (elMain) {
 					elMain.onclick = function() {
@@ -198,6 +200,10 @@
 
 				if ((document.getElementById('video-content')) && (document.getElementById('view-post'))) {
 					window.vue.fetchNextVideo('video-content', 'view-post');
+
+					if (!window.enableVideoSwipe) {
+						document.getElementById('video-swiper').remove();
+					}
 				}
 
 				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))

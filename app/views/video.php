@@ -12,6 +12,7 @@
             <a id="view-post" href=""></a>
         </div>
 
+        <div class="video-swiper" id="video-swiper" ontouchstart="window.touchStartX = event.changedTouches[0].screenX;" ontouchend="window.touchEndX = event.changedTouches[0].screenX; if ((window.touchStartX < window.touchEndX) || (window.touchStartX > window.touchEndX)) { window.vue.fetchNextVideo('video-content', 'view-post'); }"></div>
         <div class="video-content" id="video-content"><center><i class="fas fa-spinner fa-spin"></i></center></div>
 
         <div class="video-controls">

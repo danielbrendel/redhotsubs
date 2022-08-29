@@ -38,6 +38,7 @@ class SitemapModule
         $this->sites = [];
 
         $this->sites[] = $this->url('/');
+        $this->sites[] = $this->url('/video');
         $this->sites[] = $this->url('/imprint');
         $this->sites[] = $this->url('/privacy');
 
