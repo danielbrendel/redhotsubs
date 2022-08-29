@@ -474,3 +474,49 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     margin-top: 10px;
     margin-bottom: 15px;
 }
+
+.video-categories {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.video-category {
+    position: relative;
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.video-category-enabled {
+    background-color: rgb(100, 100, 100);
+}
+
+.video-category a {
+    color: rgb(150, 150, 150);
+}
+
+.video-category a:hover {
+    color: rgb(150, 150, 150);
+    text-decoration: none;
+}
+
+.video-title {
+    margin-bottom: 23px;
+    text-align: center;
+}
+
+.video-title a {
+    font-size: 1.2em;
+}
+
+.video-content {
+}
+
+.video-controls {
+    margin-top: 15px;
+    text-align: center;
+}

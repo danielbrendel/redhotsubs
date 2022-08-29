@@ -75,6 +75,22 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param array $cats
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getRandomFromVideoCategories(array $cats)
+    {
+        try {
+            $inq = implode(',', array_fill(0, count($cats), '?'));
+            $result = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE LOWER(category) IN (' . $inq . ') AND cat_video = 1 ORDER BY RAND() LIMIT 1', $cats);
+            return $result;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

@@ -228,7 +228,7 @@ import Chart from 'chart.js/auto';
             location.href = window.location.origin + '/user/' + ident;
         },
 
-        renderIFrame: function(target, src, title) {
+        renderIFrame: function(target, src) {
             let html = `<iframe id="media-player" class="media-video" src="` + src + `"></iframe>`;
 
             target.innerHTML = html;
@@ -297,6 +297,73 @@ import Chart from 'chart.js/auto';
                     }
                 });
             }
+        },
+
+        fetchNextVideo: function(target, link) {
+            let cats = this.getAllEnabledVideoCategories();
+            let catstr = '';
+
+            cats.forEach(function(elem, index) {
+                catstr += elem + ',';
+            });
+            
+            this.ajaxRequest('get', window.location.origin + '/content/video?categories=' + catstr, {}, function(response) {
+                if (response.code == 200) {
+                    document.getElementById(target).innerHTML = '<center><iframe id="media-player" class="media-video" src="https://www.redditmedia.com/mediaembed/' + response.data.all.id + '"></iframe></center>';
+                    document.getElementById(link).href = response.data.link;
+                    document.getElementById(link).innerHTML = response.data.title;
+                } else {
+                    console.log(response.msg);
+                }
+            });
+        },
+
+        isVideoCategoryEnabled: function(which) {
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('category_' + which + '=1') !== -1) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
+
+        toggleVideoCategoryCookie: function(which) {
+            let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
+
+            if (!this.isVideoCategoryEnabled(which)) {
+                document.cookie = 'category_' + which + '=1; path=/; expires=' + expDate.toUTCString() + ';';
+
+                let elem = document.getElementById('vcat-' + which);
+                if (elem) {
+                    elem.classList.add('video-category-enabled');
+                }
+            } else {
+                document.cookie = 'category_' + which + '=0; path=/; expires=' + expDate.toUTCString() + ';';
+
+                let elem = document.getElementById('vcat-' + which);
+                if (elem) {
+                    elem.classList.remove('video-category-enabled');
+                }
+            }
+        },
+
+        getAllEnabledVideoCategories: function() {
+            let result = [];
+
+            let cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+                if (cookies[i].indexOf('category_') !== -1) {
+                    if (cookies[i].indexOf('=1') !== -1) {
+                        result.push(cookies[i].substr(cookies[i].indexOf('_') + 1, cookies[i].indexOf('=') - (cookies[i].indexOf('_') + 1)));
+                    }
+                }
+            }
+
+            return result;
         },
 
         renderStats: function(pw, elem, start, end = '') {

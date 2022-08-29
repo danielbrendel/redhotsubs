@@ -321,6 +321,56 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /video
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function showVideo($request)
+	{
+		$subs = SubsModel::getAllSubs();
+
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'video'],
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
+		], [
+			'page_title' => 'Video content',
+			'categories' => AppSettingsModel::getCategories(),
+			'subs' => $subs,
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
+		]);
+	}
+
+	/**
+	 * Handles URL: /content/video
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function fetchVideo($request)
+	{
+		try {
+			$cats = explode(',', $request->params()->query('categories', array()));
+
+			$data = CrawlerModule::queryRandomVideo($cats);
+
+			return json([
+				'code' => 200,
+				'data' => $data
+			]);
+		} catch (\Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /imprint
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

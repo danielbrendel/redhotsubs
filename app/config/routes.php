@@ -23,6 +23,8 @@ return [
     array('/p/{ident}', 'GET', 'index@showPostOld'),
     array('/r/{sub}', 'GET', 'index@showSub'),
     array('/user/{ident}', 'GET', 'index@showUser'),
+    array('/video', 'GET', 'index@showVideo'),
+    array('/content/video', 'GET', 'index@fetchVideo'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),

@@ -183,6 +183,23 @@
 
 				window.vue.bScrollAutoLoad = {{ (env('APP_SCROLLAUTOLOAD', false)) ? 'true' : 'false' }};
 
+				if (window.vue.getAllEnabledVideoCategories().length == 0) {
+					window.vue.toggleVideoCategoryCookie('{{ env('APP_DEFAULTCAT') }}');
+				}
+
+				let vidCats = document.getElementsByClassName('video-category');
+				if (vidCats.length > 0) {
+					for (let i = 0; i < vidCats.length; i++) {
+						if (window.vue.isVideoCategoryEnabled(vidCats[i].id.substr(vidCats[i].id.indexOf('-') + 1))) {
+							vidCats[i].classList.add('video-category-enabled');
+						}
+					}
+				}
+
+				if ((document.getElementById('video-content')) && (document.getElementById('view-post'))) {
+					window.vue.fetchNextVideo('video-content', 'view-post');
+				}
+
 				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))
 					document.getElementById('media-content').innerHTML = '';
 					document.getElementById('current-sub').innerHTML = '{{ $show_sub }}';

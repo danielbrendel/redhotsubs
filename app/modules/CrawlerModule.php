@@ -71,4 +71,28 @@ class CrawlerModule
             throw $e;
         }
     }
+
+    /**
+     * @param array $cats
+     * @return mixed
+     */
+    public static function queryRandomVideo(array $cats)
+    {
+        try {
+            foreach ($cats as $key => $value) {
+                $cats[$key] = strtolower($value);
+            }
+
+            $sub = SubsModel::getRandomFromVideoCategories($cats);
+            
+            $crawler = new RFCrawler($sub->get(0)->get('sub_ident') . '/', env('APP_USERAGENT'), []);
+            $content = [];
+
+            $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
+   
+            return $content[rand(0, count($content) - 1)];
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

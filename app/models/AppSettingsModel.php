@@ -117,6 +117,21 @@ class AppSettingsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return array
+     * @throws Exception
+     */
+    public static function getCategories()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            $cats = $item->get('categories');
+            return explode(',', $cats);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string
