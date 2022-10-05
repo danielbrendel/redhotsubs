@@ -43,7 +43,7 @@ class IndexController extends BaseController {
 		], [
 			'subs' => $subs,
 			'featured' => $featured,
-			'featUser' => FeaturedUserModel::getSelection(env('APP_FEATUREDUSERCOUNT', 3)),
+			'featUsers' => FeaturedUserModel::getSelection(env('APP_FEATUREDUSERCOUNT', 3)),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}

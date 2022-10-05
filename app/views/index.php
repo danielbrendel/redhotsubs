@@ -46,43 +46,41 @@
 			@endforeach
 		</div>
 
-		@if ((is_object($featUser)) && ($featUser->count() > 0))
+		@if ((is_object($featUsers)) && (count($featUsers) > 0))
 			<div class="media-cards" id="media-cards">
-				@for ($i = 0; $i < $featUser->count(); $i++)
-					<a href="{{ url('/user/' . $featUser->get($i)->get('username')) }}">
+				@foreach ($featUsers as $featUser)
+					<a href="{{ url('/user/' . $featUser->get('username')) }}">
 						<div class="media-card-item">
 							<div class="media-card-item-title">
-								u/{{ $featUser->get($i)->get('username') }}
+								u/{{ $featUser->get('username') }}
 							</div>
 
-							<div class="media-card-item-image" title="u/{{ $featUser->get($i)->get('username') }}">
+							<div class="media-card-item-image" title="u/{{ $featUser->get('username') }}">
 								<i class="fas fa-spinner fa-spin"></i>
 							</div>
 						</div>
 					</a>
-				@endfor
+				@endforeach
 			</div>
 		@endif
 
 		<div class="media-list">
 			<?php $lastCat = ''; ?>
-			@for ($i = 0; $i < $subs->count(); $i++)
-				@if ($subs->get($i)->get('featured') == SubsModel::SUB_UNFEATURED)
-					<?php 
-						if ($lastCat !== $subs->get($i)->get('category')) {
-							$lastCat = $subs->get($i)->get('category');
+			@foreach ($subs as $sub)
+				<?php 
+					if ($lastCat !== $sub->get('category')) {
+						$lastCat = $sub->get('category');
 
-							echo '<div class="navbar-item is-nav-category">' . $subs->get($i)->get('category') . '</div>';
-						} 
-					?>
+						echo '<div class="navbar-item is-nav-category">' . $sub->get('category') . '</div>';
+					} 
+				?>
 
-					<div class="media-list-item">
-						<a class="" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
-							{{ $subs->get($i)->get('sub_ident') }}
-						</a>
-					</div>
-				@endif
-			@endfor
+				<div class="media-list-item">
+					<a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
+						{{ $sub->get('sub_ident') }}
+					</a>
+				</div>
+			@endforeach
 		</div>
 	</div>
 
