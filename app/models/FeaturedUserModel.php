@@ -21,6 +21,20 @@ class FeaturedUserModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return \Asatru\Database\Collection
+     * @throws Exception
+     */
+    public static function getAll()
+    {
+        try {
+            $data = FeaturedUserModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE active = 1');
+            return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

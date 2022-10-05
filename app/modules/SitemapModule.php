@@ -51,8 +51,13 @@ class SitemapModule
         }
 
         $subs = SubsModel::getAllSubs();
-        for ($i = 0; $i < $subs->count(); $i++) {
-            $this->sites[] = $this->url('/' . $subs->get($i)->get('sub_ident'));
+        foreach ($subs as $sub) {
+            $this->sites[] = $this->url('/' . $sub->get('sub_ident'));
+        }
+
+        $featUsers = FeaturedUserModel::getAll();
+        foreach ($featUsers as $featUser) {
+            $this->sites[] = $this->url('/user/' . $featUser->get('username'));
         }
     }
 
