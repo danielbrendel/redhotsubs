@@ -251,6 +251,43 @@ import Chart from 'chart.js/auto';
                 mediaContent = `<a href="` + elem.media + `" target="_blank"><img src="` + elem.media + `" alt="` + elem.title + `"/></a>`;
             }
 
+            let lnkname = elem.all.name.substr(elem.all.name.indexOf('_') + 1);
+            let pltitle = elem.all.permalink.substr(elem.all.permalink.indexOf(lnkname + '/') + lnkname.length + 1);
+            pltitle = pltitle.substr(0, pltitle.length - 1);
+
+            let share = `
+                <div class="dropdown is-right" id="post-share-` + elem.all.id + `">
+                    <div class="dropdown-trigger">
+                        <i class="fas fa-share-alt is-pointer" onclick="window.vue.toggleDropdown(document.getElementById('post-share-` + elem.all.id + `'));"></i>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a onclick="window.vue.toggleDropdown(document.getElementById('post-share-` + elem.id + `'));" href="https://www.reddit.com/submit?url=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `&title=` + elem.title + `" class="dropdown-item is-color-black">
+                                <i class="fab fa-reddit"></i>&nbsp;Share with Reddit
+                            </a>
+                            <a onclick="window.vue.toggleDropdown(document.getElementById('post-share-` + elem.id + `'));" href="whatsapp://send?text=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `" class="dropdown-item is-color-black">
+                                <i class="fab fa-whatsapp"></i>&nbsp;Share with WhatsApp
+                            </a>
+                            <a onclick="window.vue.toggleDropdown(document.getElementById(''post-share-` + elem.id + `'));" href="https://twitter.com/share?url=` + encodeURI(window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle) + `&text=` + elem.title + `" class="dropdown-item is-color-black">
+                                <i class="fab fa-twitter"></i>&nbsp;Share with Twitter
+                            </a>
+                            <a onclick="window.vue.toggleDropdown(document.getElementById(''post-share-` + elem.id + `'));" href="https://www.facebook.com/sharer/sharer.php?u=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `" class="dropdown-item is-color-black">
+                                <i class="fab fa-facebook"></i>&nbsp;Share with Facebook
+                            </a>
+                            <a onclick="window.vue.toggleDropdown(document.getElementById(''post-share-` + elem.id + `'));" href="mailto:name@domain.com?body=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `" class="dropdown-item is-color-black">
+                                <i class="far fa-envelope"></i>&nbsp;Share with E-Mail
+                            </a>
+                            <a onclick="window.vue.toggleDropdown(document.getElementById(''post-share-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `" class="dropdown-item is-color-black">
+                                <i class="fas fa-sms"></i>&nbsp;Share with SMS
+                            </a>
+                            <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `'); window.vue.toggleDropdown(document.getElementById('post-share-` + elem.id + `'));" class="dropdown-item is-color-black">
+                                <i class="far fa-copy"></i>&nbsp;Copy to Clipboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
             let html = `
                 <div class="item">
                     <div class="item-header">
@@ -258,8 +295,14 @@ import Chart from 'chart.js/auto';
                             By <a href="` + window.location.origin + `/user/` + elem.author + `">u/` + elem.author + `</a>
                         </div>
             
-                        <div class="item-date">
-                            ` + elem.diffForHumans + `
+                        <div class="item-right">
+                            <div class="item-date">
+                                ` + elem.diffForHumans + `
+                            </div>
+
+                            <div class="item-share">
+                                ` + share + `
+                            </div>
                         </div>
                     </div>
             
@@ -459,6 +502,24 @@ import Chart from 'chart.js/auto';
             });
 
             setTimeout(function() { window.vue.updateOnlineCount(target, pw); }, 10000);
+        },
+
+        toggleDropdown: function(elem) {
+            if (elem.classList.contains('is-active')) {
+                elem.classList.remove('is-active');
+            } else {
+                elem.classList.add('is-active');
+            }
+        },
+
+        copyToClipboard: function(text) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert('Link has been copied to clipboard.');
         },
     }
  });

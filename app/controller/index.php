@@ -150,9 +150,16 @@ class IndexController extends BaseController {
 		$ident = $request->arg('ident');
 		$title = $request->arg('title');
 
-		$post = TwitterHistoryModel::getByIdentAndSub($ident, $sub);
+		$fetchdest = '';
 
-		$data = CrawlerModule::fetchContent($post->get(0)->get('permalink'), 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+		$post = TwitterHistoryModel::getByIdentAndSub($ident, $sub);
+		if ($post->count() > 0) {
+			$fetchdest = $post->get(0)->get('permalink');
+		} else {
+			$fetchdest = '/r/' . $sub . '/comments/' . ((strpos($ident, 't3_') !== false) ? substr($ident, 3) : $ident);
+		}
+
+		$data = CrawlerModule::fetchContent($fetchdest, 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
 		$data = $data[0];
 		
 		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
