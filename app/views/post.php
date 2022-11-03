@@ -32,11 +32,14 @@
                 <div class="item-comments"><i class="far fa-comments"></i>&nbsp;{{ $post_data->comment_amount }}</div>
                 <div class="item-subscribers"><i class="far fa-grin-stars"></i>&nbsp;{{ $post_data->upvote_amount }}</div>
                 <div class="item-right">
-                    @if ($post_data->hasFavorited)
-                    <a href="javascript:void(0);" onclick="window.vue.removeFavorite('{{ $post_data->all->permalink }}'); location.reload();">Remove from favorites</a>&nbsp;|&nbsp;
-                    @else
-                    <a href="javascript:void(0);" onclick="window.vue.addFavorite('{{ $post_data->all->permalink }}'); location.reload();">Add to favorites</a>&nbsp;|&nbsp;
-                    @endif
+                    <span id="favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-add" class="{{ ($post_data->hasFavorited) ? 'is-hidden' : '' }}">
+                        <a href="javascript:void(0);" onclick="window.vue.addFavorite('{{ $post_data->all->permalink }}', function() { document.getElementById('favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-add').classList.add('is-hidden'); document.getElementById('favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-remove').classList.remove('is-hidden'); });">Add to favorites</a>&nbsp;|&nbsp;
+                    </span>
+
+                    <span id="favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-remove" class="{{ (!$post_data->hasFavorited) ? 'is-hidden' : '' }}">
+                        <a href="javascript:void(0);" onclick="window.vue.removeFavorite('{{ $post_data->all->permalink }}', function() { document.getElementById('favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-add').classList.remove('is-hidden'); document.getElementById('favorite-action-{{ $post_data->all->subreddit }}-{{ $post_data->all->name }}-remove').classList.add('is-hidden'); });">Remove from favorites</a>&nbsp;|&nbsp;
+                    </span>
+                    
                     <a href="{{ $post_data->link }}">View post</a>
                 </div>
             </div>

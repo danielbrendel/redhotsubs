@@ -288,12 +288,7 @@ import Chart from 'chart.js/auto';
                 </div>
             `;
 
-            let fav = '';
-            if (elem.hasFavorited) {
-                fav = `<a href="javascript:void(0);" onclick="window.vue.removeFavorite('` + elem.all.permalink + `');">Remove from favorites</a>&nbsp;|&nbsp;`;
-            } else {
-                fav = `<a href="javascript:void(0);" onclick="window.vue.addFavorite('` + elem.all.permalink + `');">Add to favorites</a>&nbsp;|&nbsp;`;
-            }
+            let fav = `<span id="favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-add" class="` + ((elem.hasFavorited) ? 'is-hidden' : '') + `"><a href="javascript:void(0);" onclick="window.vue.addFavorite('` + elem.all.permalink + `', function(){ document.getElementById('favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-add').classList.add('is-hidden'); document.getElementById('favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-remove').classList.remove('is-hidden'); });">Add to favorites</a>&nbsp;|&nbsp;</span><span id="favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-remove" class="` + ((!elem.hasFavorited) ? 'is-hidden' : '') + `"><a href="javascript:void(0);" onclick="window.vue.removeFavorite('` + elem.all.permalink + `', function(){ document.getElementById('favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-add').classList.remove('is-hidden'); document.getElementById('favorite-action-` + elem.all.subreddit + '-' + elem.all.name + `-remove').classList.add('is-hidden'); });">Remove from favorites</a>&nbsp;|&nbsp;</span>`;
 
             let html = `
                 <div class="item">
@@ -436,15 +431,21 @@ import Chart from 'chart.js/auto';
                         document.getElementById('spinner').remove();
                     }
 
-                    response.data.forEach(function(elem, index) {
-                        let content = window.vue.renderFavorite(elem.content);
+                    if (response.data.length > 0) {
+                        response.data.forEach(function(elem, index) {
+                            let content = window.vue.renderFavorite(elem.content);
 
-                        document.getElementById(target).innerHTML += content;
-                    });
+                            document.getElementById(target).innerHTML += content;
+                        });
 
-                    window.favoritePagination = response.data[response.data.length - 1].id;
+                        window.favoritePagination = response.data[response.data.length - 1].id;
 
-                    document.getElementById(target).innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchFavorites('` + target + `');">Load more</a><br/><br/></center></div>`;
+                        document.getElementById(target).innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchFavorites('` + target + `');">Load more</a><br/><br/></center></div>`;
+                    } else {
+                        if (window.favoritePagination === null) {
+                            document.getElementById(target).innerHTML += '<p>You don\'t have added any favorites yet.</p>';
+                        }
+                    }
                 }
             });
         },
@@ -474,7 +475,7 @@ import Chart from 'chart.js/auto';
                         </a>
                     </div>
                     <div class="favorite-actions">
-                        <a href="javascript:void(0);" onclick="if (confirm('Do you really want to remove this post?')) { window.vue.removeFavorite('` + elem.all.permalink + `'); document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove(); }">Remove</a>
+                        <a href="javascript:void(0);" onclick="if (confirm('Do you really want to remove this post?')) { window.vue.removeFavorite('` + elem.all.permalink + `', function() { document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove(); }); }">Remove</a>
                     </div>
                 </div>
             `;
@@ -482,7 +483,7 @@ import Chart from 'chart.js/auto';
             return html;
         },
 
-        addFavorite: function(ident) {
+        addFavorite: function(ident, successfunc = function(){}) {
             if (ident[0] == '/') {
                 ident = ident.substr(1);
             }
@@ -493,14 +494,12 @@ import Chart from 'chart.js/auto';
 
             window.vue.ajaxRequest('post', window.location.origin + '/favorites/add', { ident: ident }, function(response) {
                 if (response.code == 200) {
-                    alert('Favorite has been added');
-                } else {
-                    console.log(response.msg);
+                    successfunc();
                 }
             });
         },
 
-        removeFavorite: function(ident) {
+        removeFavorite: function(ident, successfunc = function(){}) {
             if (ident[0] == '/') {
                 ident = ident.substr(1);
             }
@@ -511,9 +510,7 @@ import Chart from 'chart.js/auto';
 
             window.vue.ajaxRequest('post', window.location.origin + '/favorites/remove', { ident: ident }, function(response) {
                 if (response.code == 200) {
-                    alert('Favorite has been removed');
-                } else {
-                    console.log(response.msg);
+                    successfunc();
                 }
             });
         },
