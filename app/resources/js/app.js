@@ -474,7 +474,7 @@ import Chart from 'chart.js/auto';
                         </a>
                     </div>
                     <div class="favorite-actions">
-                        <a href="javascript:void(0);" onclick="window.vue.removeFavorite('` + elem.all.permalink + `'); document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove();">Remove</a>
+                        <a href="javascript:void(0);" onclick="if (confirm('Do you really want to remove this post?')) { window.vue.removeFavorite('` + elem.all.permalink + `'); document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove(); }">Remove</a>
                     </div>
                 </div>
             `;
