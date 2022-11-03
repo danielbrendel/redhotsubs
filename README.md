@@ -18,6 +18,8 @@ where the bot can post hot postings of specific subs to Twitter using cards for 
 - Show user postings
 - Display specific post
 - Display useful infos about a post
+- Video section
+- Favorites
 - Twitter bot
 - Statistics (access token required)
 

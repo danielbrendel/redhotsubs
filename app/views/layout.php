@@ -206,6 +206,10 @@
 					}
 				}
 
+				if (document.getElementById('favorites')) {
+					window.vue.fetchFavorites('favorites');
+				}
+
 				@if ((isset($show_sub)) && (is_string($show_sub)) && (strlen($show_sub) > 0))
 					document.getElementById('media-content').innerHTML = '';
 					document.getElementById('current-sub').innerHTML = '{{ $show_sub }}';

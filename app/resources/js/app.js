@@ -288,6 +288,13 @@ import Chart from 'chart.js/auto';
                 </div>
             `;
 
+            let fav = '';
+            if (elem.hasFavorited) {
+                fav = `<a href="javascript:void(0);" onclick="window.vue.removeFavorite('` + elem.all.permalink + `');">Remove from favorites</a>&nbsp;|&nbsp;`;
+            } else {
+                fav = `<a href="javascript:void(0);" onclick="window.vue.addFavorite('` + elem.all.permalink + `');">Add to favorites</a>&nbsp;|&nbsp;`;
+            }
+
             let html = `
                 <div class="item">
                     <div class="item-header">
@@ -315,11 +322,14 @@ import Chart from 'chart.js/auto';
                     <div class="item-footer">
                         <div class="item-comments"><i class="far fa-comments"></i>&nbsp;` + elem.comment_amount + `</div>
                         <div class="item-subscribers"><i class="far fa-grin-stars"></i>&nbsp;` + elem.upvote_amount + `</div>
-                        <div class="item-goto"><a href="`+ elem.link + `">View post</a></div>
+                        <div class="item-right">
+                            ` + fav + `
+                            <a href="`+ elem.link + `">View post</a>
+                        </div>
                     </div>
                 </div>
             `;
-
+            
             return html;
         },
 
@@ -407,6 +417,105 @@ import Chart from 'chart.js/auto';
             }
 
             return result;
+        },
+
+        fetchFavorites: function(target) {
+            if (typeof window.favoritePagination === 'undefined') {
+                window.favoritePagination = null;
+            }
+
+            if (document.getElementById('loadmore')) {
+                document.getElementById('loadmore').remove();
+            }
+
+            document.getElementById(target).innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
+
+            window.vue.ajaxRequest('post', window.location.origin + '/favorites', { paginate: window.favoritePagination }, function(response) {
+                if (response.code == 200) {
+                    if (document.getElementById('spinner')) {
+                        document.getElementById('spinner').remove();
+                    }
+
+                    response.data.forEach(function(elem, index) {
+                        let content = window.vue.renderFavorite(elem.content);
+
+                        document.getElementById(target).innerHTML += content;
+                    });
+
+                    window.favoritePagination = response.data[response.data.length - 1].id;
+
+                    document.getElementById(target).innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchFavorites('` + target + `');">Load more</a><br/><br/></center></div>`;
+                }
+            });
+        },
+
+        renderFavorite: function(elem) {
+            let lnkname = elem.all.name.substr(elem.all.name.indexOf('_') + 1);
+            let pltitle = elem.all.permalink.substr(elem.all.permalink.indexOf(lnkname + '/') + lnkname.length + 1);
+            pltitle = pltitle.substr(0, pltitle.length - 1);
+
+            const FAV_TITLE_MAXLEN = 20;
+            let title = elem.title;
+            if (title.length > FAV_TITLE_MAXLEN) {
+                title = title.substr(0, FAV_TITLE_MAXLEN - 3) + '...';
+            }
+
+            let html = `
+                <div id="favorite-` + elem.all.subreddit + `-` + elem.all.name + `" class="favorite-item">
+                    <div class="favorite-content">
+                        <a href="` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `">
+                            <div class="media-card-item">
+                                <div class="media-card-item-title">
+                                    ` + title + `
+                                </div>
+
+                                <div class="media-card-item-image" style="background-image: url('` + elem.all.thumbnail + `');"></div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="favorite-actions">
+                        <a href="javascript:void(0);" onclick="window.vue.removeFavorite('` + elem.all.permalink + `'); document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove();">Remove</a>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        },
+
+        addFavorite: function(ident) {
+            if (ident[0] == '/') {
+                ident = ident.substr(1);
+            }
+
+            if (ident[ident.length - 1] == '/') {
+                ident = ident.substr(0, ident.length - 1);
+            }
+
+            window.vue.ajaxRequest('post', window.location.origin + '/favorites/add', { ident: ident }, function(response) {
+                if (response.code == 200) {
+                    alert('Favorite has been added');
+                } else {
+                    console.log(response.msg);
+                }
+            });
+        },
+
+        removeFavorite: function(ident) {
+            if (ident[0] == '/') {
+                ident = ident.substr(1);
+            }
+
+            if (ident[ident.length - 1] == '/') {
+                ident = ident.substr(0, ident.length - 1);
+            }
+
+            window.vue.ajaxRequest('post', window.location.origin + '/favorites/remove', { ident: ident }, function(response) {
+                if (response.code == 200) {
+                    alert('Favorite has been removed');
+                } else {
+                    console.log(response.msg);
+                }
+            });
         },
 
         renderStats: function(pw, elem, start, end = '') {

@@ -55,6 +55,10 @@
                 Videos
             </a>
 
+            <a class="navbar-item" href="{{ url('/favorites') }}">
+                Favorites
+            </a>
+
             @if (isset($subs))
             <div class="navbar-item has-dropdown is-hoverable" id="navbar-subs-dropdown">
                 <a class="navbar-link">

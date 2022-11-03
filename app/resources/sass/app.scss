@@ -115,6 +115,10 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     text-decoration: underline;
 }
 
+.has-bottom-space {
+    margin-bottom: 30px;
+}
+
 .input-dark {
     background-color: rgb(50, 50, 48);
     color: rgb(150, 150, 150);
@@ -367,9 +371,10 @@ a.dropdown-item:hover {
     color: rgb(150, 150, 150);
 }
 
-.item-goto {
+.item-right {
     display: inline-block;
     float: right;
+    color: rgb(120, 120, 120);
 }
 
 .footer {
@@ -558,4 +563,15 @@ a.dropdown-item:hover {
 .video-controls {
     margin-top: 15px;
     text-align: center;
+}
+
+.favorite-item {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.favorite-actions {
+    margin-top: -12px;
+    padding-left: 10px;
 }

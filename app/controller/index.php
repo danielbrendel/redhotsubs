@@ -89,6 +89,7 @@ class IndexController extends BaseController {
 				$item->diffForHumans = (new Carbon($item->all->created_utc))->diffForHumans();
 				$item->comment_amount = UtilsModule::countAsString($item->all->num_comments);
 				$item->upvote_amount = UtilsModule::countAsString($item->all->ups);
+				$item->hasFavorited = FavoritesModel::hasFavorited($item->all->permalink);
 			}
 
 			return json([
@@ -165,6 +166,7 @@ class IndexController extends BaseController {
 		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
 		$data->upvote_amount = UtilsModule::countAsString($data->all->ups);
+		$data->hasFavorited = FavoritesModel::hasFavorited($data->all->permalink);
 
 		$media = $data->media;
 		if ((strpos($media, 'redgifs.com') !== false) || (strpos($media, '.gif') !== false)) {
@@ -368,6 +370,110 @@ class IndexController extends BaseController {
 			return json([
 				'code' => 200,
 				'data' => $data
+			]);
+		} catch (\Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
+	 * Handles URL: /favorites
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function favorites($request)
+	{
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'favorites'],
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
+		], [
+			'page_title' => 'Favorites',
+			'categories' => AppSettingsModel::getCategories(),
+			'subs' => SubsModel::getAllSubs(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
+		]);
+	}
+
+	/**
+	 * Handles URL: /favorites
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function queryFavorites($request)
+	{
+		try {
+			$paginate = $request->params()->query('paginate', null);
+
+			$data = array();
+
+			$favs = FavoritesModel::queryFavorites($paginate);
+			foreach ($favs as $item) {
+				$itemdata = CrawlerModule::fetchContent($item->get('ident'), 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+				$itemdata = $itemdata[0];
+
+				$data[] = array('id' => $item->get('id'), 'hash' => $item->get('hash'), 'content' => $itemdata);
+			}
+
+			return json([
+				'code' => 200,
+				'data' => $data
+			]);
+		} catch (\Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
+	 * Handles URL: /favorites/add
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function addFavorite($request)
+	{
+		try {
+			$ident = $request->params()->query('ident', null);
+
+			FavoritesModel::addFavorite($ident);
+
+			return json([
+				'code' => 200
+			]);
+		} catch (\Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
+	 * Handles URL: /favorites/remove
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function removeFavorite($request)
+	{
+		try {
+			$ident = $request->params()->query('ident', null);
+
+			FavoritesModel::removeFavorite($ident);
+
+			return json([
+				'code' => 200
 			]);
 		} catch (\Exception $e) {
 			return json([
