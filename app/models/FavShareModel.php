@@ -12,20 +12,16 @@ class FavShareModel extends \Asatru\Database\Model
     public static function genShare()
     {
         try {
-            $token = '';
             $session = session_id();
+            $token = md5($session . '_' . date('Y-m-d H:i:s') . '_' . uniqid('', true));
             
             $exists = FavShareModel::raw('SELECT COUNT(*) as count FROM `' . self::tableName() . '` WHERE session = ?', [$session])->first();
             if ($exists->get('count') == 0) {
-                $token = md5(random_bytes(55));
-
                 FavShareModel::raw('INSERT INTO `' . self::tableName() . '` (token, session) VALUES(?, ?)', [
                     $token,
                     $session
                 ]);
             } else {
-                $token = md5(random_bytes(55));
-
                 FavShareModel::raw('UPDATE `' . self::tableName() . '` SET token = ? WHERE session = ?', [
                     $token,
                     $session
@@ -68,13 +64,18 @@ class FavShareModel extends \Asatru\Database\Model
         try {
             $session = session_id();
 
+            $alreadygen = FavShareModel::raw('SELECT COUNT(*) as count FROM `' . self::tableName() . '` WHERE session = ?', [$session])->first();
+            if ((!$alreadygen) || ($alreadygen->get('count') == 0)) {
+                FavSHareModel::genShare();
+            }
+
             $sessionData = FavShareModel::raw('SELECT session FROM `' . self::tableName() . '` WHERE token = ?', [$token])->first();
             if ($sessionData) {
                 $favs = FavoritesModel::getAllFavorites($sessionData->get('session'));
 
                 foreach ($favs as $fav) {
                     $exists = FavoritesModel::raw('SELECT COUNT(*) as count FROM `' . FavoritesModel::tableName() . '` WHERE hash = ? AND ident = ?', [$session, $fav->get('ident')])->first();
-                    if ($exists->get('count') == 0) {
+                    if ((!$exists) || ($exists->get('count') == 0)) {
                         FavoritesModel::raw('INSERT INTO `' . FavoritesModel::tableName() . '` (hash, ident) VALUES(?, ?)', [
                             $session,
                             $fav->get('ident')
