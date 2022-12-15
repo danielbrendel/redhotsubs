@@ -29,6 +29,8 @@ return [
     array('/favorites', 'POST', 'index@queryFavorites'),
     array('/favorites/add', 'POST', 'index@addFavorite'),
     array('/favorites/remove', 'POST', 'index@removeFavorite'),
+    array('/favorites/share/generate', 'POST', 'index@generateFavoriteToken'),
+    array('/favorites/share/import', 'POST', 'index@importFavorites'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),

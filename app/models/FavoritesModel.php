@@ -79,6 +79,19 @@ class FavoritesModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $hash
+     * @return mixed
+     */
+    public static function getAllFavorites($hash = null)
+    {
+        if ($hash === null) {
+            $hash = session_id();
+        }
+
+        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? ORDER BY id DESC', [$hash]);
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

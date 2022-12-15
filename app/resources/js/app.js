@@ -18,6 +18,8 @@ import Chart from 'chart.js/auto';
         appName: '',
         defaultSub: '',
         bShowAgeConsent: false,
+        bShowFavToken: false,
+        bShowImportFavs: false,
         bScrollAutoLoad: false
     },
 
@@ -515,6 +517,23 @@ import Chart from 'chart.js/auto';
             });
         },
 
+        genFavToken: function(out) {
+            window.vue.ajaxRequest('post', window.location.origin + '/favorites/share/generate', {}, function(response) {
+                if (response.code == 200) {
+                    document.getElementById(out).value = response.token;
+                }
+            });
+        },
+
+        importFavs: function(input) {
+            window.vue.ajaxRequest('post', window.location.origin + '/favorites/share/import', { token: document.getElementById(input).value }, function(response) {
+                if (response.code == 200) {
+                    alert('Import has completed');
+                    location.reload();
+                }
+            });
+        },
+
         renderStats: function(pw, elem, start, end = '') {
             window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start, end: end }, function(response){
                 if (response.code == 200) {
@@ -625,7 +644,7 @@ import Chart from 'chart.js/auto';
             el.select();
             document.execCommand('copy');
             document.body.removeChild(el);
-            alert('Link has been copied to clipboard.');
+            alert('Item has been copied to clipboard.');
         },
     }
  });
