@@ -88,7 +88,7 @@ class FavoritesModel extends \Asatru\Database\Model
             $hash = session_id();
         }
 
-        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? ORDER BY id DESC', [$hash]);
+        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? ORDER BY id ASC', [$hash]);
     }
 
     /**
