@@ -83,6 +83,10 @@
 
 						{%footer%}
 
+						@if (env('APP_ENABLEBOTTOMNAV'))
+							@include('bottomnav.php')
+						@endif
+
 						<div class="modal" :class="{'is-active': bShowAgeConsent}">
 							<div class="modal-background is-almost-not-transparent"></div>
 							<div class="modal-card">

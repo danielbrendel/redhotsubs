@@ -398,6 +398,12 @@ a.dropdown-item:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.scroll-to-top-above-bottomnav {
+    @media screen and (max-width: 1087px) {
+        bottom: 50px;
+    }
+}
+
 .page {
     padding: 20px;
 }
@@ -578,4 +584,42 @@ a.dropdown-item:hover {
 
 .has-small-button-next {
     width: 87%;
+}
+
+.bottomnav {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    background-color: rgb(150, 150, 150);
+    @media screen and (min-width: 1087px) {
+        display: none;
+    }
+}
+
+.bottomnav-items {
+    position: relative;
+    display: block;
+    width: 385px;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bottomnav-item {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 50px;
+    margin-top: 6px;
+    color: rgb(50, 50, 50);
+    text-align: center;
+}
+
+.bottomnav-item a {
+    color: rgb(50, 50, 50);
+}
+
+.bottomnav-item a:hover {
+    color: rgb(50, 50, 50);
+    text-decoration: none;
 }
