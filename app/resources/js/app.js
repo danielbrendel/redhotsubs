@@ -534,6 +534,17 @@ import Chart from 'chart.js/auto';
             });
         },
 
+        toggleSubsOverlay: function() {
+            if ((document.getElementById('subs-overlay').style.display === 'none') || (document.getElementById('subs-overlay').style.display === '')) {
+                document.getElementById('subs-overlay').style.display = 'inherit';
+                document.getElementById('subs-overlay-content').style.maxHeight = window.innerHeight + 'px';
+                document.getElementsByTagName('html')[0].style.overflowY = 'hidden';
+            } else {
+                document.getElementById('subs-overlay').style.display = 'none';
+                document.getElementsByTagName('html')[0].style.overflowY = 'inherit';
+            }
+        },
+
         renderStats: function(pw, elem, start, end = '') {
             window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start, end: end }, function(response){
                 if (response.code == 200) {
