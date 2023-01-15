@@ -54,7 +54,7 @@
 			@endforeach
 		</div>
 
-		@if ((is_object($featUsers)) && (count($featUsers) > 0))
+		@if ((isset($featUsers)) && (is_object($featUsers)) && (count($featUsers) > 0))
 			<div class="media-cards" id="media-cards">
 				<h3>Featured creators</h3>
 
@@ -75,23 +75,25 @@
 		@endif
 
 		@if (env('APP_SHOWTRENDINGUSERS'))
-			<div class="media-cards" id="media-cards">
-				<h3>Trending creators</h3>
+			@if ((isset($trendUsers)) && (is_object($trendUsers)) && (count($trendUsers) > 0))
+				<div class="media-cards" id="media-cards">
+					<h3>Trending creators</h3>
 
-				@foreach ($trendUsers as $trendUser)
-					<a href="{{ url('/user/' . $trendUser->get('username')) }}">
-						<div class="media-card-item">
-							<div class="media-card-item-title">
-								u/{{ $trendUser->get('username') }}
-							</div>
+					@foreach ($trendUsers as $trendUser)
+						<a href="{{ url('/user/' . $trendUser->get('username')) }}">
+							<div class="media-card-item">
+								<div class="media-card-item-title">
+									u/{{ $trendUser->get('username') }}
+								</div>
 
-							<div class="media-card-item-image" title="u/{{ $trendUser->get('username') }}">
-								<i class="fas fa-spinner fa-spin"></i>
+								<div class="media-card-item-image" title="u/{{ $trendUser->get('username') }}">
+									<i class="fas fa-spinner fa-spin"></i>
+								</div>
 							</div>
-						</div>
-					</a>
-				@endforeach
-			</div>
+						</a>
+					@endforeach
+				</div>
+			@endif
 		@endif
 
 		<div class="media-list">
