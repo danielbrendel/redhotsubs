@@ -315,7 +315,9 @@ class IndexController extends BaseController {
 		$user = $request->arg('ident');
 		$user = 'user/' . $user;
 
-		TrendingUserModel::addViewCount($user);
+		if ($user !== 'default') { //TODO: Why do sometimes queries of r/default and user/default happen?
+			TrendingUserModel::addViewCount($user);
+		}
 
 		return parent::view([
 			['navbar', 'navbar'],
