@@ -87,6 +87,9 @@
 							@include('bottomnav.php')
 						@endif
 
+						@include('subsoverlay.php')
+						@include('scroller.php')
+
 						<div class="modal" :class="{'is-active': bShowAgeConsent}">
 							<div class="modal-background is-almost-not-transparent"></div>
 							<div class="modal-card">

@@ -119,33 +119,4 @@
 		</div>
 		@endif
 	</div>
-
-	<div class="subs-overlay" id="subs-overlay">
-		<div class="subs-overlay-content" id="subs-overlay-content">
-			<a class="subs-overlay-content-close" href="javascript:void(0);" onclick="window.vue.toggleSubsOverlay();">Close</a>
-
-			<?php $lastCat = ''; ?>
-			@foreach ($subs as $sub)
-				<?php 
-					if ($lastCat !== $sub->get('category')) {
-						$lastCat = $sub->get('category');
-
-						echo '<div class="navbar-item is-nav-category">' . $sub->get('category') . '</div>';
-					} 
-				?>
-
-				<div class="media-list-item">
-					<a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
-						{{ $sub->get('sub_ident') }}
-					</a>
-				</div>
-			@endforeach
-		</div>
-	</div>
-
-	<div class="scroll-to-top {{ ((env('APP_ENABLEBOTTOMNAV')) ? 'scroll-to-top-above-bottomnav' : '' ) }}">
-		<div class="scroll-to-top-inner">
-			<a href="javascript:void(0);" onclick="window.scroll({top: 0, left: 0, behavior: 'smooth'}); if (document.getElementById('subs-overlay-content')) { document.getElementById('subs-overlay-content').scroll({top: 0, left: 0, behavior: 'smooth'}); }"><i class="fas fa-arrow-up fa-2x up-color"></i></a>
-		</div>
-	</div>
 </div>
