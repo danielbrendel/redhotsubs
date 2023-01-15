@@ -2,15 +2,15 @@
     <div class="bottomnav-items">
         <div class="bottomnav-item">
             <a href="{{ url('/') }}">
-                <div><i class="fas fa-globe"></i></div>
-                <div>Discover</div>
+                <div><i class="fas fa-home"></i></div>
+                <div>Home</div>
             </a>
         </div>
 
         <div class="bottomnav-item">
-            <a href="{{ url('/news') }}">
-                <div><i class="far fa-newspaper"></i></div>
-                <div>News</div>
+            <a href="javascript:void(0);" onclick="window.vue.toggleSubsOverlay();">
+                <div><i class="fas fa-th"></i></div>
+                <div>Subs</div>
             </a>
         </div>
 
