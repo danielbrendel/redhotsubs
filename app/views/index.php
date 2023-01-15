@@ -37,6 +37,8 @@
 		
 
 		<div class="media-cards" id="media-cards">
+			<h3>Featured subs</h3>
+
 			@foreach ($featured as $item)
 				<a href="{{ url('/' . $item) }}">
 					<div class="media-card-item">
@@ -54,6 +56,8 @@
 
 		@if ((is_object($featUsers)) && (count($featUsers) > 0))
 			<div class="media-cards" id="media-cards">
+				<h3>Featured creators</h3>
+
 				@foreach ($featUsers as $featUser)
 					<a href="{{ url('/user/' . $featUser->get('username')) }}">
 						<div class="media-card-item">
@@ -62,6 +66,26 @@
 							</div>
 
 							<div class="media-card-item-image" title="u/{{ $featUser->get('username') }}">
+								<i class="fas fa-spinner fa-spin"></i>
+							</div>
+						</div>
+					</a>
+				@endforeach
+			</div>
+		@endif
+
+		@if (env('APP_SHOWTRENDINGUSERS'))
+			<div class="media-cards" id="media-cards">
+				<h3>Trending creators</h3>
+
+				@foreach ($trendUsers as $trendUser)
+					<a href="{{ url('/user/' . $trendUser->get('username')) }}">
+						<div class="media-card-item">
+							<div class="media-card-item-title">
+								u/{{ $trendUser->get('username') }}
+							</div>
+
+							<div class="media-card-item-image" title="u/{{ $trendUser->get('username') }}">
 								<i class="fas fa-spinner fa-spin"></i>
 							</div>
 						</div>

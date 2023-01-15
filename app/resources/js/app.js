@@ -344,6 +344,8 @@ import Chart from 'chart.js/auto';
                     if (response.code == 200) {
                         elems[i].innerHTML = '';
                         elems[i].style.backgroundImage = 'url(\"' + response.data.image + '\")';
+                    } else {
+                        elems[i].parentElement.parentElement.style.display = 'none';
                     }
                 });
             }

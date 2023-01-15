@@ -44,6 +44,7 @@ class IndexController extends BaseController {
 			'subs' => $subs,
 			'featured' => $featured,
 			'featUsers' => FeaturedUserModel::getSelection(env('APP_FEATUREDUSERCOUNT', 3)),
+			'trendUsers' => TrendingUserModel::getTrendingUsers(date('Y-m-d', strtotime('-1 week')), env('APP_TRENDINGUSERCOUNT')),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
 	}
@@ -313,6 +314,8 @@ class IndexController extends BaseController {
 
 		$user = $request->arg('ident');
 		$user = 'user/' . $user;
+
+		TrendingUserModel::addViewCount($user);
 
 		return parent::view([
 			['navbar', 'navbar'],
