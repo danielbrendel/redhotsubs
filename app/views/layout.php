@@ -154,7 +154,7 @@
 			</div>
 		</div>
 
-		<script src="{{ asset('js/app.js') }}"></script>
+		<script src="{{ asset('js/app.js', true) }}"></script>
 		<script>
 			document.addEventListener('DOMContentLoaded', function(){
 				window.vue.appName = '{{ env('APP_NAME') }}';
