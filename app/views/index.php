@@ -26,9 +26,15 @@
 	</div>
 
 	<div class="media-content" id="media-content">
+		
 		<div class="media-info">
-			{!! AppSettingsModel::getAbout() !!}
+			<h2>{{ env('APP_HEADLINE') }}</h2>
+
+			@if (env('APP_INFOTEXTPOS', 'top') === 'top')
+				{!! AppSettingsModel::getAbout() !!}
+			@endif
 		</div>
+		
 
 		<div class="media-cards" id="media-cards">
 			@foreach ($featured as $item)
@@ -82,6 +88,12 @@
 				</div>
 			@endforeach
 		</div>
+
+		@if (env('APP_INFOTEXTPOS', 'top') === 'bottom')
+		<div class="media-info no-padding-top">
+			{!! AppSettingsModel::getAbout() !!}
+		</div>
+		@endif
 	</div>
 
 	<div class="subs-overlay" id="subs-overlay">
