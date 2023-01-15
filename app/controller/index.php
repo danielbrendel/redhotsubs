@@ -315,7 +315,7 @@ class IndexController extends BaseController {
 		$user = $request->arg('ident');
 		$user = 'user/' . $user;
 
-		if ($user !== 'default') { //TODO: Why do sometimes queries of r/default and user/default happen?
+		if (CrawlerModule::userExists($user)) {
 			TrendingUserModel::addViewCount($user);
 		}
 

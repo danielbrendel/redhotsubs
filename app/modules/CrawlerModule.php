@@ -95,4 +95,33 @@ class CrawlerModule
             throw $e;
         }
     }
+
+    /**
+     * @param $user
+     * @return bool
+     * @throws Exception
+     */
+    public static function userExists($user)
+    {
+        try {
+            if (strpos($user, '/') !== false) {
+                $user = substr($user, strpos($user, '/') + 1);
+            }
+
+            if (UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/user/' . $user . '/about/.json') != 200) {
+                return false;
+            }
+
+            $data = json_decode(file_get_contents(RFCrawler::URL_REDDIT . '/user/' . $user . '/about/.json'));
+            if ($data) {
+                if ((isset($data->data->name)) && ($data->data->name === $user) && (isset($data->data->total_karma)) && ($data->data->total_karma >= env('APP_TRENDINGUSERMINKARMA'))) {
+                    return true;
+                }
+            }
+
+            return false;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

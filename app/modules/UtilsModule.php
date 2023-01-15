@@ -32,4 +32,19 @@ class UtilsModule {
             throw $e;
         }
     }
+
+    /**
+     * @param $url
+     * @return int
+     * @throws Exception
+     */
+    public static function getResponseCode($url)
+    {
+        try {
+            $result = get_headers($url);
+            return (int)substr($result[0], 9, 3);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
