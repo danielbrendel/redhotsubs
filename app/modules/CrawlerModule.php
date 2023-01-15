@@ -114,7 +114,7 @@ class CrawlerModule
 
             $data = json_decode(file_get_contents(RFCrawler::URL_REDDIT . '/user/' . $user . '/about/.json'));
             if ($data) {
-                if ((isset($data->data->name)) && ($data->data->name === $user) && (isset($data->data->total_karma)) && ($data->data->total_karma >= env('APP_TRENDINGUSERMINKARMA'))) {
+                if ((isset($data->data->name)) && ($data->data->name === $user) && (isset($data->data->total_karma)) && ($data->data->total_karma >= env('APP_TRENDINGUSERMINKARMA')) && ((!isset($data->data->is_suspended)) || (!$data->data->is_suspended))) {
                     return true;
                 }
             }
