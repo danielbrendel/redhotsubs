@@ -35,6 +35,7 @@ class SubsModel_Migration
         $this->database->add('cat_video BOOLEAN NOT NULL');
         $this->database->add('featured BOOLEAN NOT NULL DEFAULT 0');
         $this->database->add('twitter_posting BOOLEAN NOT NULL DEFAULT 0');
+        $this->database->add('last_check TIMESTAMP NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }

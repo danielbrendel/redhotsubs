@@ -124,4 +124,28 @@ class CrawlerModule
             throw $e;
         }
     }
+
+    /**
+     * @param $sub
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getSubStatus($sub)
+    {
+        try {
+            $response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/r/' . $sub . '/about/.json');
+            if ($response_code != 200) {
+                $result = new \stdClass();
+                $result->error = $response_code;
+                $result->message = 'Not Found';
+                $result->reason = null;
+                return $result;
+            }
+
+            $data = json_decode(file_get_contents(RFCrawler::URL_REDDIT . '/r/' . $sub . '/about/.json'));
+            return $data;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

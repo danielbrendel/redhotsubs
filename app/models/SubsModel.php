@@ -91,6 +91,48 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getErrorSubs($limit = 1)
+    {
+        try {
+            $result = [];
+
+            $subs = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE last_check IS NULL LIMIT ' . $limit);
+
+            if ($subs->count() == 0) {
+                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = NULL');
+                return $result;
+            }
+
+            foreach ($subs as $sub) {
+                $subname = $sub->get('sub_ident');
+                if (strpos($subname, 'r/') !== false) {
+                    $subname = substr($subname, 2);
+                }
+                
+                $status = CrawlerModule::getSubStatus($subname);
+                if ((isset($status->error)) && ($status->error == 404)) {
+                    $result[] = [
+                        'name' => $subname,
+                        'error' => $status->error,
+                        'reason' => ((isset($status->reason)) ? $status->reason : null)
+                    ];
+                }
+
+                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = CURRENT_TIMESTAMP WHERE id = ?', [
+                    $sub->get('id')
+                ]);
+            }
+
+            return $result;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

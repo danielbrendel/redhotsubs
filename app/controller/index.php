@@ -762,6 +762,35 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /cronjob/errorsubs/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function check_subs($request)
+	{
+		try {
+			if ($request->arg('pw') !== env('APP_SUBSPASSWORD')) {
+				throw new Exception('Invalid password');
+			}
+
+			$subs = SubsModel::getErrorSubs(env('APP_ERRORSUBSCHECKCOUNT', 1));
+			foreach ($subs as $sub) {
+				ErrorSubsModel::addToTable($sub['name'], $sub['error'], $sub['reason']);
+			}
+
+			return json([
+				'code' => 200
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /cronjob/twitter/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

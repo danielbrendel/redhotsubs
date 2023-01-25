@@ -39,6 +39,7 @@ return [
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
     array('/stats/query/{pw}/online', 'ANY', 'index@queryOnlineCount'),
     array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),
+    array('/cronjob/errorsubs/{pw}', 'ANY', 'index@check_subs'),
     array('/sitemap', 'GET', 'index@sitemap'),
     array('$404', 'ANY', 'error404@index')
 ];
