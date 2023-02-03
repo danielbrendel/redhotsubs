@@ -173,17 +173,22 @@ class IndexController extends BaseController {
 		if ((strpos($media, 'redgifs.com') !== false) || (strpos($media, '.gif') !== false)) {
 			$media = $data->all->thumbnail;
 		}
+
+		$additional_meta = [
+			'og:title' => $data->title,
+			'og:description' => env('APP_DESCRIPTION'),
+			'og:url' => url('/p/' . $sub . '/' . $ident . '/' . $title),
+			'og:image' => $media
+		];
 		
 		if (env('TWITTERBOT_ENABLEMETA')) {
-			$additional_meta = [
+			$additional_meta = array_merge($additional_meta, [
 				'twitter:card' => 'summary',
 				'twitter:title' => $data->title,
 				'twitter:site' => url('/'),
 				'twitter:description' => env('APP_DESCRIPTION'),
 				'twitter:image' => $media,
-			];
-		} else {
-			$additional_meta = null;
+			]);
 		}
 
 		return parent::view([

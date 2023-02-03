@@ -10,7 +10,7 @@
 
 		@if ((isset($additional_meta)) && (is_array($additional_meta)))
 			@foreach ($additional_meta as $key => $value)
-				<meta name="{{ $key }}" content="{{ $value }}">
+				<meta name="{{ $key }}" property="{{ $key }}" content="{{ $value }}">
 			@endforeach
 		@endif
 		
