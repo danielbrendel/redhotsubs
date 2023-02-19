@@ -39,12 +39,6 @@
         @endif
 
         <div class="navbar-end">
-            @if (env('APP_TWITTERFEED') !== null)
-            <a class="navbar-item" href="{{ url('/news') }}">
-                News
-            </a>
-            @endif
-
             @if (env('APP_ENABLEAPPPAGE'))
             <a class="navbar-item" href="{{ url('/getapp') }}">
                 App
@@ -53,6 +47,10 @@
 
             <a class="navbar-item" href="{{ url('/video') }}">
                 Videos
+            </a>
+
+            <a class="navbar-item" href="{{ url('/creators') }}">
+                Creators
             </a>
 
             <a class="navbar-item" href="{{ url('/favorites') }}">

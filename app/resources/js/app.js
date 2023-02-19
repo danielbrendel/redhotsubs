@@ -536,6 +536,62 @@ import Chart from 'chart.js/auto';
             });
         },
 
+        fetchCreators: function(target) {
+            if (typeof window.creatorPagination === 'undefined') {
+                window.creatorPagination = null;
+            }
+
+            if (document.getElementById('loadmore')) {
+                document.getElementById('loadmore').remove();
+            }
+
+            document.getElementById(target).innerHTML += '<div id="spinner"><center><br/><i class="fas fa-spinner fa-spin"></i><br/><br/></center></div>';
+
+            window.vue.ajaxRequest('post', window.location.origin + '/creators/fetch', { paginate: window.creatorPagination }, function(response) {
+                if (response.code == 200) {
+                    if (document.getElementById('spinner')) {
+                        document.getElementById('spinner').remove();
+                    }
+
+                    if (response.data.length > 0) {
+                        response.data.forEach(function(elem, index) {
+                            let content = window.vue.renderCreator(elem);
+                            
+                            document.getElementById(target).innerHTML += content;
+                        });
+
+                        window.creatorPagination = response.data[response.data.length - 1].count;
+
+                        document.getElementById(target).innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchCreators('` + target + `');">Load more</a><br/><br/></center></div>`;
+                    
+                        window.vue.renderCardImages();
+                    } else {
+                        if (window.creatorPagination === null) {
+                            document.getElementById(target).innerHTML += '<p>No data yet.</p>';
+                        }
+                    }
+                }
+            });
+        },
+
+        renderCreator: function(elem) {
+            let html = `
+                <a href="` + window.location.origin + '/user/' + elem.username + `">
+                    <div class="media-card-item">
+                        <div class="media-card-item-title">
+                            u/` + elem.username + `
+                        </div>
+
+                        <div class="media-card-item-image" title="u/` + elem.username + `">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </a>
+            `;
+
+            return html;
+        },
+
         toggleSubsOverlay: function() {
             if ((document.getElementById('subs-overlay').style.display === 'none') || (document.getElementById('subs-overlay').style.display === '')) {
                 document.getElementById('subs-overlay').style.display = 'inherit';

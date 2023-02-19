@@ -31,6 +31,8 @@ return [
     array('/favorites/remove', 'POST', 'index@removeFavorite'),
     array('/favorites/share/generate', 'POST', 'index@generateFavoriteToken'),
     array('/favorites/share/import', 'POST', 'index@importFavorites'),
+    array('/creators', 'GET', 'index@creators'),
+    array('/creators/fetch', 'ANY', 'index@fetchCreators'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/news', 'GET', 'index@news'),

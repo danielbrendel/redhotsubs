@@ -1,5 +1,7 @@
 <?php
 
+use RFCrawler\RFCrawler;
+
 /**
  * Class UtilsModule
  */
@@ -43,6 +45,25 @@ class UtilsModule {
         try {
             $result = get_headers($url);
             return (int)substr($result[0], 9, 3);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $username
+     * @return mixed
+     * @throws Exception
+     */
+    public static function userValid($username)
+    {
+        try {
+            $response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/user/' . $username . '/about/.json');
+            if ($response_code != 200) {
+                return false;
+            }
+
+            return true;
         } catch (Exception $e) {
             throw $e;
         }

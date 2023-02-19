@@ -40,19 +40,28 @@ class TrendingUserModel extends \Asatru\Database\Model
      * Get trending users from date up to now
      * 
      * @param $fromDate
+     * @param $limit
+     * @param $paginate
      * @return mixed
      * @throws \Exception
      */
-    public static function getTrendingUsers($fromDate = null, $limit = 3)
+    public static function getTrendingUsers($fromDate = null, $limit = 3, $paginate = null)
     {
         try {
             if ($fromDate === null) {
                 $fromDate = date('Y-m-d', strtotime('-1 week'));
             }
 
-            $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `' . self::tableName() . '` WHERE DATE(created_at) > ? GROUP BY username ORDER BY count DESC LIMIT ' . $limit, [
-                $fromDate
-            ]);
+            if ($paginate === null) {
+                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `' . self::tableName() . '` WHERE DATE(created_at) > ? GROUP BY username ORDER BY count DESC LIMIT ' . $limit, [
+                    $fromDate
+                ]);
+            } else {
+                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `' . self::tableName() . '` WHERE DATE(created_at) > ? GROUP BY username HAVING count < ? ORDER BY count DESC LIMIT ' . $limit, [
+                    $fromDate,
+                    (int)$paginate
+                ]);
+            }
 
             return $rows;
         } catch (\Exception $e) {
