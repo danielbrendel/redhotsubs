@@ -368,16 +368,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.65.0",
+            "version": "2.66.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "09acf64155c16dc6f580f36569ae89344e9734a3"
+                "reference": "496712849902241f04902033b0441b269effe001"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/09acf64155c16dc6f580f36569ae89344e9734a3",
-                "reference": "09acf64155c16dc6f580f36569ae89344e9734a3",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/496712849902241f04902033b0441b269effe001",
+                "reference": "496712849902241f04902033b0441b269effe001",
                 "shasum": ""
             },
             "require": {
@@ -466,7 +466,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-06T15:55:01+00:00"
+            "time": "2023-01-29T18:53:47+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -958,16 +958,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.31",
+            "version": "8.5.32",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "33c126b09a42de5c99e5e8032b54e8221264a74e"
+                "reference": "375686930d05c9fd7d20f6e5fc38121e8d7a9d55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/33c126b09a42de5c99e5e8032b54e8221264a74e",
-                "reference": "33c126b09a42de5c99e5e8032b54e8221264a74e",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/375686930d05c9fd7d20f6e5fc38121e8d7a9d55",
+                "reference": "375686930d05c9fd7d20f6e5fc38121e8d7a9d55",
                 "shasum": ""
             },
             "require": {
@@ -1035,7 +1035,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.31"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/8.5.32"
             },
             "funding": [
                 {
@@ -1051,7 +1051,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-28T05:57:37+00:00"
+            "time": "2023-01-26T08:30:25+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
