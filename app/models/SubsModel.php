@@ -102,7 +102,7 @@ class SubsModel extends \Asatru\Database\Model
             $subs = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE last_check IS NULL LIMIT ' . $limit);
 
             if ($subs->count() == 0) {
-                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = NULL');
+                //SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = NULL');
                 return $result;
             }
 
