@@ -788,7 +788,7 @@ class IndexController extends BaseController {
 				'count_total' => $visits_total,
 				'start' => $start,
 				'end' => $end,
-				'day_diff' => $dayDiff
+				'day_diff' => (int)$dayDiff
 			]);
 		} catch (Exception $e) {
 			return json([
