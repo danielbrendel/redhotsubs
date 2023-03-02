@@ -459,7 +459,7 @@ import Chart from 'chart.js/auto';
             let pltitle = elem.all.permalink.substr(elem.all.permalink.indexOf(lnkname + '/') + lnkname.length + 1);
             pltitle = pltitle.substr(0, pltitle.length - 1);
 
-            const FAV_TITLE_MAXLEN = 20;
+            const FAV_TITLE_MAXLEN = 19;
             let title = elem.title;
             if (title.length > FAV_TITLE_MAXLEN) {
                 title = title.substr(0, FAV_TITLE_MAXLEN - 3) + '...';
@@ -468,18 +468,16 @@ import Chart from 'chart.js/auto';
             let html = `
                 <div id="favorite-` + elem.all.subreddit + `-` + elem.all.name + `" class="favorite-item">
                     <div class="favorite-content">
-                        <a href="` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `">
-                            <div class="media-card-item">
-                                <div class="media-card-item-title">
-                                    ` + title + `
-                                </div>
-
-                                <div class="media-card-item-image" style="background-image: url('` + elem.all.thumbnail + `');"></div>
+                        <div class="media-card-item">
+                            <div class="media-card-item-title">
+                                <div class="is-inline-block"><a href="` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `">` + title + `</a></div>
+                                <div class="is-inline-block float-right" title="Remove"><a href="javascript:void(0);" onclick="if (confirm('Do you really want to remove this post?')) { window.vue.removeFavorite('` + elem.all.permalink + `', function() { document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove(); }); }"><i class="fas fa-trash-alt"></i></a></div>
                             </div>
-                        </a>
-                    </div>
-                    <div class="favorite-actions">
-                        <a href="javascript:void(0);" onclick="if (confirm('Do you really want to remove this post?')) { window.vue.removeFavorite('` + elem.all.permalink + `', function() { document.getElementById('favorite-` + elem.all.subreddit + `-` + elem.all.name + `').remove(); }); }">Remove</a>
+
+                            <a href="` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `">
+                                <div class="media-card-item-image" style="background-image: url('` + elem.all.thumbnail + `');"></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
             `;

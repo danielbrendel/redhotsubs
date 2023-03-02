@@ -123,6 +123,10 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     margin-bottom: 30px;
 }
 
+.float-right {
+    float: right;
+}
+
 .input-dark {
     background-color: rgb(50, 50, 48);
     color: rgb(150, 150, 150);
@@ -273,7 +277,6 @@ a.dropdown-item:hover {
     margin-bottom: 20px;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 4px;
-    cursor: pointer;
 }
 
 .media-card-item:hover {
@@ -285,6 +288,10 @@ a.dropdown-item:hover {
     font-size: 1.2em;
     color: rgb(200, 200, 200);
     background-color: rgb(100, 100, 100);
+}
+
+.media-card-item-title a {
+    color: rgb(200, 200, 200);
 }
 
 .media-card-item-image {
