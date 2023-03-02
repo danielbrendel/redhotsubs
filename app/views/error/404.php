@@ -1,17 +1,11 @@
 <!-- Error 404 yield file -->
 
-<div class="outer">
-	<div class="inner">
-        <div class="title">
-            <h1>Error 404</h1>
-        </div>
+<div class="media-frame">
+	<div class="page">
+        <h1>Oops!</h1>
 
-        <div class="text">
-            <p>The requested resource <?= $_SERVER['REQUEST_URI']; ?> was not found on the server.</p>
-        </div>
+        <p>We could not find <strong class="text-bright">{{ $_SERVER['REQUEST_URI'] }}</strong> here on {{ env('APP_NAME') }}</p>
 
-        <div class="links">
-            <button type="button" class="button btn-col-contact" onclick="location.href = '{{ url('/') }}';">Go home</button>
-        </div>
+        <small>Error 404</small>
     </div>
 </div>
