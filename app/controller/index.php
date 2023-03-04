@@ -421,13 +421,9 @@ class IndexController extends BaseController {
 
 			$favs = FavoritesModel::queryFavorites($paginate);
 			foreach ($favs as $item) {
-				$itemdata = CrawlerModule::fetchContent($item->get('ident'), 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+				$itemdata = CrawlerModule::queryCachedPost($item->get('ident'));
 				
-				if (isset($itemdata[0])) {
-					$itemdata = $itemdata[0];
-
-					$data[] = array('id' => $item->get('id'), 'hash' => $item->get('hash'), 'content' => $itemdata);
-				}
+				$data[] = array('id' => $item->get('id'), 'hash' => $item->get('hash'), 'content' => $itemdata);
 			}
 
 			return json([

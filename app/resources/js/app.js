@@ -434,14 +434,16 @@ import Chart from 'chart.js/auto';
                     if (document.getElementById('spinner')) {
                         document.getElementById('spinner').remove();
                     }
-
+                    
                     if (response.data.length > 0) {
                         response.data.forEach(function(elem, index) {
-                            let content = window.vue.renderFavorite(elem.content);
+                            if (elem.content !== null) {
+                                let content = window.vue.renderFavorite(elem.content);
 
-                            document.getElementById(target).innerHTML += content;
+                                document.getElementById(target).innerHTML += content;
+                            }
                         });
-
+                        
                         window.favoritePagination = response.data[response.data.length - 1].id;
 
                         document.getElementById(target).innerHTML += `<div id="loadmore"><center><br/><a id="loadmore-anchor" href="javascript:void(0);" onclick="window.vue.fetchFavorites('` + target + `');">Load more</a><br/><br/></center></div>`;
