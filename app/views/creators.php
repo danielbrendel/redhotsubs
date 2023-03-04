@@ -4,6 +4,6 @@
     <p>Browse through trending creators</p>
 
     <div class="page-content">
-        <div id="creators"></div>
+        <div id="creators" class="creators"></div>
     </div>
 </div>

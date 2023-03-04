@@ -11,6 +11,6 @@
         </p>
         @endif
 
-        <div id="favorites"></div>
+        <div id="favorites" class="favorites"></div>
     </div>
 </div>

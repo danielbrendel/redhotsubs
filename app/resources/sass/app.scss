@@ -259,6 +259,9 @@ a.dropdown-item:hover {
 
 .media-cards {
     padding: 20px;
+    @media screen and (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .media-cards h3 {
@@ -288,6 +291,9 @@ a.dropdown-item:hover {
     font-size: 1.2em;
     color: rgb(200, 200, 200);
     background-color: rgb(100, 100, 100);
+    @media screen and (max-width: 450px) {
+        text-align: left;
+    }
 }
 
 .media-card-item-title a {
@@ -630,6 +636,12 @@ a.dropdown-item:hover {
 .favorite-actions {
     margin-top: -12px;
     padding-left: 10px;
+}
+
+.creators, .favorites {
+    @media screen and (max-width: 450px) {
+        text-align: center;
+    }
 }
 
 .has-small-button-next {
