@@ -148,4 +148,27 @@ class CrawlerModule
             throw $e;
         }
     }
+
+    /**
+     * @param $dest
+     * @return string
+     * @throws Exception
+     */
+    public static function queryThumbnail($dest)
+    {
+        try {
+            $image = CacheModel::remember($dest . '_thumbnail', 60 * 3, function() use ($dest) {
+                $content = CrawlerModule::fetchContent($dest . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
+                if (count($content) > 0) {
+                    return $content[0]->all->thumbnail;
+                } else {
+                    return '';
+                }
+            });
+            
+            return $image;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

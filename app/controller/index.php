@@ -116,21 +116,14 @@ class IndexController extends BaseController {
 		try {
 			$sub = $request->params()->query('sub');
 			
-			$content = CrawlerModule::fetchContent($sub . '/', 'hot', '', array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
-
-			if (count($content) > 0) {
-				return json([
-					'code' => 200,
-					'data' => [
-						'sub' => $sub,
-						'image' => $content[0]->all->thumbnail
-					]
-				]);
-			}
+			$thumbnail = CrawlerModule::queryThumbnail($sub);
 
 			return json([
-				'code' => 404,
-				'data' => null
+				'code' => 200,
+				'data' => [
+					'sub' => $sub,
+					'image' => $thumbnail
+				]
 			]);
 		} catch (Exception $e) {
 			return json([
