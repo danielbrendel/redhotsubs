@@ -164,7 +164,7 @@ class CrawlerModule
                 if (count($content) > 0) {
                     return $content[0]->all->thumbnail;
                 } else {
-                    return '';
+                    return null;
                 }
             });
             

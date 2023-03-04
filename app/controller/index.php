@@ -118,6 +118,13 @@ class IndexController extends BaseController {
 			
 			$thumbnail = CrawlerModule::queryThumbnail($sub);
 
+			if ($thumbnail === null) {
+				return json([
+					'code' => 404,
+					'data' => null
+				]);
+			}
+
 			return json([
 				'code' => 200,
 				'data' => [
