@@ -19,7 +19,7 @@
     "prefer-stable": true,
 	"require": {
         "php": ">=7.4.6",
-		"danielbrendel/asatru-php-framework": "^1.0",
+		"danielbrendel/asatru-php-framework": "dev-main",
         "phpmailer/phpmailer": "^6.1",
         "nesbot/carbon": "^2.0",
         "danielbrendel/rfcrawler": "dev-main",
