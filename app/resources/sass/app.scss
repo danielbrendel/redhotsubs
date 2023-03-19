@@ -239,6 +239,14 @@ a.dropdown-item:hover {
     background-color: rgba(31, 220, 40, 0.1);
 }
 
+.info-content-green a:hover {
+    color: rgb(94, 167, 255);
+}
+
+.info-content-green strong {
+    color: rgb(185, 185, 185);
+}
+
 .info-box-violet {
     border: 1px solid rgb(130, 130, 255);
 }
@@ -251,6 +259,18 @@ a.dropdown-item:hover {
 .info-content-violet {
     color: rgb(150, 150, 150);
     background-color: rgba(130, 130, 255, 0.4);
+}
+
+.info-content-violet a {
+    color: rgb(68, 143, 234);
+}
+
+.info-content-violet a:hover {
+    color: rgb(94, 167, 255);
+}
+
+.info-content-violet strong {
+    color: rgb(185, 185, 185);
 }
 
 .info-box-red {
@@ -267,6 +287,10 @@ a.dropdown-item:hover {
     background-color: rgba(205, 40, 38, 0.1);
 }
 
+.info-content-red strong {
+    color: rgb(185, 185, 185);
+}
+
 .info-box-blue {
     border: 1px solid rgb(20, 85, 143);
 }
@@ -279,6 +303,10 @@ a.dropdown-item:hover {
 .info-content-blue {
     color: rgb(150, 150, 150);
     background-color: rgba(23, 0, 168, 0.3);
+}
+
+.info-content-blue strong {
+    color: rgb(185, 185, 185);
 }
 
 .media-frame {
