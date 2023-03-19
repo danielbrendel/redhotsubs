@@ -695,7 +695,7 @@ import Chart from 'chart.js/auto';
                 }
             });
 
-            setTimeout(function() { window.vue.updateOnlineCount(target, pw); }, 10000);
+            setTimeout(function() { window.vue.updateOnlineCount(target, pw); }, 1000 * 60);
         },
 
         toggleDropdown: function(elem) {
