@@ -213,7 +213,10 @@ a.dropdown-item:hover {
 }
 
 .info-title {
-    padding: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     font-size: 1.3em;
     font-weight: bold;
 }
@@ -223,7 +226,7 @@ a.dropdown-item:hover {
 }
 
 .info-box-green {
-    border: 3px solid rgb(20, 143, 25);
+    border: 1px solid rgb(20, 143, 25);
 }
 
 .info-header-green {
@@ -237,7 +240,7 @@ a.dropdown-item:hover {
 }
 
 .info-box-violet {
-    border: 3px solid rgb(130, 130, 255);
+    border: 1px solid rgb(130, 130, 255);
 }
 
 .info-header-violet {
@@ -251,7 +254,7 @@ a.dropdown-item:hover {
 }
 
 .info-box-red {
-    border: 3px solid rgb(123, 68, 68);
+    border: 1px solid rgb(123, 68, 68);
 }
 
 .info-header-red {
@@ -265,7 +268,7 @@ a.dropdown-item:hover {
 }
 
 .info-box-blue {
-    border: 3px solid rgb(20, 85, 143);
+    border: 1px solid rgb(20, 85, 143);
 }
 
 .info-header-blue {
