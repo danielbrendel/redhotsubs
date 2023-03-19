@@ -124,7 +124,13 @@ class AppSettingsModel extends \Asatru\Database\Model
     {
         try {
             $item = AppSettingsModel::where('id', '=', 1)->first();
-            return $item->get('info_style');
+            $value = $item->get('info_style');
+
+            if ((!is_string($value)) || (strlen($value) === 0)) {
+                return 'violet';
+            }
+
+            return $value;
         } catch (Exception $e) {
             throw $e;
         }
