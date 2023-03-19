@@ -117,6 +117,20 @@ class AppSettingsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return string
+     * @throws Exception
+     */
+    public static function getInfoStyle()
+    {
+        try {
+            $item = AppSettingsModel::where('id', '=', 1)->first();
+            return $item->get('info_style');
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * @return array
      * @throws Exception
      */
