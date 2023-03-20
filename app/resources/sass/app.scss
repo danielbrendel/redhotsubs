@@ -358,6 +358,13 @@ a.dropdown-item:hover {
     margin-bottom: 20px;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 4px;
+    @media screen and (max-width: 450px) {
+        width: 154px;
+        height: 154px;
+        margin-left: 1px;
+        margin-right: 1px;
+        margin-bottom: 7px;
+    }
 }
 
 .media-card-item:hover {
@@ -371,6 +378,7 @@ a.dropdown-item:hover {
     background-color: rgb(100, 100, 100);
     @media screen and (max-width: 450px) {
         text-align: left;
+        font-size: 0.9em;
     }
 }
 
@@ -383,6 +391,9 @@ a.dropdown-item:hover {
     background-size: cover;
     width: 100%;
     height: 76%;
+    @media screen and (max-width: 450px) {
+        height: 73%;
+    }
 }
 
 .media-list {
