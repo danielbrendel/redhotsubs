@@ -63,6 +63,10 @@ class UtilsModule {
                 return false;
             }
 
+            if (UserBlacklistModel::listed($username)) {
+                return false;
+            }
+
             return true;
         } catch (Exception $e) {
             throw $e;

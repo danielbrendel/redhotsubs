@@ -86,7 +86,14 @@ class IndexController extends BaseController {
 			
 			$content = CrawlerModule::fetchContent($sub, $sorting, $after, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'), $sortStyle);
 
-			foreach ($content as &$item) {
+			foreach ($content as $key => &$item) {
+				if (isset($item->author)) {
+					if (UserBlacklistModel::listed($item->author)) {
+						unset($content[$key]);
+						continue;
+					}
+				}
+
 				$item->diffForHumans = (new Carbon($item->all->created_utc))->diffForHumans();
 				$item->comment_amount = UtilsModule::countAsString($item->all->num_comments);
 				$item->upvote_amount = UtilsModule::countAsString($item->all->ups);
@@ -95,7 +102,7 @@ class IndexController extends BaseController {
 
 			return json([
 				'code' => 200,
-				'data' => (array)$content
+				'data' => array_values((array)$content)
 			]);
 		} catch (Exception $e) {
 			return json([
@@ -163,6 +170,12 @@ class IndexController extends BaseController {
 
 		$data = CrawlerModule::fetchContent($fetchdest, 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
 		$data = $data[0];
+
+		if (isset($data->author)) {
+			if (UserBlacklistModel::listed($data->author)) {
+				return abort(404);
+			}
+		}
 		
 		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
@@ -220,8 +233,13 @@ class IndexController extends BaseController {
 		$ident = base64_decode($ident);
 
 		$data = CrawlerModule::fetchContent($ident, 'ignore', null, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'));
-		
 		$data = $data[0];
+
+		if (isset($data->author)) {
+			if (UserBlacklistModel::listed($data->author)) {
+				return abort(404);
+			}
+		}
 		
 		$data->diffForHumans = (new Carbon($data->all->created_utc))->diffForHumans();
 		$data->comment_amount = UtilsModule::countAsString($data->all->num_comments);
@@ -429,6 +447,12 @@ class IndexController extends BaseController {
 			$favs = FavoritesModel::queryFavorites($paginate);
 			foreach ($favs as $item) {
 				$itemdata = CrawlerModule::queryCachedPost($item->get('ident'));
+
+				if (isset($itemdata->author)) {
+					if (UserBlacklistModel::listed($itemdata->author)) {
+						continue;
+					}
+				}
 				
 				$data[] = array('id' => $item->get('id'), 'hash' => $item->get('hash'), 'content' => $itemdata);
 			}

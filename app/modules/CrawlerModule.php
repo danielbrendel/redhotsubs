@@ -91,8 +91,20 @@ class CrawlerModule
             $content = [];
 
             $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
+
+            $attempts = 0;
+            $retitem = null;
+
+            while ($attempts < 10) {
+                $retitem = $content[rand(0, count($content) - 1)];
+                if ((isset($retitem->author)) && (UserBlacklistModel::listed($retitem->author))) {
+                    $attempts++;
+                } else {
+                    break;
+                }
+            }
    
-            return $content[rand(0, count($content) - 1)];
+            return $retitem;
         } catch (Exception $e) {
             throw $e;
         }
