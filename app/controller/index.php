@@ -672,6 +672,66 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /contact
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function contact($request)
+	{
+		return parent::view([
+			['navbar', 'navbar'],
+			['cookies', 'cookies'],
+			['info', 'info'],
+			['content', 'contact'],
+			['footer', 'footer'],
+			['navdesktop', 'navdesktop']
+		], [
+			'page_title' => 'Contact',
+			'captcha' => CaptchaModel::createSum(session_id()),
+			'subjects' => ContactSubjectModel::getAll(),
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
+		]);
+	}
+
+	/**
+	 * Handles URL: /contact
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function addContact($request)
+	{
+		try {
+			$name = $request->params()->query('name', null);
+			$email = $request->params()->query('email', null);
+			$subject = $request->params()->query('subject', null);
+			$content = $request->params()->query('content', null);
+			$captcha = $request->params()->query('captcha', null);
+
+			$sum = CaptchaModel::querySum(session_id());
+			if ($sum !== $captcha) {
+				throw new \Exception('Please enter the correct captcha');
+			}
+
+			if ((is_string($name)) && (strlen($name) > 0) && (is_string($email)) && (strlen($email) > 0) && (is_string($subject)) && (strlen($subject) > 0) && (is_string($content)) && (strlen($content) > 0)) {
+				ContactModel::addEntry($name, $email, $subject, $content);
+			} else {
+				throw new \Exception('Please fill out the entire form');
+			}
+
+			return json([
+				'code' => 200
+			]);
+		} catch (\Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /news
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

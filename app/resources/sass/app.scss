@@ -150,6 +150,18 @@ a.dropdown-item:hover {
     color: rgb(100, 100, 100);
 }
 
+.label {
+    color: rgb(150, 150, 150);
+}
+
+.input, .textarea {
+    background-color: rgb(100, 100, 100);
+}
+
+.input::placeholder, .textarea::placeholder, .select::placeholder {
+    color: rgb(20, 20, 20);
+}
+
 .cookie-consent {
     position: relative;
     display: none;

@@ -35,6 +35,8 @@ return [
     array('/creators/fetch', 'ANY', 'index@fetchCreators'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
+    array('/contact', 'GET', 'index@contact'),
+    array('/contact', 'POST', 'index@addContact'),
     array('/news', 'GET', 'index@news'),
     array('/getapp', 'GET', 'index@app'),
     array('/stats/{pw}', 'GET', 'index@stats'),

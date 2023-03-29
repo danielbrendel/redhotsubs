@@ -603,6 +603,24 @@ import Chart from 'chart.js/auto';
             }
         },
 
+        contactRequest: function() {
+            window.vue.ajaxRequest('post', window.location.origin + '/contact', {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                content: document.getElementById('content').value,
+                captcha: document.getElementById('captcha').value
+            }, function(response) {
+                if (response.code == 200) {
+                    alert('Thank you for contacting us. We will get back to you as soon as possible.');
+                } else {
+                    alert(response.msg);
+                }
+
+                location.reload();
+            });
+        },
+
         renderStats: function(pw, elem, start, end = '') {
             window.vue.ajaxRequest('post', window.location.origin + '/stats/query/' + pw, { start: start, end: end }, function(response){
                 if (response.code == 200) {

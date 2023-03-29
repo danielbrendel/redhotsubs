@@ -5,7 +5,7 @@
         <div class="column is-8">
             <div class="footer-frame">
                 <div class="footer-content">
-                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} | <a class="link-light-dark" href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/privacy') }}">Privacy policy</a> | Visits: {{ $view_count }} | 
+                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} | <a class="link-light-dark" href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/privacy') }}">Privacy policy</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/contact') }}">Contact</a> | Visits: {{ $view_count }} | 
 
                     @if (env('APP_REDDITHOME') !== null)
                         &nbsp;<a class="is-link-grey" title="Reddit" href="https://www.reddit.com/r/{{ env('APP_REDDITHOME') }}"><i class="fab fa-reddit"></i></a>
