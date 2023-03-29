@@ -49,7 +49,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link" onclick="window.vue.contactRequest();" onsubmit="return false;">Submit</button>
+                <button class="button is-link" onclick="window.vue.contactRequest();">Submit</button>
             </div>
         </div>
     </div>
