@@ -679,6 +679,10 @@ class IndexController extends BaseController {
 	 */
 	public function contact($request)
 	{
+		if (!env('APP_ENABLECONTACT')) {
+			return redirect('/');
+		}
+
 		return parent::view([
 			['navbar', 'navbar'],
 			['cookies', 'cookies'],
@@ -703,6 +707,10 @@ class IndexController extends BaseController {
 	public function addContact($request)
 	{
 		try {
+			if (!env('APP_ENABLECONTACT')) {
+				throw new \Exception('Contact feature is currently deactivated');
+			}
+
 			$name = $request->params()->query('name', null);
 			$email = $request->params()->query('email', null);
 			$subject = $request->params()->query('subject', null);

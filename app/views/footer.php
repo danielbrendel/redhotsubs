@@ -26,7 +26,12 @@
                     </div>
 
                     <div>
-                        <a class="link-light-dark" href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/privacy') }}">Privacy policy</a>&nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/contact') }}">Contact</a>
+                        <a class="link-light-dark" href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;
+                        <a class="link-light-dark" href="{{ url('/privacy') }}">Privacy policy</a>
+
+                        @if (env('APP_ENABLECONTACT'))
+                            &nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/contact') }}">Contact</a>
+                        @endif
                     </div>
                 </div>
             </div>
