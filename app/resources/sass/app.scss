@@ -534,6 +534,9 @@ a.dropdown-item:hover {
     color: rgb(150, 150, 150);
     background-color: rgb(80, 80, 80);
     padding: 1rem 1.5rem 1rem;
+    @media screen and (min-width: 769px) {
+        padding-bottom: 35px;
+    }
 }
 
 .scroll-to-top {
@@ -572,9 +575,9 @@ a.dropdown-item:hover {
 
 .footer-frame {
     width: 100%;
-    @media screen and (min-width: 769px) {
+    /*@media screen and (min-width: 769px) {
         height: 76px;
-    }
+    }*/
 }
 
 .footer-content {

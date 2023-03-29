@@ -33,6 +33,10 @@
                             &nbsp;&bull;&nbsp;<a class="link-light-dark" href="{{ url('/contact') }}">Contact</a>
                         @endif
                     </div>
+
+                    @if (env('APP_SHOWFOOTERVISITS'))
+                        <div>Visits: {{ $view_count }}</div>
+                    @endif
                 </div>
             </div>
         </div>
