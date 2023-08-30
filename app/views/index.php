@@ -28,10 +28,10 @@
 	<div class="media-content" id="media-content">
 		
 		<div class="media-info">
-			<h2>{{ env('APP_HEADLINE') }}</h2>
+			<h2 class="is-index-headline">{{ env('APP_HEADLINE') }}</h2>
 
 			@if (env('APP_INFOTEXTPOS', 'top') === 'top')
-				{!! AppSettingsModel::getAbout() !!}
+				<div class="is-infotext-top">{!! AppSettingsModel::getAbout() !!}</div>
 			@endif
 		</div>
 		

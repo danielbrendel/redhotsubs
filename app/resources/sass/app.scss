@@ -56,6 +56,17 @@ a:hover {
     font-weight: bold;
 }
 
+.is-index-headline {
+    margin-top: 15px;
+    @media screen and (max-width: 815px) {
+        text-align: center;
+    }
+}
+
+.is-infotext-top {
+    margin-top: 30px;
+}
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.0);
 }
