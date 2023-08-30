@@ -239,7 +239,7 @@ import Chart from 'chart.js/auto';
         renderPost: function(elem) {
             let mediaContent = '';
 
-            if (elem.all.domain === 'redgifs.com') {
+            if (elem.all.domain.includes('redgifs.com')) {
                 mediaContent = `<center>
                     <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elem.all.id + `'), 'https://www.redditmedia.com/mediaembed/` + elem.all.id + `');" style="background-image: url('` + elem.all.thumbnail + `');">
                         <div class="media-video-preview-overlay">    

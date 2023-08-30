@@ -14,7 +14,7 @@
             <div class="item-title">{{ $post_data->title }}</div>
     
             <div class="item-media" id="item-media-{{ $post_data->all->id }}">
-                @if ($post_data->all->domain === 'redgifs.com')
+                @if (strpos($post_data->all->domain, 'redgifs.com') !== false)
                     <center>
                     <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-{{ $post_data->all->id }}'), 'https://www.redditmedia.com/mediaembed/{{ $post_data->all->id }}');" style="background-image: url('{{ $post_data->all->thumbnail }}');">
                         <div class="media-video-preview-overlay">    
