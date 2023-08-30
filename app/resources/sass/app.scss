@@ -743,6 +743,14 @@ a.dropdown-item:hover {
     padding-left: 10px;
 }
 
+.fav-icon-add {
+    color:rgb(20, 143, 25);
+}
+
+.fav-icon-remove {
+    color: rgb(154, 73, 69);
+}
+
 .creators, .favorites {
     @media screen and (max-width: 450px) {
         text-align: center;
