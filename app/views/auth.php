@@ -37,84 +37,76 @@
 
     <body>
         <div id="main">
-            <div class="container">
-				<div class="columns">
-					<div class="column is-2 non-mobile"></div>
+            <div class="auth">
+                <div class="auth-header">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo"/>
 
-					<div class="column is-8">
-                        <div class="auth">
-                            <div class="auth-header">
-                                <img src="{{ asset('img/logo.png') }}" alt="Logo"/>
+                    <h1>{{ env('APP_NAME') }}</h1>
+                </div>
 
-                                <h1>{{ env('APP_NAME') }}</h1>
-                            </div>
+                <div class="auth-hint">
+                    Currently private mode is activated. Please enter your authentication token in order to view the content.
+                </div>
 
-                            <div class="auth-hint">
-                                Currently private mode is activated. Please enter your authentication token in order to view the content.
-                            </div>
+                @if (FlashMessage::hasMsg('error'))
+                <div class="auth-info">
+                    {{ FlashMessage::getMsg('error') }}
+                </div>
+                @endif
 
-                            @if (FlashMessage::hasMsg('error'))
-                            <div class="auth-info">
-                                {{ FlashMessage::getMsg('error') }}
-                            </div>
-                            @endif
+                <div class="auth-form">
+                    <form method="POST" action="{{ url('/auth') }}">
+                        @csrf
 
-                            <div class="auth-form">
-                                <form method="POST" action="{{ url('/auth') }}">
-                                    @csrf
-
-                                    <div class="field">
-                                        <div class="control">
-                                            <input type="text" class="input" name="token" required/>
-                                        </div>
-                                    </div>
-
-                                    <div class="field">
-                                        <div class="control">
-                                            <input type="submit" class="button is-link" value="Submit"/>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
-                            <div class="auth-contact">
-                                Need help? Send us an e-mail: <a href="mailto:{{ env('APP_CONTACT') }}">{{ env('APP_CONTACT') }}</a>
-                            </div>
-
-                            <div class="auth-footer">
-                                <div class="auth-footer-social">
-                                    @if (env('APP_REDDITHOME') !== null)
-                                        &nbsp;<a title="Reddit" href="https://www.reddit.com/r/{{ env('APP_REDDITHOME') }}"><i class="fab fa-reddit"></i></a>
-                                    @endif
-
-                                    @if (env('APP_TWITTERFEED') !== null)
-                                        &nbsp;<a title="Twitter" href="https://twitter.com/{{ env('APP_TWITTERFEED') }}"><i class="fab fa-twitter"></i></a>
-                                    @endif
-
-                                    @if (env('APP_INSTAFEED') !== null)
-                                        &nbsp;<a title="Instagram" href="https://www.instagram.com/{{ env('APP_INSTAFEED') }}"><i class="fab fa-instagram"></i></a>
-                                    @endif
-
-                                    @if (env('APP_DISCORDHOME') !== null)
-                                        &nbsp;<a title="Discord" href="{{ env('APP_DISCORDHOME') }}"><i class="fab fa-discord"></i></a>
-                                    @endif
-                                </div>
-
-                                <div class="auth-footer-info">
-                                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} |  
-
-                                    @if (env('APP_ENABLEAPPPAGE'))
-                                        <a href="{{ url('/getapp') }}">App</a>&nbsp;&bull;&nbsp;
-                                    @endif
-
-                                    <a href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;
-                                    <a href="{{ url('/privacy') }}">Privacy policy</a>
-                                </div>
+                        <div class="field">
+                            <div class="control">
+                                <input type="text" class="input" name="token" required/>
                             </div>
                         </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" class="button is-link" value="Submit"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="auth-contact">
+                    Need help? Send us an e-mail: <a href="mailto:{{ env('APP_CONTACT') }}">{{ env('APP_CONTACT') }}</a>
+                </div>
+
+                <div class="auth-footer">
+                    <div class="auth-footer-social">
+                        @if (env('APP_REDDITHOME') !== null)
+                            &nbsp;<a title="Reddit" href="https://www.reddit.com/r/{{ env('APP_REDDITHOME') }}"><i class="fab fa-reddit"></i></a>
+                        @endif
+
+                        @if (env('APP_TWITTERFEED') !== null)
+                            &nbsp;<a title="Twitter" href="https://twitter.com/{{ env('APP_TWITTERFEED') }}"><i class="fab fa-twitter"></i></a>
+                        @endif
+
+                        @if (env('APP_INSTAFEED') !== null)
+                            &nbsp;<a title="Instagram" href="https://www.instagram.com/{{ env('APP_INSTAFEED') }}"><i class="fab fa-instagram"></i></a>
+                        @endif
+
+                        @if (env('APP_DISCORDHOME') !== null)
+                            &nbsp;<a title="Discord" href="{{ env('APP_DISCORDHOME') }}"><i class="fab fa-discord"></i></a>
+                        @endif
                     </div>
 
-                    <div class="column is-2 non-mobile"></div>
+                    <div class="auth-footer-info">
+                        <div>&copy; {{ date('Y') }} by {{ env('APP_NAME') }}</div>
+
+                        <div>
+                            @if (env('APP_ENABLEAPPPAGE'))
+                                <a href="{{ url('/getapp') }}">App</a>&nbsp;&bull;&nbsp;
+                            @endif
+
+                            <a href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;
+                            <a href="{{ url('/privacy') }}">Privacy policy</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

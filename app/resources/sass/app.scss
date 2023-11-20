@@ -833,13 +833,12 @@ a.dropdown-item:hover {
 }
 
 .auth {
-    position: fixed;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     padding: 20px;
-    top: 10%;
-    @media screen and (min-width: 1472px) {
-        left: 27%;
-    }
 }
 
 .auth-header {
