@@ -31,7 +31,9 @@ class BaseController extends Asatru\Controller\Controller {
 			} catch (\Exception $e) {
 				$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-				if ($url !== '/auth') {
+				$allowed_urls = array('/getapp', '/news', '/imprint', '/privacy', '/contact');
+
+				if (($url !== '/auth') && (!in_array($url, $allowed_urls))) {
 					header('Location: /auth');
 					exit();
 				}
