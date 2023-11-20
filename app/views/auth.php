@@ -80,6 +80,37 @@
                             <div class="auth-contact">
                                 Need help? Send us an e-mail: <a href="mailto:{{ env('APP_CONTACT') }}">{{ env('APP_CONTACT') }}</a>
                             </div>
+
+                            <div class="auth-footer">
+                                <div class="auth-footer-social">
+                                    @if (env('APP_REDDITHOME') !== null)
+                                        &nbsp;<a title="Reddit" href="https://www.reddit.com/r/{{ env('APP_REDDITHOME') }}"><i class="fab fa-reddit"></i></a>
+                                    @endif
+
+                                    @if (env('APP_TWITTERFEED') !== null)
+                                        &nbsp;<a title="Twitter" href="https://twitter.com/{{ env('APP_TWITTERFEED') }}"><i class="fab fa-twitter"></i></a>
+                                    @endif
+
+                                    @if (env('APP_INSTAFEED') !== null)
+                                        &nbsp;<a title="Instagram" href="https://www.instagram.com/{{ env('APP_INSTAFEED') }}"><i class="fab fa-instagram"></i></a>
+                                    @endif
+
+                                    @if (env('APP_DISCORDHOME') !== null)
+                                        &nbsp;<a title="Discord" href="{{ env('APP_DISCORDHOME') }}"><i class="fab fa-discord"></i></a>
+                                    @endif
+                                </div>
+
+                                <div class="auth-footer-info">
+                                    &copy; {{ date('Y') }} by {{ env('APP_NAME') }} |  
+
+                                    @if (env('APP_ENABLEAPPPAGE'))
+                                        <a href="{{ url('/app') }}">App</a>&nbsp;&bull;&nbsp;
+                                    @endif
+
+                                    <a href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;
+                                    <a href="{{ url('/privacy') }}">Privacy policy</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

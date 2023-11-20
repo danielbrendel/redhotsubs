@@ -835,12 +835,14 @@ a.dropdown-item:hover {
     font-size: 2.5em;
     font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+    color: rgb(100, 100, 100);
 }
 
 .auth-hint {
     position: relative;
     margin-top: 35px;
     margin-bottom: 45px;
+    color: rgb(100, 100, 100);
 }
 
 .auth-info {
@@ -860,4 +862,26 @@ a.dropdown-item:hover {
 .auth-contact {
     position: relative;
     margin-top: 50px;
+    color: rgb(100, 100, 100);
+}
+
+.auth-footer {
+    position: relative;
+    margin-top: 35px;
+    font-size: 0.7em;
+    color: rgb(76, 76, 76);
+}
+
+.auth-footer-social {
+    position: relative;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+}
+
+.auth-footer-info {
+    position: relative;
+}
+
+.auth-footer a {
+    color: rgb(76, 76, 76);
 }
