@@ -614,7 +614,7 @@ class IndexController extends BaseController {
 					$data[] = array('count' => $item->get('count'), 'username' => $item->get('username'));
 				}
 			}
-
+			
 			return json([
 				'code' => 200,
 				'data' => $data

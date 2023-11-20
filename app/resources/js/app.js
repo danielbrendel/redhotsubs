@@ -282,7 +282,7 @@ import Chart from 'chart.js/auto';
                             <a onclick="window.vue.toggleDropdown(document.getElementById(''post-share-` + elem.id + `'));" href="sms:000000000?body=` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `" class="dropdown-item is-color-black">
                                 <i class="fas fa-sms"></i>&nbsp;Share with SMS
                             </a>
-                            <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + ` - ` + elem.title + `'); window.vue.toggleDropdown(document.getElementById('post-share-` + elem.id + `'));" class="dropdown-item is-color-black">
+                            <a href="javascript:void(0)" onclick="window.vue.copyToClipboard('` + window.location.origin + '/p/' + elem.all.subreddit + '/' + elem.all.name + '/' + pltitle + `'); window.vue.toggleDropdown(document.getElementById('post-share-` + elem.id + `'));" class="dropdown-item is-color-black">
                                 <i class="far fa-copy"></i>&nbsp;Copy to Clipboard
                             </a>
                         </div>

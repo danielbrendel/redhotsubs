@@ -43,8 +43,44 @@ class UtilsModule {
     public static function getResponseCode($url)
     {
         try {
-            $result = get_headers($url);
-            return (int)substr($result[0], 9, 3);
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_USERAGENT, env('APP_USERAGENT'));
+            curl_setopt($curl, CURLOPT_HEADER, 1);
+            curl_setopt($curl, CURLOPT_NOBODY, 1);
+
+            $response = curl_exec($curl);
+            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+            curl_close($curl);
+            
+            return $httpcode;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $url
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getRemoteContents($url)
+    {
+        try {
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_USERAGENT, env('APP_USERAGENT'));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            
+            return $response;
         } catch (Exception $e) {
             throw $e;
         }
@@ -59,6 +95,7 @@ class UtilsModule {
     {
         try {
             $response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/user/' . $username . '/about/.json');
+            
             if ($response_code != 200) {
                 return false;
             }

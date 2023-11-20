@@ -27,6 +27,6 @@ where the bot can post hot postings of specific subs to Twitter using cards for 
 
 ## System requirements
 The app is being developed with the following environment. Other environments may work, too.
-- PHP ^8.0
+- PHP ^8.2
 - MySQL 10.4.27-MariaDB
 - Standard PHP extensions
