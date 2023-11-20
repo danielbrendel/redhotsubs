@@ -104,7 +104,7 @@
                                     &copy; {{ date('Y') }} by {{ env('APP_NAME') }} |  
 
                                     @if (env('APP_ENABLEAPPPAGE'))
-                                        <a href="{{ url('/app') }}">App</a>&nbsp;&bull;&nbsp;
+                                        <a href="{{ url('/getapp') }}">App</a>&nbsp;&bull;&nbsp;
                                     @endif
 
                                     <a href="{{ url('/imprint') }}">Imprint</a>&nbsp;&bull;&nbsp;
