@@ -8,18 +8,20 @@ __GitHub__: https://github.com/danielbrendel
 Released under the MIT license
 
 ## Description
-RedHotSubs is a free NSFW client for Reddit. It shows curated NSFW subs where posts can be sorted
-by hot, top and new posts. It can also show postings of users. It does also have a Twitter bot feature
-where the bot can post hot postings of specific subs to Twitter using cards for media preview.
+RedHotSubs is a free NSFW client for Reddit. It is intended to view curated NSFW content from
+NSFW Subreddits. This application gives you the opportunity to comfortably browse through 
+NSFW content without any hassle. It has various features that round it up as a rich-featured
+NSFW client. The system can be set up as public or private depending on the use case.
 
 ## Features
 - Browse curated Subreddits
 - Sort by hot, top and new
 - Show user postings
-- Display specific post
+- Display single posts
 - Display useful infos about a post
 - Video section
 - Trending creators
+- Featured creators
 - Favorites
 - Twitter bot
 - Statistics (access token required)
