@@ -809,3 +809,55 @@ a.dropdown-item:hover {
     color: rgb(50, 50, 50);
     text-decoration: none;
 }
+
+.auth {
+    position: fixed;
+    text-align: center;
+    padding: 20px;
+    top: 10%;
+    @media screen and (min-width: 1472px) {
+        left: 27%;
+    }
+}
+
+.auth-header {
+    position: relative;
+}
+
+.auth-header img {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+}
+
+.auth-header h1 {
+    font-size: 2.5em;
+    font-family: Quicksand, Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.auth-hint {
+    position: relative;
+    margin-top: 35px;
+    margin-bottom: 45px;
+}
+
+.auth-info {
+    position: relative;
+    margin-bottom: 43px;
+    color: rgb(154, 73, 69);
+}
+
+.auth-form {
+    position: relative;
+}
+
+.auth-form input[type=submit] {
+    width: 100%;
+}
+
+.auth-contact {
+    position: relative;
+    margin-top: 50px;
+}

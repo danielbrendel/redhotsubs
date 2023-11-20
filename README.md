@@ -23,6 +23,7 @@ where the bot can post hot postings of specific subs to Twitter using cards for 
 - Favorites
 - Twitter bot
 - Statistics (access token required)
+- Toggable authentication feature
 
 ## System requirements
 The app is being developed with the following environment. Other environments may work, too.

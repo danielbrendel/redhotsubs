@@ -39,6 +39,8 @@ return [
     array('/contact', 'POST', 'index@addContact'),
     array('/news', 'GET', 'index@news'),
     array('/getapp', 'GET', 'index@app'),
+    array('/auth', 'GET', 'index@view_auth'),
+    array('/auth', 'POST', 'index@auth'),
     array('/stats/{pw}', 'GET', 'index@stats'),
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
     array('/stats/query/{pw}/online', 'ANY', 'index@queryOnlineCount'),

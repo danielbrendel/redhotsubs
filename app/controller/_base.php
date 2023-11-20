@@ -24,6 +24,19 @@ class BaseController extends Asatru\Controller\Controller {
 		}
 
 		ViewCountModel::addToCount($_SERVER['REMOTE_ADDR']);
+
+		if (env('APP_PRIVATEMODE', false)) {
+			try {
+				AuthModel::verify();
+			} catch (\Exception $e) {
+				$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+				if ($url !== '/auth') {
+					header('Location: /auth');
+					exit();
+				}
+			}
+		}
 	}
 
 	/**

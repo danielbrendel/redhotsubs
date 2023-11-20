@@ -789,6 +789,45 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /auth
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler|Asatru\View\RedirectHandler
+	 */
+	public function view_auth($request)
+	{
+		if (!env('APP_PRIVATEMODE')) {
+			return redirect('/');
+		}
+
+		$view = new Asatru\View\ViewHandler();
+		$view->setLayout('auth');
+		$view->setVars(['view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())]);
+
+		return $view;
+	}
+
+	/**
+	 * Handles URL: /auth
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function auth($request)
+	{
+		try {
+			$token = $request->params()->query('token', null);
+			
+			AuthModel::activate($token);
+
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return back();
+		}
+	}
+
+	/**
 	 * Handles URL: /stats/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
