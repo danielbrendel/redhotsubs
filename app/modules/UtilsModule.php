@@ -63,6 +63,30 @@ class UtilsModule {
     }
 
     /**
+     * @param $url
+     * @return mixed
+     * @throws Exception
+     */
+    public static function getRemoteContents($url)
+    {
+        try {
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_USERAGENT, env('APP_USERAGENT'));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            
+            return $response;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * @param $username
      * @return mixed
      * @throws Exception
