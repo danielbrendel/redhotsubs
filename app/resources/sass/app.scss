@@ -726,6 +726,9 @@ a.dropdown-item:hover {
 
 .video-title {
     margin-bottom: 23px;
+    @media screen and (max-width: 768px) {
+        margin-bottom: 45px;
+    }
     text-align: center;
 }
 
@@ -743,13 +746,22 @@ a.dropdown-item:hover {
     @media screen and (min-width: 1089px) {
         display: none;
     }
+    @media screen and (max-width: 768px) {
+        margin: -20px;
+    }
 }
 
 .video-content {
+    @media screen and (max-width: 768px) {
+        margin: -20px;
+    }
 }
 
 .video-controls {
     margin-top: 15px;
+    @media screen and (max-width: 768px) {
+        margin-top: 35px;
+    }
     text-align: center;
 }
 
