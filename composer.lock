@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "90bb11742dccd99e08cc0c159e4a280e",
+    "content-hash": "df0ead948b888afb0b7ec2a960e068ae",
     "packages": [
         {
             "name": "abraham/twitteroauth",
@@ -187,56 +187,6 @@
                 "source": "https://github.com/danielbrendel/dnyAsatruPHP-Framework/tree/v1.0"
             },
             "time": "2023-06-15T13:20:50+00:00"
-        },
-        {
-            "name": "danielbrendel/rfcrawler",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/danielbrendel/rfcrawler.git",
-                "reference": "58f0c3dce963e68cfa31b1ca05720289ad9f7d69"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/danielbrendel/rfcrawler/zipball/58f0c3dce963e68cfa31b1ca05720289ad9f7d69",
-                "reference": "58f0c3dce963e68cfa31b1ca05720289ad9f7d69",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "RFCrawler\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Brendel",
-                    "email": "dbrendel1988@gmail.com"
-                }
-            ],
-            "description": "PHP Reddit Feed Crawler",
-            "keywords": [
-                "crawler",
-                "library",
-                "php",
-                "reddit"
-            ],
-            "support": {
-                "issues": "https://github.com/danielbrendel/rfcrawler/issues",
-                "source": "https://github.com/danielbrendel/rfcrawler/tree/main"
-            },
-            "time": "2022-05-04T23:54:30+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2297,8 +2247,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "danielbrendel/asatru-php-framework": 20,
-        "danielbrendel/rfcrawler": 20
+        "danielbrendel/asatru-php-framework": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

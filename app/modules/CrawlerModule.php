@@ -1,6 +1,7 @@
 <?php
 
-use RFCrawler\RFCrawler;
+/** Require Reddit crawler helper component */
+require_once app_path('/helper/RFCrawler.php');
 
 /**
  * Class CrawlerModule
