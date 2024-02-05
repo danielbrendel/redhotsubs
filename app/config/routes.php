@@ -36,12 +36,12 @@ return [
     array('/video', 'GET', 'content@showVideo'),
     array('/content/video', 'GET', 'content@fetchVideo'),
 
-    array('/favorites', 'GET', 'index@favorites'),
-    array('/favorites', 'POST', 'index@queryFavorites'),
-    array('/favorites/add', 'POST', 'index@addFavorite'),
-    array('/favorites/remove', 'POST', 'index@removeFavorite'),
-    array('/favorites/share/generate', 'POST', 'index@generateFavoriteToken'),
-    array('/favorites/share/import', 'POST', 'index@importFavorites'),
+    array('/favorites', 'GET', 'favorites@favorites'),
+    array('/favorites', 'POST', 'favorites@queryFavorites'),
+    array('/favorites/add', 'POST', 'favorites@addFavorite'),
+    array('/favorites/remove', 'POST', 'favorites@removeFavorite'),
+    array('/favorites/share/generate', 'POST', 'favorites@generateFavoriteToken'),
+    array('/favorites/share/import', 'POST', 'favorites@importFavorites'),
 
     array('/creators', 'GET', 'index@creators'),
     array('/creators/fetch', 'ANY', 'index@fetchCreators'),

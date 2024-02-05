@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class represents your controller
+ * Content controller
  */
 class ContentController extends BaseController {
     const INDEX_LAYOUT = 'layout';

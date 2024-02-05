@@ -213,7 +213,7 @@ class CrawlerModule
                 }
             });
 
-            return json_decode($data);
+            return ($data) ? json_decode($data) : null;
         } catch (Exception $e) {
             throw $e;
         }
