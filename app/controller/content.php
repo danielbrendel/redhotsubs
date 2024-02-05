@@ -4,8 +4,6 @@
  * Content controller
  */
 class ContentController extends BaseController {
-    const INDEX_LAYOUT = 'layout';
-
 	/**
 	 * Perform base initialization
 	 * 
@@ -13,7 +11,7 @@ class ContentController extends BaseController {
 	 */
 	public function __construct()
 	{
-		parent::__construct(self::INDEX_LAYOUT);
+		parent::__construct($this->layout);
 	}
 
     /**

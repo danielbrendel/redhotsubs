@@ -4,8 +4,6 @@
  * Cronjobs controller
  */
 class CronjobsController extends BaseController {
-    const INDEX_LAYOUT = 'layout';
-
 	/**
 	 * Perform base initialization
 	 * 
@@ -13,7 +11,7 @@ class CronjobsController extends BaseController {
 	 */
 	public function __construct()
 	{
-		parent::__construct(self::INDEX_LAYOUT);
+		parent::__construct($this->layout);
 	}
 
     /**
