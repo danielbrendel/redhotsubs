@@ -121,7 +121,6 @@ class CrawlerModule
      * @param $user
      * @return bool
      * @throws Exception
-     * @deprecated Use OAuth request
      */
     public static function userExists($user)
     {
@@ -134,7 +133,13 @@ class CrawlerModule
                 return false;
             }
 
-            $data = UtilsModule::getRemoteContents(RFCrawler::URL_REDDIT . '/user/' . $user . '/about/.json');
+            $crawler = new RFCrawler('user/' . $user . '/about/.json', env('APP_USERAGENT'), [], [
+                'user' => env('REDDIT_CLIENT_ID'),
+                'password' => env('REDDIT_CLIENT_SECRET')
+            ]);
+
+            $data = $crawler->fetchUrl();
+
             if ($data) {
                 if ((isset($data->data->name)) && ($data->data->name === $user) && (isset($data->data->total_karma)) && ($data->data->total_karma >= env('APP_TRENDINGUSERMINKARMA')) && ((!isset($data->data->is_suspended)) || (!$data->data->is_suspended))) {
                     return true;
