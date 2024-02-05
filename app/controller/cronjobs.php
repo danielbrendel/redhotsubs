@@ -15,7 +15,7 @@ class CronjobsController extends BaseController {
 	}
 
     /**
-	 * Handles URL: /cronjob/errorsubs/{pw}
+	 * Handles URL: /cronjob/subs/errorneous/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
 	 * @return Asatru\View\JsonHandler
@@ -31,6 +31,32 @@ class CronjobsController extends BaseController {
 			foreach ($subs as $sub) {
 				ErrorSubsModel::addToTable($sub['name'], $sub['error'], $sub['reason']);
 			}
+
+			return json([
+				'code' => 200
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
+	 * Handles URL: /cronjob/subs/description/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function sub_descriptions($request)
+	{
+		try {
+			if ($request->arg('pw') !== env('APP_SUBSPASSWORD')) {
+				throw new Exception('Invalid password');
+			}
+
+			SubsModel::updateSubDescriptions(env('APP_DESCSUBSCHECKCOUNT', 1), env('APP_DESCSUBREFRESHHOURS', 24), env('APP_DESCSUBMAXLEN', 30));
 
 			return json([
 				'code' => 200

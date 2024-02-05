@@ -433,21 +433,45 @@ a.dropdown-item:hover {
     padding: 20px;
 }
 
+.media-list-title {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
 .media-list-item {
     position: relative;
     display: inline-block;
+    min-width: 243px;
+    @media screen and (max-width: 532px) {
+        width: 93%;
+    }
     font-size: 1.2em;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    background-color: rgb(41, 41, 41);
+    border-radius: 20px;
 }
 
-.media-list-item a {
+.media-list-item-title {
+
+}
+
+.media-list-item-title a {
     color: rgb(150, 150, 150);
 }
 
-.media-list-item a:hover {
+.media-list-item-title a:hover {
     color: rgb(180, 180, 180);
+}
+
+
+.media-list-item-description {
+
 }
 
 .item {

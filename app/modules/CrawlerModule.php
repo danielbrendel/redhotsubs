@@ -206,6 +206,31 @@ class CrawlerModule
     }
 
     /**
+     * @param $sub
+     * @return mixed
+     * @throws \Exception
+     */
+    public static function querySubDescription($sub)
+    {
+        try {
+            $crawler = new RFCrawler('r/' . $sub . '/about/.json', env('APP_USERAGENT'), [], [
+                'user' => env('REDDIT_CLIENT_ID'),
+                'password' => env('REDDIT_CLIENT_SECRET')
+            ]);
+
+            $data = $crawler->fetchUrl();
+
+            if (isset($data->data->title)) {
+                return $data->data->title;
+            }
+            
+            return null;
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * @param $dest
      * @return mixed
      * @throws Exception

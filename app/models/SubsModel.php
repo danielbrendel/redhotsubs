@@ -91,6 +91,7 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $limit
      * @return mixed
      * @throws Exception
      */
@@ -128,6 +129,43 @@ class SubsModel extends \Asatru\Database\Model
 
             return $result;
         } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $limit
+     * @param $hours
+     * @param $maxlen
+     * @throws \Exception
+     */
+    public static function updateSubDescriptions($limit = 1, $hours = 24, $maxlen = 30)
+    {
+        try {
+            $subs = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE last_desc IS NULL OR TIMESTAMPDIFF(HOUR, last_desc, NOW()) >= ? LIMIT ' . $limit, [$hours]);
+
+            if ($subs->count() == 0) {
+                //SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_desc = NULL');
+            }
+
+            foreach ($subs as $sub) {
+                $subname = $sub->get('sub_ident');
+                if (strpos($subname, 'r/') !== false) {
+                    $subname = substr($subname, 2);
+                }
+                
+                $description = CrawlerModule::querySubDescription($subname);
+                if ((is_string($description)) && (strlen($description) > 0)) {
+                    SubsModel::raw('UPDATE `' . self::tableName() . '` SET description = ? WHERE id = ?', [
+                        ((strlen($description) > $maxlen) ? substr($description, 0, $maxlen - 3) . '...' : $description), $sub->get('id')
+                    ]);
+                }
+
+                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_desc = CURRENT_TIMESTAMP WHERE id = ?', [
+                    $sub->get('id')
+                ]);
+            }
+        } catch (\Exception $e) {
             throw $e;
         }
     }

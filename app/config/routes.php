@@ -51,7 +51,8 @@ return [
     array('/stats/query/{pw}/online', 'ANY', 'stats@queryOnlineCount'),
 
     array('/cronjob/twitter/{pw}', 'ANY', 'cronjobs@twitter_cronjob'),
-    array('/cronjob/errorsubs/{pw}', 'ANY', 'cronjobs@check_subs'),
+    array('/cronjob/subs/errorneous/{pw}', 'ANY', 'cronjobs@check_subs'),
+    array('/cronjob/subs/description/{pw}', 'ANY', 'cronjobs@sub_descriptions'),
 
     array('$404', 'ANY', 'error404@index')
 ];

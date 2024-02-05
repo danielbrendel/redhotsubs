@@ -8,14 +8,18 @@
                 if ($lastCat !== $sub->get('category')) {
                     $lastCat = $sub->get('category');
 
-                    echo '<div class="navbar-item is-nav-category">' . $sub->get('category') . '</div>';
+                    echo '<div class="navbar-item is-nav-category media-list-title">' . $sub->get('category') . '</div>';
                 } 
             ?>
 
             <div class="media-list-item">
-                <a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
-                    {{ $sub->get('sub_ident') }}
-                </a>
+                <div class="media-list-item-title">
+                    <a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
+                        {{ $sub->get('sub_ident') }}
+                    </a>
+                </div>
+
+                <div class="media-list-item-description">{{ (($sub->get('description')) ? $sub->get('description') : 'No description available') }}</div>
             </div>
         @endforeach
     </div>

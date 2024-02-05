@@ -6,14 +6,18 @@
                 if ($lastCat !== $subs->get($i)->get('category')) {
                     $lastCat = $subs->get($i)->get('category');
 
-                    echo '<div class="navbar-item is-nav-category">' . $subs->get($i)->get('category') . '</div>';
+                    echo '<div class="navbar-item is-nav-category media-list-title">' . $subs->get($i)->get('category') . '</div>';
                 } 
             ?>
 
             <div class="media-list-item">
-                <a class="" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
-                    {{ $subs->get($i)->get('sub_ident') }}
-                </a>
+                <div class="media-list-item-title">
+                    <a class="" href="{{ url('/' . $subs->get($i)->get('sub_ident')) }}">
+                        {{ $subs->get($i)->get('sub_ident') }}
+                    </a>
+                </div>
+
+                <div class="media-list-item-description">{{ (($subs->get($i)->get('description')) ? $subs->get($i)->get('description') : 'No description available') }}</div>
             </div>
         @endfor
     @endif
