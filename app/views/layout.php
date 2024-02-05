@@ -71,9 +71,9 @@
 		<div id="main">
 			<div class="container">
 				<div class="columns">
-					<div class="column is-2 non-mobile"></div>
+					<div class="column is-1 non-mobile"></div>
 
-					<div class="column is-8 no-bottom-padding">
+					<div class="column is-10 no-bottom-padding">
 						{%navbar%}
 						{%navdesktop%}
 
@@ -152,7 +152,7 @@
 						</div>
 					</div>
 
-					<div class="column is-2 non-mobile"></div>
+					<div class="column is-1 non-mobile"></div>
 				</div>
 			</div>
 		</div>

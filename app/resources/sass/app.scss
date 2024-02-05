@@ -659,17 +659,18 @@ a.dropdown-item:hover {
 }
 
 .media-video {
-    width: 500px;
+    width: 800px;
     height: 500px;
 }
 
 .media-video-preview {
     background-repeat: no-repeat;
     background-size: cover;
-    @media screen and (min-width: 812px) {
-        width: 500px;
-    }
     height: 222px;
+    @media screen and (min-width: 812px) {
+        width: 800px;
+        height: 450px;
+    }
 }
 
 .media-video-preview-overlay {
