@@ -58,13 +58,16 @@ class CrawlerModule
                 $args['after'] = $after;
             }
 
-            $crawler = new RFCrawler($sub, env('APP_USERAGENT'), $args);
+            $crawler = new RFCrawler($sub, env('APP_USERAGENT'), $args, [
+                'user' => env('REDDIT_CLIENT_ID'),
+                'password' => env('REDDIT_CLIENT_SECRET')
+            ]);
             $content = [];
 
             if ($sortStyle === 'url') {
-                $content = $crawler->fetchFromJson($ft, $exclude, $include);
+                $content = $crawler->fetch($ft, $exclude, $include);
             } else if ($sortStyle === 'param') {
-                $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
+                $content = $crawler->fetch(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
             } else {
                 throw new Exception('Invalid sorting style: ' . $sortStyle);
             }
@@ -88,10 +91,13 @@ class CrawlerModule
 
             $sub = SubsModel::getRandomFromVideoCategories($cats);
             
-            $crawler = new RFCrawler($sub->get(0)->get('sub_ident') . '/', env('APP_USERAGENT'), []);
+            $crawler = new RFCrawler($sub->get(0)->get('sub_ident') . '/', env('APP_USERAGENT'), [], [
+                'user' => env('REDDIT_CLIENT_ID'),
+                'password' => env('REDDIT_CLIENT_SECRET')
+            ]);
             $content = [];
 
-            $content = $crawler->fetchFromJson(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
+            $content = $crawler->fetch(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
 
             $attempts = 0;
             $retitem = null;
@@ -115,6 +121,7 @@ class CrawlerModule
      * @param $user
      * @return bool
      * @throws Exception
+     * @deprecated Use OAuth request
      */
     public static function userExists($user)
     {
@@ -144,6 +151,7 @@ class CrawlerModule
      * @param $sub
      * @return mixed
      * @throws Exception
+     * @deprecated Use OAuth request
      */
     public static function getSubStatus($sub)
     {

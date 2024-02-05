@@ -8,7 +8,7 @@ class RFCrawler
     /**
 	 * Reddit URL
 	 */
-	 public const URL_REDDIT = "https://www.reddit.com";
+	 public const URL_REDDIT = "https://oauth.reddit.com";
 	
      /**
       * Fetch types
@@ -40,11 +40,18 @@ class RFCrawler
      private string $user_agent;
  
      /**
+      * @var array
+      * 
+      * Authentication credentials
+      */
+     private array $credentials;
+
+    /**
       * @var string
       * 
-      * Temporary old user agent
+      * Authentication bearer token
       */
-     private string $old_user_agent;
+     private string $auth_bearer;
 
      /**
       * Constructor for instantiation
@@ -52,13 +59,18 @@ class RFCrawler
       * @param string $url
       * @param string $user_agent
       * @param array $args
+      * @param $credentials
       * @return void
       */
-     public function __construct(string $url, string $user_agent = '', $args = array())
+     public function __construct(string $url, string $user_agent = '', $args = array(), $credentials = array())
      {
          $this->url = self::URL_REDDIT . '/' . $url;
+
          $this->user_agent = $user_agent;
          $this->args = $args;
+         $this->credentials = $credentials;
+
+         $this->auth_bearer = $this->auth($credentials);
      }
  
      /**
@@ -70,12 +82,10 @@ class RFCrawler
       * @return array
       * @throws \Exception
       */
-     public function fetchFromJson($type = self::FETCH_TYPE_IGNORE, $url_filter = array(), $url_must_contain = array())
+     public function fetch($type = self::FETCH_TYPE_IGNORE, $url_filter = array(), $url_must_contain = array())
      {
          try {
              $result = array();
- 
-             $this->storeUserAgent();
              
              $url = "{$this->url}{$type}/.json";
              $firstArg = false;
@@ -89,7 +99,9 @@ class RFCrawler
                  }
              }
              
-             $data = json_decode(file_get_contents($url));
+             $data = $this->request($url, [
+                "Authorization: Bearer {$this->auth_bearer}"
+             ]);
              
              if (is_array($data)) {
                  $children = $data[0]->data->children;
@@ -152,14 +164,26 @@ class RFCrawler
  
                  $result[] = $item;
              }
- 
-             $this->resetUserAgent();
              
              return $result;
          } catch (\Exception $e) {
              throw $e;
          }
      }
+
+     /**
+      * Get bearer token
+      * @param $credentials
+      * @return mixed
+      */
+    public function auth($credentials)
+    {
+        $response = $this->request("https://www.reddit.com/api/v1/access_token", [
+            'Authorization: Basic ' . base64_encode($this->credentials['user'] . ':' . $this->credentials['password'])
+        ], 'grant_type=client_credentials');
+
+        return ((isset($response->access_token)) ? $response->access_token : null);
+    }
 
      /**
 	 * Check if URL contains at least one of the required entries
@@ -182,28 +206,36 @@ class RFCrawler
 		return $containsAny;
 	}
 
-	/**
-	 * Store custom user agent and backup old
-	 * 
-	 * @return void
-	 */
-	private function storeUserAgent()
-	{
-		if ($this->user_agent !== '') {
-			$this->old_user_agent = ini_get('user_agent');
-			ini_set('user_agent', $this->user_agent);
-		}
-	}
+    /**
+     * Perform Reddit request
+     * 
+     * @param $url
+     * @param $header
+     * @param $data
+     * @return mixed
+     */
+    public function request($url, $header, $data = null)
+    {
+        $ch = curl_init($url);
 
-	/**
-	 * Restore old user agent
-	 * 
-	 * @return void
-	 */
-	private function resetUserAgent()
-	{
-		if ($this->user_agent !== '') {
-			ini_set('user_agent', $this->old_user_agent);
-		}
-	}
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->user_agent);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+        
+        if ($data !== null) {
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
+
+        $response = curl_exec($ch);
+
+        if(curl_error($ch)) {
+            throw new Exception(curl_error($ch));
+        }
+
+        curl_close($ch);
+        
+        return json_decode($response);
+    }
 }
