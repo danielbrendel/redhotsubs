@@ -65,9 +65,9 @@ class CrawlerModule
             $content = [];
 
             if ($sortStyle === 'url') {
-                $content = $crawler->fetch($ft, $exclude, $include);
+                $content = $crawler->fetchPost($ft, $exclude, $include);
             } else if ($sortStyle === 'param') {
-                $content = $crawler->fetch(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
+                $content = $crawler->fetchPost(RFCrawler::FETCH_TYPE_IGNORE, $exclude, $include);
             } else {
                 throw new Exception('Invalid sorting style: ' . $sortStyle);
             }
@@ -97,7 +97,7 @@ class CrawlerModule
             ]);
             $content = [];
 
-            $content = $crawler->fetch(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
+            $content = $crawler->fetchPost(RFCrawler::FETCH_TYPE_HOT, array('reddit.com/gallery/', 'https://www.reddit.com/r/', 'i.redd.it', 'i.imgur.com', 'external-preview.redd.it', '.gifv', 'v.reddit.com', 'v.redd.it', ), array('redgifs'));
 
             $attempts = 0;
             $retitem = null;
@@ -151,7 +151,6 @@ class CrawlerModule
      * @param $sub
      * @return mixed
      * @throws Exception
-     * @deprecated Use OAuth request
      */
     public static function getSubStatus($sub)
     {
@@ -165,7 +164,13 @@ class CrawlerModule
                 return $result;
             }
 
-            $data = json_decode(file_get_contents(RFCrawler::URL_REDDIT . '/r/' . $sub . '/about/.json'));
+            $crawler = new RFCrawler('r/' . $sub . '/about/.json', env('APP_USERAGENT'), [], [
+                'user' => env('REDDIT_CLIENT_ID'),
+                'password' => env('REDDIT_CLIENT_SECRET')
+            ]);
+
+            $data = $crawler->fetchUrl();
+
             return $data;
         } catch (Exception $e) {
             throw $e;
