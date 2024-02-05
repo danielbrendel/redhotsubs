@@ -24,8 +24,9 @@ NSFW client. The system can be set up as public or private depending on the use 
 - Featured creators
 - Favorites
 - Twitter bot
-- Statistics (access token required)
+- Statistics
 - Toggable authentication feature
+- Cronjobs
 
 ## System requirements
 The app is being developed with the following environment. Other environments may work, too.
