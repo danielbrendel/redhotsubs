@@ -46,9 +46,9 @@ return [
     array('/creators', 'GET', 'creators@creators'),
     array('/creators/fetch', 'ANY', 'creators@fetchCreators'),
     
-    array('/stats/{pw}', 'GET', 'index@stats'),
-    array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
-    array('/stats/query/{pw}/online', 'ANY', 'index@queryOnlineCount'),
+    array('/stats/{pw}', 'GET', 'stats@stats'),
+    array('/stats/query/{pw}', 'ANY', 'stats@queryStats'),
+    array('/stats/query/{pw}/online', 'ANY', 'stats@queryOnlineCount'),
 
     array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),
     array('/cronjob/errorsubs/{pw}', 'ANY', 'index@check_subs'),
