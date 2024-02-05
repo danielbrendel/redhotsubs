@@ -43,8 +43,8 @@ return [
     array('/favorites/share/generate', 'POST', 'favorites@generateFavoriteToken'),
     array('/favorites/share/import', 'POST', 'favorites@importFavorites'),
 
-    array('/creators', 'GET', 'index@creators'),
-    array('/creators/fetch', 'ANY', 'index@fetchCreators'),
+    array('/creators', 'GET', 'creators@creators'),
+    array('/creators/fetch', 'ANY', 'creators@fetchCreators'),
     
     array('/stats/{pw}', 'GET', 'index@stats'),
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
