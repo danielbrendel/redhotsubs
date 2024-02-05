@@ -17,22 +17,6 @@
 
 return [
     array('/', 'GET', 'index@index'),
-	array('/content/fetch', 'ANY', 'index@queryContent'),
-    array('/content/sub/image', 'ANY', 'index@querySubImage'),
-    array('/p/{sub}/{ident}/{title}', 'GET', 'index@showPost'),
-    array('/p/{ident}', 'GET', 'index@showPostOld'),
-    array('/r/{sub}', 'GET', 'index@showSub'),
-    array('/user/{ident}', 'GET', 'index@showUser'),
-    array('/video', 'GET', 'index@showVideo'),
-    array('/content/video', 'GET', 'index@fetchVideo'),
-    array('/favorites', 'GET', 'index@favorites'),
-    array('/favorites', 'POST', 'index@queryFavorites'),
-    array('/favorites/add', 'POST', 'index@addFavorite'),
-    array('/favorites/remove', 'POST', 'index@removeFavorite'),
-    array('/favorites/share/generate', 'POST', 'index@generateFavoriteToken'),
-    array('/favorites/share/import', 'POST', 'index@importFavorites'),
-    array('/creators', 'GET', 'index@creators'),
-    array('/creators/fetch', 'ANY', 'index@fetchCreators'),
     array('/imprint', 'GET', 'index@imprint'),
     array('/privacy', 'GET', 'index@privacy'),
     array('/contact', 'GET', 'index@contact'),
@@ -41,11 +25,33 @@ return [
     array('/getapp', 'GET', 'index@app'),
     array('/auth', 'GET', 'index@view_auth'),
     array('/auth', 'POST', 'index@auth'),
+    array('/sitemap', 'GET', 'index@sitemap'),
+
+	array('/content/fetch', 'ANY', 'content@queryContent'),
+    array('/content/sub/image', 'ANY', 'content@querySubImage'),
+    array('/p/{sub}/{ident}/{title}', 'GET', 'content@showPost'),
+    array('/p/{ident}', 'GET', 'content@showPostOld'),
+    array('/r/{sub}', 'GET', 'content@showSub'),
+    array('/user/{ident}', 'GET', 'content@showUser'),
+    array('/video', 'GET', 'content@showVideo'),
+    array('/content/video', 'GET', 'content@fetchVideo'),
+
+    array('/favorites', 'GET', 'index@favorites'),
+    array('/favorites', 'POST', 'index@queryFavorites'),
+    array('/favorites/add', 'POST', 'index@addFavorite'),
+    array('/favorites/remove', 'POST', 'index@removeFavorite'),
+    array('/favorites/share/generate', 'POST', 'index@generateFavoriteToken'),
+    array('/favorites/share/import', 'POST', 'index@importFavorites'),
+
+    array('/creators', 'GET', 'index@creators'),
+    array('/creators/fetch', 'ANY', 'index@fetchCreators'),
+    
     array('/stats/{pw}', 'GET', 'index@stats'),
     array('/stats/query/{pw}', 'ANY', 'index@queryStats'),
     array('/stats/query/{pw}/online', 'ANY', 'index@queryOnlineCount'),
+
     array('/cronjob/twitter/{pw}', 'ANY', 'index@twitter_cronjob'),
     array('/cronjob/errorsubs/{pw}', 'ANY', 'index@check_subs'),
-    array('/sitemap', 'GET', 'index@sitemap'),
+
     array('$404', 'ANY', 'error404@index')
 ];
