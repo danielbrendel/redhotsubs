@@ -118,7 +118,7 @@
 						<div class="media-list-item-description">{{ (($sub->get('description')) ? $sub->get('description') : 'No description available') }}</div>
 					@else
 						<div class="media-list-item-image">
-							<img src="{{ asset('img/logo.png') }}" data-id="{{ $sub->get('sub_ident') }}" alt="thumbnail"/>
+							<img src="{{ asset('img/placeholder.png') }}" data-id="{{ $sub->get('sub_ident') }}" alt="thumbnail"/>
 						</div>
 
 						<div class="media-list-item-info">
