@@ -230,21 +230,25 @@ import Chart from 'chart.js/auto';
             location.href = window.location.origin + '/user/' + ident;
         },
 
+        renderVideoPreview: function(id, thumbnail) {
+            return `<center>
+                <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + id + `'), 'https://www.redditmedia.com/mediaembed/` + id + `', '` + id + `', '` + thumbnail + `');" style="background-image: url('` + thumbnail + `');">
+                    <div class="media-video-preview-overlay">    
+                        <div class="media-video-preview-inner">
+                            <i class="fas fa-play-circle"></i>&nbsp;Play
+                        </div>
+                    </div>
+                </div></center>
+            `;
+        },
+
         renderIFrame: function(target, src, id, thumbnail) {
             let iframes = document.getElementsByTagName('iframe');
             for (let i = 0; i < iframes.length; i++) {
                 let elId = iframes[i].dataset.id;
                 let elThumbnail = iframes[i].dataset.thumbnail;
 
-                iframes[i].parentNode.innerHTML = `<center>
-                    <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elId + `'), 'https://www.redditmedia.com/mediaembed/` + elId + `', '` + elId + `', '` + elThumbnail + `');" style="background-image: url('` + elThumbnail + `');">
-                        <div class="media-video-preview-overlay">    
-                            <div class="media-video-preview-inner">
-                                <i class="fas fa-play-circle"></i>&nbsp;Play
-                            </div>
-                        </div>
-                    </div></center>
-                `;
+                iframes[i].parentNode.innerHTML = window.vue.renderVideoPreview(elId, elThumbnail);
             }
 
             let html = `<iframe id="media-player" class="media-video" src="` + src + `" data-id="` + id + `" data-thumbnail="` + thumbnail + `"></iframe>`;
@@ -256,15 +260,7 @@ import Chart from 'chart.js/auto';
             let mediaContent = '';
 
             if (elem.all.domain.includes('redgifs.com')) {
-                mediaContent = `<center>
-                    <div id="media-video" class="media-video-preview is-pointer" onclick="window.vue.renderIFrame(document.getElementById('item-media-` + elem.all.id + `'), 'https://www.redditmedia.com/mediaembed/` + elem.all.id + `', '` + elem.all.id + `', '` + elem.all.thumbnail + `');" style="background-image: url('` + elem.all.thumbnail + `');">
-                        <div class="media-video-preview-overlay">    
-                            <div class="media-video-preview-inner">
-                                <i class="fas fa-play-circle"></i>&nbsp;Play
-                            </div>
-                        </div>
-                    </div></center>
-                `;
+                mediaContent = window.vue.renderVideoPreview(elem.all.id, elem.all.thumbnail);
             } else {
                 mediaContent = `<a href="` + elem.media + `" target="_blank"><img src="` + elem.media + `" alt="` + elem.title + `"/></a>`;
             }
