@@ -70,6 +70,33 @@ class CronjobsController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /cronjob/subs/thumbnails/{pw}
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\JsonHandler
+	 */
+	public function sub_thumbnails($request)
+	{
+		try {
+			if ($request->arg('pw') !== env('APP_SUBSPASSWORD')) {
+				throw new Exception('Invalid password');
+			}
+
+			SubsModel::addMissingSubsToCache();
+			SubsModel::updateSubThumbnails(env('APP_THUMBSUBSCHECKCOUNT', 1));
+
+			return json([
+				'code' => 200
+			]);
+		} catch (Exception $e) {
+			return json([
+				'code' => 500,
+				'msg' => $e->getMessage()
+			]);
+		}
+	}
+
+	/**
 	 * Handles URL: /cronjob/twitter/{pw}
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

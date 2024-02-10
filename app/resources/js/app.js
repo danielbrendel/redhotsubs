@@ -367,6 +367,20 @@ import Chart from 'chart.js/auto';
             }
         },
 
+        renderThumbImages: function() {
+            let elems = document.getElementsByClassName('media-list-item-image');
+
+            for (let i = 0; i < elems.length; i++) {
+                let sub = elems[i].childNodes[0].dataset.id;
+                
+                this.ajaxRequest('post', window.location.origin + '/content/sub/image', { sub: sub }, function(response) {
+                    if (response.code == 200) {
+                        elems[i].childNodes[0].src = response.data.image;
+                    }
+                });
+            }
+        },
+
         fetchNextVideo: function(target, link) {
             let cats = this.getAllEnabledVideoCategories();
             let catstr = '';

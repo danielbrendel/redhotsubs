@@ -171,6 +171,45 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return void
+     * @throws \Exception
+     */
+    public static function addMissingSubsToCache()
+    {
+        try {
+            $subs = SubsModel::getAllSubs();
+
+            foreach ($subs as $sub) {
+                if (!CacheModel::has($sub->get('sub_ident') . '_thumbnail')) {
+                    CacheModel::raw('INSERT INTO `@THIS` (ident, value, updated_at) VALUES(?, NULL, CURRENT_TIMESTAMP)', [
+                        $sub->get('sub_ident') . '_thumbnail'
+                    ]);
+                }
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @param $limit
+     * @return void
+     * @throws \Exception
+     */
+    public static function updateSubThumbnails($limit = 1)
+    {
+        try {
+            $cached_subs = CacheModel::raw('SELECT * FROM `@THIS` WHERE ident LIKE ? AND TIMESTAMPDIFF(SECOND, updated_at, NOW()) >= ? LIMIT ' . $limit, ['r/%', env('APP_CACHEDURATION')]);
+
+            foreach ($cached_subs as $cached_sub) {
+                CrawlerModule::queryThumbnail(str_replace('_thumbnail', '', $cached_sub->get('ident')));
+            }
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

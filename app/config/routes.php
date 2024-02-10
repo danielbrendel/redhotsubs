@@ -53,6 +53,7 @@ return [
     array('/cronjob/twitter/{pw}', 'ANY', 'cronjobs@twitter_cronjob'),
     array('/cronjob/subs/errorneous/{pw}', 'ANY', 'cronjobs@check_subs'),
     array('/cronjob/subs/description/{pw}', 'ANY', 'cronjobs@sub_descriptions'),
+    array('/cronjob/subs/thumbnails/{pw}', 'ANY', 'cronjobs@sub_thumbnails'),
 
     array('$404', 'ANY', 'error404@index')
 ];

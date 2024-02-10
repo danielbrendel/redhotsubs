@@ -275,6 +275,9 @@
 					if (document.getElementById('media-cards')) {
 						window.vue.renderCardImages();
 					}
+					if (document.getElementsByClassName('media-list-item-image')) {
+						window.vue.renderThumbImages();
+					}
 				@endif
 
 				if (window.vue.getPostSorting() == 'hot') {

@@ -108,13 +108,29 @@
 				?>
 
 				<div class="media-list-item">
-					<div class="media-list-item-title">
-						<a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
-							{{ $sub->get('sub_ident') }}
-						</a>
-					</div>
+					@if (!env('APP_RENDERSUBTHUMBNAIL'))
+						<div class="media-list-item-title">
+							<a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
+								{{ $sub->get('sub_ident') }}
+							</a>
+						</div>
 
-					<div class="media-list-item-description">{{ (($sub->get('description')) ? $sub->get('description') : 'No description available') }}</div>
+						<div class="media-list-item-description">{{ (($sub->get('description')) ? $sub->get('description') : 'No description available') }}</div>
+					@else
+						<div class="media-list-item-image">
+							<img src="{{ asset('img/logo.png') }}" data-id="{{ $sub->get('sub_ident') }}" alt="thumbnail"/>
+						</div>
+
+						<div class="media-list-item-info">
+							<div class="media-list-item-title">
+								<a class="" href="{{ url('/' . $sub->get('sub_ident')) }}">
+									{{ $sub->get('sub_ident') }}
+								</a>
+							</div>
+
+							<div class="media-list-item-description">{{ (($sub->get('description')) ? $sub->get('description') : 'No description available') }}</div>
+						</div>
+					@endif
 				</div>
 			@endforeach
 		</div>

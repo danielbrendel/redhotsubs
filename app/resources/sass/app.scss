@@ -457,8 +457,27 @@ a.dropdown-item:hover {
     border-radius: 20px;
 }
 
-.media-list-item-title {
+.media-list-item-image {
+    position: relative;
+    display: inline-block;
+    top: 5px;
+    margin-right: 10px;
+}
 
+.media-list-item-image img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+}
+
+.media-list-item-info {
+    position: relative;
+    display: inline-block;
+    top: -8px;
+}
+
+.media-list-item-title {
+    position: relative;
 }
 
 .media-list-item-title a {
@@ -471,7 +490,7 @@ a.dropdown-item:hover {
 
 
 .media-list-item-description {
-
+    position: relative;
 }
 
 .item {
