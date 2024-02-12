@@ -1,11 +1,25 @@
-# RedHotSubs - A free NSFW client for Reddit
+<h1 align="center">
+    <img src="public/img/logo_big.png" width="256"/><br/>
+    RedHotSubs
+</h1>
 
-(C) 2022 - 2024 by Daniel Brendel
+<p align="center">
+    A free NSFW client for Reddit<br/>
+    (C) 2022 - 2024 by Daniel Brendel
+</p>
 
+<p align="center">
+    <img src="https://img.shields.io/badge/web-php-orange" alt="web-php"/>
+    <img src="https://img.shields.io/badge/db-mysql-pink" alt="db-mysql"/>
+    <img src="https://img.shields.io/badge/method-oauth-yellow" alt="method-oauth"/>
+    <img src="https://img.shields.io/badge/license-MIT-blue" alt="license-mit"/>
+</p>
+
+## Author
+
+__Author__: Daniel Brendel\
 __Contact__: dbrendel1988(at)gmail(dot)com\
 __GitHub__: https://github.com/danielbrendel
-
-Released under the MIT license
 
 ## Description
 RedHotSubs is a free NSFW client for Reddit. It is intended to view curated NSFW content from
