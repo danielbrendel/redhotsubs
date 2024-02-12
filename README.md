@@ -28,19 +28,20 @@ NSFW content without any hassle. It has various features that round it up as a r
 NSFW client. The system can be set up as public or private depending on the use case.
 
 ## Features
-- Browse curated Subreddits
-- Sort by hot, top and new
-- Show user postings
-- Display single posts
-- Display useful infos about a post
-- Video section
-- Trending creators
-- Featured creators
-- Favorites
-- Twitter bot
-- Statistics
-- Toggable authentication feature
-- Cronjobs
+- ❇️ Browse curated Subreddits
+- 🎚️ Sort by hot, top and new
+- 👄 Show user postings
+- 👤 Display single posts
+- 📄 Display useful infos about a post
+- 🎞️ Video section
+- 🔥 Trending creators
+- 💚 Featured creators
+- 🔖 Favorites
+- 🐤 Twitter bot
+- 📈 Statistics
+- 🔑 Toggable authentication feature
+- 📱 Responsive layout
+- 📜 Cronjobs
 
 ## System requirements
 The app is being developed with the following environment. Other environments may work, too.
