@@ -210,6 +210,20 @@ class SubsModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $sub
+     * @return string
+     * @throws \Exception
+     */
+    public static function getSubThumbnail($sub)
+    {
+        try {
+            return (string)CacheModel::raw('SELECT * FROM `@THIS` WHERE ident = ?', [$sub . '_thumbnail'])->first()->get('value');
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string
