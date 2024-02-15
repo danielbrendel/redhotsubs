@@ -261,6 +261,9 @@ class ContentController extends BaseController {
 		}
 
 		$sub = $request->arg('sub');
+
+		$sub_status = CrawlerModule::getSubStatus($sub);
+
 		$sub = 'r/' . $sub;
 		if (!SubsModel::subExists($sub)) {
 			if ((!env('APP_ALLOWCUSTOMSUBS')) || ((!isset($_COOKIE['custom_sub']) || ($_COOKIE['custom_sub'] !== $sub)))) {
@@ -277,6 +280,7 @@ class ContentController extends BaseController {
 			['navdesktop', 'navdesktop']
 		], [
 			'show_sub' => $sub,
+			'sub_status' => $sub_status,
 			'subs' => $subs,
 			'featured' => $featured,
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())

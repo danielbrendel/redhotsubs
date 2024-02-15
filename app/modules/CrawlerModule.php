@@ -160,14 +160,14 @@ class CrawlerModule
     public static function getSubStatus($sub)
     {
         try {
-            $response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/r/' . $sub . '/about/.json');
+            /*$response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/r/' . $sub . '/about/.json');
             if ($response_code != 200) {
                 $result = new \stdClass();
                 $result->error = $response_code;
                 $result->message = 'Not Found';
                 $result->reason = null;
                 return $result;
-            }
+            }*/
 
             $crawler = new RFCrawler('r/' . $sub . '/about/.json', env('APP_USERAGENT'), [], [
                 'user' => env('REDDIT_CLIENT_ID'),

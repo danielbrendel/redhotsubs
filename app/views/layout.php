@@ -270,7 +270,16 @@
 					document.getElementById('media-content').innerHTML = '';
 					document.getElementById('current-sub').innerHTML = '{{ $show_sub }}';
 					window.vue.setSubSelection('{{ $show_sub }}/');
-					window.vue.fetchPosts('{{ $show_sub }}', window.vue.getPostSorting(), document.getElementById('media-content'));
+					@if (isset($sub_status->error))
+						document.getElementById('media-content').innerHTML = `;
+							<div class="info info-box-red">
+								<div class="info-title info-header-red">Error</div>
+
+								<div class="info-content info-content-red">{{ $sub_status->message }}{{ ((isset($sub_status->reason)) ? ': ' . $sub_status->reason : '') }}</div>
+							</div>`;
+					@else
+						window.vue.fetchPosts('{{ $show_sub }}', window.vue.getPostSorting(), document.getElementById('media-content'));
+					@endif
 				@else
 					if (document.getElementById('media-cards')) {
 						window.vue.renderCardImages();

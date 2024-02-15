@@ -174,7 +174,7 @@ class RFCrawler
     /**
      * Fetch from Reddit Url
      * 
-     * 
+     * @return mixed
      */
     public function fetchUrl()
     {

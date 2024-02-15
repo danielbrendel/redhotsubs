@@ -474,6 +474,10 @@ a.dropdown-item:hover {
     position: relative;
     display: inline-block;
     top: -8px;
+    @media screen and (max-width: 768px) {
+        font-size: 0.8em;
+        top: -10px;
+    }
 }
 
 .media-list-item-title {
