@@ -185,6 +185,11 @@
 
 				@if (env('APP_ENABLEPWA'))
 					if (window.innerWidth < 1098) {
+						let curPage = document.querySelector('.page');
+						if (curPage) {
+							curPage.style.marginTop = '50px';
+						}
+
 						let scroller = document.querySelector('.scroll-to-top');
 						if (scroller) {
 							scroller.style.bottom = '83px';
