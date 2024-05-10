@@ -184,14 +184,37 @@
 
 				@if (env('APP_ENABLEPWA'))
 					if (window.innerWidth < 1098) {
-						let curPage = document.querySelector('.page');
-						if (curPage) {
-							curPage.style.marginTop = '50px';
+						let elNavSort = document.querySelector('.nav-sorting');
+						if (elNavSort) {
+							let elContainer = document.querySelector('.container');
+							if ((elContainer) && (!elContainer.classList.contains('container-pwa'))) {
+								elContainer.classList.add('container-pwa');
+							}
 						}
 
-						let scroller = document.querySelector('.scroll-to-top');
-						if (scroller) {
-							scroller.style.bottom = '83px';
+						let elNavbarRoot = document.querySelector('.navbar');
+						if (elNavbarRoot) {
+							elNavbarRoot.style.backgroundColor = '#3b3b3b';
+						}
+
+						let elNavEnd = document.querySelector('.navbar-end');
+						if (elNavEnd) {
+							elNavEnd.style.marginBottom = '100px';
+						}
+
+						let elCurPage = document.querySelector('.page');
+						if (elCurPage) {
+							elCurPage.style.marginTop = '50px';
+						}
+
+						let elScroller = document.querySelector('.scroll-to-top');
+						if (elScroller) {
+							elScroller.style.bottom = '83px';
+						}
+
+						let elFooter = document.querySelector('.footer');
+						if (elFooter) {
+							elFooter.style.marginBottom = '80px';
 						}
 					}
 				@endif

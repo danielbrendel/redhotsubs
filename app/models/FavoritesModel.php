@@ -61,6 +61,9 @@ class FavoritesModel extends \Asatru\Database\Model
     public static function hasFavorited($ident)
     {
         $user = AuthModel::getAuthUser();
+        if (!$user) {
+            return false;
+        }
         
         if (substr($ident, 0, 1) == '/') {
             $ident = substr($ident, 1);

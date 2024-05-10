@@ -1,4 +1,4 @@
-<nav class="navbar is-dark {{ ((env('APP_ENABLEPWA')) ? 'is-fixed-top-pwa' : '') }}" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark {{ ((env('APP_ENABLEPWA')) ? 'is-fixed-top' : '') }}" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item navbar-item-brand is-title-font" href="{{ url('/') }}">
             <img src="{{ asset('img/logo.png') }}" alt="Logo"/>&nbsp;<h1>{{ env('APP_NAME') }}</h1>
@@ -53,9 +53,11 @@
                 Creators
             </a>
 
+            @if (env('APP_PRIVATEMODE'))
             <a class="navbar-item" href="{{ url('/favorites') }}">
                 Favorites
             </a>
+            @endif
 
             @if (isset($subs))
             <div class="navbar-item has-dropdown is-hoverable" id="navbar-subs-dropdown">

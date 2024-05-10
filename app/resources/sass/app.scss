@@ -21,6 +21,12 @@ a {
     overflow-y: hidden;
 }
 
+.container-pwa {
+    @media screen and (max-width: 1087px) {
+        margin-top: 50px;
+    }
+}
+
 a:hover {
     color: rgb(70, 119, 184);
     text-decoration: underline;
@@ -129,13 +135,9 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     }
 }
 
-.navbar.is-fixed-top-pwa {
-    @media screen and (max-width: 1087px) {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 30;
+.navbar.is-fixed-top {
+    @media screen and (min-width: 1089px) {
+        position: relative;
     }
 }
 
@@ -157,7 +159,7 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
 }
 
 .has-bottom-space {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 .float-right {
@@ -880,7 +882,7 @@ a.dropdown-item:hover {
     z-index: 100;
     padding-left: 5px;
     padding-right: 5px;
-    background-color: rgb(30, 30, 30);
+    background-color: #3b3b3b;
     @media screen and (min-width: 1087px) {
         display: none;
     }
@@ -909,11 +911,11 @@ a.dropdown-item:hover {
 }
 
 .bottomnav-item a {
-    color: rgb(150, 150, 150);
+    color: rgb(200, 200, 200);
 }
 
 .bottomnav-item a:hover {
-    color: rgb(200, 200, 200);
+    color: rgb(250, 250, 250);
     text-decoration: none;
 }
 
