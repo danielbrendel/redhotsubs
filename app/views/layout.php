@@ -26,6 +26,10 @@
 		{!! ThemeModule::includeThemeAsHtml() !!}
 		<link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}"/>
 
+		@if (env('APP_ENABLEPWA'))
+		<link rel="manifest" href="{{ asset('manifest.json') }}"/>
+		@endif
+
 		@if (env('APP_DEBUG'))
 		<script src="{{ asset('js/vue.js') }}"></script>
 		@else
@@ -83,7 +87,7 @@
 
 						{%footer%}
 
-						@if (env('APP_ENABLEBOTTOMNAV'))
+						@if (env('APP_ENABLEPWA'))
 							@include('bottomnav.php')
 						@endif
 
@@ -159,11 +163,39 @@
 
 		<script src="{{ asset('js/app.js', true) }}"></script>
 		<script>
+			@if (env('APP_ENABLEPWA'))
+			window.onload = function() {
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('./serviceworker.js', { scope: '/' })
+                        .then(function(registration){
+                            window.serviceWorkerEnabled = true;
+                        }).catch(function(err){
+                            window.serviceWorkerEnabled = false;
+                            console.error(err);
+                        });
+                }
+            };
+			@endif
+
 			document.addEventListener('DOMContentLoaded', function(){
 				window.vue.appName = '{{ env('APP_NAME') }}';
 
 				window.vue.initNavbar();
 				window.vue.handleCookieConsent();
+
+				@if (env('APP_ENABLEPWA'))
+					if (window.innerWidth < 1098) {
+						let curPage = document.querySelector('.page');
+						if (curPage) {
+							curPage.style.marginTop = '50px';
+						}
+
+						let scroller = document.querySelector('.scroll-to-top');
+						if (scroller) {
+							scroller.style.bottom = '83px';
+						}
+					}
+				@endif
 
 				window.vue.defaultSub = '{{ env('APP_DEFAULTSUB') }}';
 

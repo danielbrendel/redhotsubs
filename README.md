@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="public/img/logo_big.png" width="256"/><br/>
+    <img src="public/img/logo.png" width="256"/><br/>
     RedHotSubs
 </h1>
 

@@ -51,6 +51,10 @@ class ContentController extends BaseController {
 			
 			$content = CrawlerModule::fetchContent($sub, $sorting, $after, array('.gifv', 'reddit.com/gallery/', 'https://www.reddit.com/r/', 'v.reddit.com', 'v.redd.it'), array('i.redd.it', 'i.imgur.com', 'external-preview.redd.it', 'redgifs'), $sortStyle);
 
+			if (env('APP_FILTERDUPLICATES', false)) {
+				$content = UtilsModule::filterDuplicates($content);
+			}
+
 			foreach ($content as $key => &$item) {
 				if (isset($item->author)) {
 					if (UserBlacklistModel::listed($item->author)) {

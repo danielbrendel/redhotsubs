@@ -109,4 +109,35 @@ class UtilsModule {
             throw $e;
         }
     }
+
+    /**
+     * @param $items
+     * @return array
+     * @throws Exception
+     */
+    public static function filterDuplicates($items)
+    {
+        try {
+            $duplicates = [];
+
+            foreach ($items as $key => &$item) {
+                if (isset($item->all->thumbnail)) {
+                    $hash = md5(file_get_contents($item->all->thumbnail));
+
+                    if ($hash !== false) {
+                        if (!in_array($hash, $duplicates)) {
+                            $duplicates[] = $hash;
+                        } else {
+                            unset($items[$key]);
+                            continue;
+                        }
+                    }
+                }
+            }
+
+            return $items;
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
