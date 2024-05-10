@@ -389,7 +389,7 @@ a.dropdown-item:hover {
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     @media screen and (max-width: 450px) {
         width: 154px;
@@ -401,7 +401,7 @@ a.dropdown-item:hover {
 }
 
 .media-card-item:hover {
-    border: 1px solid rgb(150, 150, 150);
+    box-shadow: 0 0 20px 0 rgba(255, 95, 200, 0.5);
 }
 
 .media-card-item-title {
