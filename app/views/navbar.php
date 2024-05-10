@@ -97,6 +97,11 @@
             @endif
 
             @if (env('APP_PRIVATEMODE'))
+            <a class="navbar-item navbar-item-icon" href="javascript:void(0);" onclick="window.vue.bShowUserSettings = true;">
+                <i class="fas fa-user" title="User settings"></i>
+                <span>User Settings</span>
+            </a>
+
             <a class="navbar-item navbar-item-icon" href="{{ url('/logout') }}">
                 <i class="fas fa-sign-out-alt" title="Logout"></i>
                 <span>Logout</span>

@@ -81,6 +81,33 @@ class AuthModel extends \Asatru\Database\Model
     }
 
     /**
+     * @param $email
+     * @param $password
+     * @return void
+     * @throws \Exception
+     */
+    public static function updateSettings($email, $password = null, $password_confirmation = null)
+    {
+        try {
+            $user = static::getAuthUser();
+
+            static::raw('UPDATE `' . self::tableName() . '` SET email = ? WHERE id = ?', [$email, $user->get('id')]);
+            
+            if ($password) {
+				if ($password !== $password_confirmation) {
+					throw new \Exception('The passwords do not match');
+				}
+
+                $password = password_hash($password, PASSWORD_BCRYPT);
+
+				static::raw('UPDATE `' . self::tableName() . '` SET password = ? WHERE id = ?', [$password, $user->get('id')]);
+			}
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

@@ -267,6 +267,30 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /user/settings/update
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function update_user_settings($request)
+	{
+		try {
+			$email = $request->params()->query('email', null);
+			$password = $request->params()->query('password', null);
+			$password_confirmation = $request->params()->query('password_confirmation', null);
+			
+			AuthModel::updateSettings($email, $password, $password_confirmation);
+
+			FlashMessage::setMsg('success', 'Settings were updated successfully');
+
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return redirect('/');
+		}
+	}
+
+	/**
 	 * Handles URL: /sitemap
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

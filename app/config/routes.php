@@ -26,6 +26,7 @@ return [
     array('/auth', 'GET', 'index@view_auth'),
     array('/login', 'POST', 'index@login'),
     array('/logout', 'ANY', 'index@logout'),
+    array('/user/settings/update', 'POST', 'index@update_user_settings'),
     array('/sitemap', 'GET', 'index@sitemap'),
 
 	array('/content/fetch', 'ANY', 'content@queryContent'),

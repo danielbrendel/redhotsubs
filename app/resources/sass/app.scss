@@ -199,6 +199,10 @@ a.dropdown-item:hover {
     color: rgb(20, 20, 20);
 }
 
+.modal .input {
+    background-color: unset !important;
+}
+
 .cookie-consent {
     position: relative;
     display: none;

@@ -81,6 +81,8 @@
 						{%navbar%}
 						{%navdesktop%}
 
+						@include('flashmsg.php')
+
 						{%cookies%}
 						{%info%}
 						{%content%}
@@ -110,50 +112,47 @@
 							</div>
 						</div>
 
-						<div class="modal" :class="{'is-active': bShowFavToken}">
+						@if (env('APP_PRIVATEMODE'))
+						<div class="modal" :class="{'is-active': bShowUserSettings}">
 							<div class="modal-background is-almost-not-transparent"></div>
 							<div class="modal-card">
 								<header class="modal-card-head is-stretched">
-									<p class="modal-card-title">Generate share token</p>
-									<button class="delete" aria-label="close" onclick="vue.bShowFavToken = false;"></button>
+									<p class="modal-card-title">User Settings</p>
+									<button class="delete" aria-label="close" onclick="vue.bShowUserSettings = false;"></button>
 								</header>
 								<section class="modal-card-body is-stretched">
-									<div class="field">
-										<label class="label">Generate token and share it</label>
-										<div class="control">
-											<input type="text" class="input has-small-button-next" id="txtShareToken" value="{{ ((isset($share_token)) ? $share_token : '') }}"/>
-											<a class="button" href="javascript:void(0);" onclick="window.vue.copyToClipboard(document.getElementById('txtShareToken').value);"><i class="far fa-copy"></i></a>
-										</div>
-									</div>
-								</section>
-								<footer class="modal-card-foot is-stretched">
-									<button class="button is-success" onclick="vue.genFavToken('txtShareToken');">Generate</button>
-									<button class="button" onclick="vue.bShowFavToken = false;">Close</button>
-								</footer>
-							</div>
-						</div>
+									<form id="frmUpdateUserSettings" method="POST" action="{{ url('/user/settings/update') }}">
+										@csrf 
 
-						<div class="modal" :class="{'is-active': bShowImportFavs}">
-							<div class="modal-background is-almost-not-transparent"></div>
-							<div class="modal-card">
-								<header class="modal-card-head is-stretched">
-									<p class="modal-card-title">Import favorites</p>
-									<button class="delete" aria-label="close" onclick="vue.bShowImportFavs = false;"></button>
-								</header>
-								<section class="modal-card-body is-stretched">
-									<div class="field">
-										<label class="label">Enter share token</label>
-										<div class="control">
-											<input type="text" class="input" id="txtImportToken"/>
+										<div class="field">
+											<label class="label">E-Mail Address</label>
+											<div class="control">
+												<input type="email" class="input" name="email" value="{{ AuthModel::getAuthUser()->get('email') }}"/>
+											</div>
 										</div>
-									</div>
+
+										<div class="field">
+											<label class="label">Password</label>
+											<div class="control">
+												<input type="password" class="input" name="password"/>
+											</div>
+										</div>
+
+										<div class="field">
+											<label class="label">Password (confirmation)</label>
+											<div class="control">
+												<input type="password" class="input" name="password_confirmation"/>
+											</div>
+										</div>
+									</form>
 								</section>
 								<footer class="modal-card-foot is-stretched">
-									<button class="button is-success" onclick="vue.importFavs('txtImportToken');">Import</button>
-									<button class="button" onclick="vue.bShowImportFavs = false;">Close</button>
+									<button class="button is-success" onclick="document.getElementById('frmUpdateUserSettings').submit();">Save</button>
+									<button class="button" onclick="vue.bShowUserSettings = false;">Close</button>
 								</footer>
 							</div>
 						</div>
+						@endif
 					</div>
 
 					<div class="column is-1 non-mobile"></div>

@@ -20,7 +20,8 @@ import Chart from 'chart.js/auto';
         bShowAgeConsent: false,
         bShowFavToken: false,
         bShowImportFavs: false,
-        bScrollAutoLoad: false
+        bScrollAutoLoad: false,
+        bShowUserSettings: false
     },
 
     methods: {
