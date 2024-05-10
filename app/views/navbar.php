@@ -1,4 +1,4 @@
-<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+<nav class="navbar is-dark {{ ((env('APP_ENABLEPWA')) ? 'is-fixed-top-pwa' : '') }}" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a class="navbar-item navbar-item-brand is-title-font" href="{{ url('/') }}">
             <img src="{{ asset('img/logo.png') }}" alt="Logo"/>&nbsp;<h1>{{ env('APP_NAME') }}</h1>

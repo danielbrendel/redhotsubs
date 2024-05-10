@@ -113,6 +113,16 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     }
 }
 
+.navbar.is-fixed-top-pwa {
+    @media screen and (max-width: 1087px) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 30;
+    }
+}
+
 .is-navbar-button {
     top: -6px;
 }
@@ -843,10 +853,14 @@ a.dropdown-item:hover {
 }
 
 .bottomnav {
-    position: relative;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     height: 70px;
-    background-color: rgb(150, 150, 150);
+    z-index: 100;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: rgb(30, 30, 30);
     @media screen and (min-width: 1087px) {
         display: none;
     }
@@ -855,28 +869,31 @@ a.dropdown-item:hover {
 .bottomnav-items {
     position: relative;
     display: block;
-    width: 385px;
+    top: 10px;
+    width: 100%;
     height: 100%;
     margin-left: auto;
     margin-right: auto;
+    text-align: center;
 }
 
 .bottomnav-item {
     position: relative;
     display: inline-block;
-    width: 80px;
+    width: 65px;
     height: 50px;
     margin-top: 6px;
-    color: rgb(50, 50, 50);
+    color: rgb(150, 150, 150);
     text-align: center;
+    font-size: 0.8em;
 }
 
 .bottomnav-item a {
-    color: rgb(50, 50, 50);
+    color: rgb(150, 150, 150);
 }
 
 .bottomnav-item a:hover {
-    color: rgb(50, 50, 50);
+    color: rgb(200, 200, 200);
     text-decoration: none;
 }
 

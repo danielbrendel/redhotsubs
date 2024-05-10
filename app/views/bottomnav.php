@@ -22,6 +22,13 @@
         </div>
 
         <div class="bottomnav-item">
+            <a href="{{ url('/creators') }}">
+                <div><i class="fas fa-users"></i></div>
+                <div>Creators</div>
+            </a>
+        </div>
+
+        <div class="bottomnav-item">
             <a href="{{ url('/favorites') }}">
                 <div><i class="fas fa-heart"></i></div>
                 <div>Favorites</div>

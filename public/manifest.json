@@ -1,0 +1,15 @@
+{
+    "name": "RedHotSubs",
+    "short_name": "RedHotSubs",
+    "icons": [
+         {
+            "src": "/img/logo_big.png",
+            "sizes": "256x256",
+            "type": "image/png"
+         }
+    ],
+    "start_url": "/",
+    "display": "fullscreen",
+    "background_color": "white",
+    "theme_color": "white"
+}
