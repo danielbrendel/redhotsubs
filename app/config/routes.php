@@ -24,7 +24,8 @@ return [
     array('/news', 'GET', 'index@news'),
     array('/getapp', 'GET', 'index@app'),
     array('/auth', 'GET', 'index@view_auth'),
-    array('/auth', 'POST', 'index@auth'),
+    array('/login', 'POST', 'index@login'),
+    array('/logout', 'ANY', 'index@logout'),
     array('/sitemap', 'GET', 'index@sitemap'),
 
 	array('/content/fetch', 'ANY', 'content@queryContent'),
@@ -40,8 +41,6 @@ return [
     array('/favorites', 'POST', 'favorites@queryFavorites'),
     array('/favorites/add', 'POST', 'favorites@addFavorite'),
     array('/favorites/remove', 'POST', 'favorites@removeFavorite'),
-    array('/favorites/share/generate', 'POST', 'favorites@generateFavoriteToken'),
-    array('/favorites/share/import', 'POST', 'favorites@importFavorites'),
 
     array('/creators', 'GET', 'creators@creators'),
     array('/creators/fetch', 'ANY', 'creators@fetchCreators'),

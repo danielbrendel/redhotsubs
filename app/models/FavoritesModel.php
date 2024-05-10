@@ -13,14 +13,14 @@ class FavoritesModel extends \Asatru\Database\Model
      */
     public static function addFavorite($ident)
     {
-        $hash = session_id();
+        $user = AuthModel::getAuthUser();
 
         if (FavoritesModel::hasFavorited($ident)) {
             return;
         }
 
-        FavoritesModel::raw('INSERT INTO `' . self::tableName() . '` (hash, ident) VALUES(?, ?)', [
-            $hash,
+        FavoritesModel::raw('INSERT INTO `' . self::tableName() . '` (userid, ident) VALUES(?, ?)', [
+            $user->get('id'),
             $ident
         ]);
     }
@@ -31,12 +31,12 @@ class FavoritesModel extends \Asatru\Database\Model
      */
     public static function queryFavorites($paginate = null)
     {
-        $hash = session_id();
+        $user = AuthModel::getAuthUser();
 
         if ($paginate !== null) {
-            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? AND id < ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$hash, $paginate]);
+            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? AND id < ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id'), $paginate]);
         } else {
-            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$hash]);
+            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id')]);
         }
     }
 
@@ -46,10 +46,10 @@ class FavoritesModel extends \Asatru\Database\Model
      */
     public static function removeFavorite($ident)
     {
-        $hash = session_id();
+        $user = AuthModel::getAuthUser();
 
-        FavoritesModel::raw('DELETE FROM `' . self::tableName() . '` WHERE hash = ? AND ident = ?', [
-            $hash,
+        FavoritesModel::raw('DELETE FROM `' . self::tableName() . '` WHERE userid = ? AND ident = ?', [
+            $user->get('id'),
             $ident
         ]);
     }
@@ -60,7 +60,7 @@ class FavoritesModel extends \Asatru\Database\Model
      */
     public static function hasFavorited($ident)
     {
-        $hash = session_id();
+        $user = AuthModel::getAuthUser();
         
         if (substr($ident, 0, 1) == '/') {
             $ident = substr($ident, 1);
@@ -70,8 +70,8 @@ class FavoritesModel extends \Asatru\Database\Model
             $ident = substr($ident, 0, strlen($ident) - 1);
         }
         
-        $result = FavoritesModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE hash = ? AND ident = ?', [
-            $hash,
+        $result = FavoritesModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE userid = ? AND ident = ?', [
+            $user->get('id'),
             $ident
         ])->first();
         
@@ -79,16 +79,16 @@ class FavoritesModel extends \Asatru\Database\Model
     }
 
     /**
-     * @param $hash
+     * @param $user
      * @return mixed
      */
-    public static function getAllFavorites($hash = null)
+    public static function getAllFavorites($user = null)
     {
-        if ($hash === null) {
-            $hash = session_id();
+        if ($user === null) {
+            $user = AuthModel::getAuthUser();
         }
 
-        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE hash = ? ORDER BY id ASC', [$hash]);
+        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? ORDER BY id ASC', [$user->get('id')]);
     }
 
     /**

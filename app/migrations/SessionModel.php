@@ -1,10 +1,9 @@
 <?php
 
 /**
- * This class specifies a migration
+ * Class SessionModel_Migration
  */
-class FavShareModel_Migration
-{
+class SessionModel_Migration {
     private $database = null;
     private $connection = null;
 
@@ -26,11 +25,12 @@ class FavShareModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('favshare', $this->connection);
+        $this->database = new Asatru\Database\Migration('SessionModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
-        $this->database->add('token VARCHAR(512) NOT NULL');
+        $this->database->add('userId INT NOT NULL');
         $this->database->add('session VARCHAR(512) NOT NULL');
+        $this->database->add('status BOOLEAN NOT NULL DEFAULT 0');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }

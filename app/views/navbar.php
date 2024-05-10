@@ -95,6 +95,13 @@
                 Browse
             </a>
             @endif
+
+            @if (env('APP_PRIVATEMODE'))
+            <a class="navbar-item navbar-item-icon" href="{{ url('/logout') }}">
+                <i class="fas fa-sign-out-alt" title="Logout"></i>
+                <span>Logout</span>
+            </a>
+            @endif
         </div>
     </div>
 </nav>

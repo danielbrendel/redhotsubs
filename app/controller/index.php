@@ -216,7 +216,7 @@ class IndexController extends BaseController {
 	 */
 	public function view_auth($request)
 	{
-		if (!env('APP_PRIVATEMODE')) {
+		if ((!env('APP_PRIVATEMODE')) || (AuthModel::getAuthUser() !== null)) {
 			return redirect('/');
 		}
 
@@ -228,17 +228,36 @@ class IndexController extends BaseController {
 	}
 
 	/**
-	 * Handles URL: /auth
+	 * Handles URL: /login
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request
 	 * @return Asatru\View\RedirectHandler
 	 */
-	public function auth($request)
+	public function login($request)
 	{
 		try {
-			$token = $request->params()->query('token', null);
+			$email = $request->params()->query('email', null);
+			$password = $request->params()->query('password', null);
 			
-			AuthModel::activate($token);
+			AuthModel::login($email, $password);
+
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return back();
+		}
+	}
+
+	/**
+	 * Handles URL: /logout
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function logout($request)
+	{
+		try {
+			AuthModel::logout();
 
 			return redirect('/');
 		} catch (\Exception $e) {

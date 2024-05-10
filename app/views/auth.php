@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="auth-hint">
-                    Currently private mode is activated. Please enter your authentication token in order to view the content.
+                    Currently private mode is activated. Please enter your login credentials in order to access the content.
                 </div>
 
                 @if (FlashMessage::hasMsg('error'))
@@ -55,18 +55,24 @@
                 @endif
 
                 <div class="auth-form">
-                    <form method="POST" action="{{ url('/auth') }}">
+                    <form method="POST" action="{{ url('/login') }}">
                         @csrf
 
                         <div class="field">
                             <div class="control">
-                                <input type="text" class="input" name="token" required/>
+                                <input type="email" class="input" name="email" placeholder="Enter your e-mail address" required/>
                             </div>
                         </div>
 
                         <div class="field">
                             <div class="control">
-                                <input type="submit" class="button is-link" value="Submit"/>
+                                <input type="password" class="input" name="password" placeholder="Enter your password" required/>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" class="button is-link" value="Login"/>
                             </div>
                         </div>
                     </form>

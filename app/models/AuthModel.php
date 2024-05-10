@@ -6,21 +6,59 @@
 class AuthModel extends \Asatru\Database\Model
 {
     /**
-     * @param $token
+     * @return mixed
+     */
+    public static function getAuthUser()
+    {
+        try {
+            $session = SessionModel::findSession(session_id());
+            if (!$session) {
+                return null;
+            }
+
+            $data = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE id = ?', [$session->get('userId')])->first();
+            if (!$data) {
+                return null;
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param $email
+     * @param $password
      * @return void
      * @throws \Exception
      */
-    public static function activate($token)
+    public static function login($email, $password)
     {
         try {
-            $data = AuthModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE token = ? AND session IS NULL LIMIT 1', [$token])->first();
+            $data = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE email = ?', [$email])->first();
             if (!$data) {
-                throw new \Exception('Token not found or already in use');
+                throw new \Exception('E-Mail address not found: ' . $email);
             }
-            
-            $session = session_id();
-            
-            AuthModel::raw('UPDATE `' . self::tableName() . '` SET session = ? WHERE id = ?', [$session, $data->get('id')]);
+
+            if (!password_verify($password, $data->get('password'))) {
+                throw new \Exception('The passwords do not match');
+            }
+
+            SessionModel::loginSession($data->get('id'), session_id());
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public static function logout()
+    {
+        try {
+            SessionModel::logoutSession(session_id());
         } catch (\Exception $e) {
             throw $e;
         }
@@ -33,11 +71,9 @@ class AuthModel extends \Asatru\Database\Model
     public static function verify()
     {
         try {
-            $session = session_id();
-
-            $data = AuthModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE session = ? LIMIT 1', [$session])->first();
-            if ((!$data) || ($data->get('session') !== $session)) {
-                throw new \Exception('Authentication failed. Please confirm that your token is valid.');
+            $auth_user = static::getAuthUser();
+            if (!$auth_user) {
+                throw new \Exception('No authenticated user found');
             }
         } catch (\Exception $e) {
             throw $e;

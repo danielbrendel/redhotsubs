@@ -31,7 +31,6 @@ class FavoritesController extends BaseController {
 			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Favorites',
-			'share_token' => FavShareModel::getShareToken(),
 			'categories' => AppSettingsModel::getCategories(),
 			'subs' => SubsModel::getAllSubs(),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
@@ -112,61 +111,6 @@ class FavoritesController extends BaseController {
 			$ident = $request->params()->query('ident', null);
 
 			FavoritesModel::removeFavorite($ident);
-
-			return json([
-				'code' => 200
-			]);
-		} catch (\Exception $e) {
-			return json([
-				'code' => 500,
-				'msg' => $e->getMessage()
-			]);
-		}
-	}
-
-	/**
-	 * Handles URL: /favorites/share/generate
-	 * 
-	 * @param Asatru\Controller\ControllerArg $request
-	 * @return Asatru\View\JsonHandler
-	 */
-	public function generateFavoriteToken($request)
-	{
-		try {
-			if (!env('APP_ENABLEFAVSHARE')) {
-				throw new \Exception('Feature is currently deactivated');
-			}
-
-			$token = FavShareModel::genShare();
-
-			return json([
-				'code' => 200,
-				'token' => $token
-			]);
-		} catch (\Exception $e) {
-			return json([
-				'code' => 500,
-				'msg' => $e->getMessage()
-			]);
-		}
-	}
-
-	/**
-	 * Handles URL: /favorites/share/import
-	 * 
-	 * @param Asatru\Controller\ControllerArg $request
-	 * @return Asatru\View\JsonHandler
-	 */
-	public function importFavorites($request)
-	{
-		try {
-			if (!env('APP_ENABLEFAVSHARE')) {
-				throw new \Exception('Feature is currently deactivated');
-			}
-			
-			$token = $request->params()->query('token', null);
-
-			FavShareModel::migrateFavorites($token);
 
 			return json([
 				'code' => 200

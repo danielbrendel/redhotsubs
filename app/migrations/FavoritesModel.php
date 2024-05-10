@@ -29,7 +29,7 @@ class FavoritesModel_Migration
         $this->database = new Asatru\Database\Migration('favorites', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
-        $this->database->add('hash VARCHAR(512) NOT NULL');
+        $this->database->add('userid INT NOT NULL');
         $this->database->add('ident VARCHAR(512) NOT NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();

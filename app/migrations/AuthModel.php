@@ -29,8 +29,8 @@ class AuthModel_Migration
         $this->database = new Asatru\Database\Migration('auth', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
-        $this->database->add('token VARCHAR(512) NOT NULL');
-        $this->database->add('session VARCHAR(512) NULL');
+        $this->database->add('email VARCHAR(512) NOT NULL');
+        $this->database->add('password VARCHAR(1024) NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }
