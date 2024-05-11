@@ -29,7 +29,7 @@
         </div>
 
         <div class="bottomnav-item">
-            <a href="{{ url('/favorites') }}">
+            <a href="javascript:void(0);" onclick="{{ ((AuthModel::isAuthenticated()) ? 'location.href = window.location.origin + \'/favorites\';' : 'location.href = window.location.origin + \'/auth\';') }}">
                 <div><i class="fas fa-heart"></i></div>
                 <div>Favorites</div>
             </a>

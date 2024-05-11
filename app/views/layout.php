@@ -112,7 +112,7 @@
 							</div>
 						</div>
 
-						@if (env('APP_PRIVATEMODE'))
+						@if (AuthModel::isAuthenticated())
 						<div class="modal" :class="{'is-active': bShowUserSettings}">
 							<div class="modal-background is-almost-not-transparent"></div>
 							<div class="modal-card">

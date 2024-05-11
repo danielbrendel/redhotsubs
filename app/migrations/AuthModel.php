@@ -31,6 +31,8 @@ class AuthModel_Migration
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('email VARCHAR(512) NOT NULL');
         $this->database->add('password VARCHAR(1024) NULL');
+        $this->database->add('account_confirm VARCHAR(512) NULL');
+        $this->database->add('password_reset VARCHAR(512) NULL');
         $this->database->add('created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP');
         $this->database->create();
     }

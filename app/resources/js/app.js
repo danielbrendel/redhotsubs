@@ -21,7 +21,9 @@ import Chart from 'chart.js/auto';
         bShowFavToken: false,
         bShowImportFavs: false,
         bScrollAutoLoad: false,
-        bShowUserSettings: false
+        bShowUserSettings: false,
+        bShowRegister: false,
+        bShowResetPassword: false,
     },
 
     methods: {

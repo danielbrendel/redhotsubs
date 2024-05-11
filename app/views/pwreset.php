@@ -38,44 +38,27 @@
     <body>
         <div id="main">
             <div class="auth">
-                <div class="auth-header is-pointer" onclick="location.href = '{{ url('/') }}';">
+                <div class="auth-header">
                     <img src="{{ asset('img/logo.png') }}" alt="Logo"/>
 
                     <h1>{{ env('APP_NAME') }}</h1>
                 </div>
 
-                @if (FlashMessage::hasMsg('success'))
-                <div class="auth-info auth-info-success">
-                    {{ FlashMessage::getMsg('success') }}
-                </div>
-                @endif
-
                 @if (FlashMessage::hasMsg('error'))
-                <div class="auth-info auth-info-error">
+                <div class="auth-info">
                     {{ FlashMessage::getMsg('error') }}
                 </div>
                 @endif
 
-                
-                <div class="auth-register">
-                    @if (!env('APP_PRIVATEMODE'))
-                        <span>Don't have an account yet?</span>
-                        <span><a href="javascript:void(0);" onclick="window.vue.bShowRegister = true;">Sign up now</a>.</span>
-                    @else
-                        <div>Private mode is currently enabled. Please log in with your account credentials below.</div>
-                    @endif
+                <div class="auth-hint">
+                    Set a new password here.
                 </div>
-                
 
                 <div class="auth-form">
-                    <form method="POST" action="{{ url('/login') }}">
+                    <form method="POST" action="{{ url('/user/reset') }}">
                         @csrf
 
-                        <div class="field">
-                            <div class="control">
-                                <input type="email" class="input" name="email" placeholder="Enter your e-mail address" required/>
-                            </div>
-                        </div>
+                        <input type="hidden" name="token" value="{{ $token }}"/>
 
                         <div class="field">
                             <div class="control">
@@ -85,15 +68,16 @@
 
                         <div class="field">
                             <div class="control">
-                                <input type="submit" class="button is-link" value="Login"/>
+                                <input type="password" class="input" name="password_confirmation" placeholder="Confirm your password" required/>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <div class="control">
+                                <input type="submit" class="button is-link" value="Reset"/>
                             </div>
                         </div>
                     </form>
-                </div>
-
-                <div class="auth-reset">
-                    <span>Forgot your password?</span>
-                    <span><a href="javascript:void(0);" onclick="window.vue.bShowResetPassword = true;">Reset your password</a>.</span>
                 </div>
 
                 <div class="auth-footer">
@@ -189,7 +173,7 @@
                         <button class="delete" aria-label="close" onclick="vue.bShowResetPassword = false;"></button>
                     </header>
                     <section class="modal-card-body is-stretched">
-                        <form id="frmUpdateUserSettings" method="POST" action="{{ url('/user/recover') }}">
+                        <form id="frmUpdateUserSettings" method="POST" action="{{ url('/user/reset') }}">
                             @csrf 
 
                             <div class="field">
@@ -201,7 +185,7 @@
                         </form>
                     </section>
                     <footer class="modal-card-foot is-stretched">
-                        <button class="button is-success" onclick="this.innerHTML = '<i class=\'fas fa-spinner fa-spin\'></i>&nbsp;' + this.innerHTML; document.getElementById('frmUpdateUserSettings').submit();">Reset</button>
+                        <button class="button is-success" onclick="this.innerHTML = '<i class=\'fas fa-spinner fa-spin\'></i>&nbsp;' + this.innerHTML; document.getElementById('frmUpdateUserSettings').submit();">Save</button>
                         <button class="button" onclick="vue.bShowResetPassword = false;">Close</button>
                     </footer>
                 </div>

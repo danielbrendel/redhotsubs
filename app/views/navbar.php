@@ -53,7 +53,7 @@
                 Creators
             </a>
 
-            @if (env('APP_PRIVATEMODE'))
+            @if (AuthModel::isAuthenticated())
             <a class="navbar-item" href="{{ url('/favorites') }}">
                 Favorites
             </a>
@@ -98,12 +98,12 @@
             </a>
             @endif
 
-            @if (env('APP_PRIVATEMODE'))
-            <a class="navbar-item navbar-item-icon" href="javascript:void(0);" onclick="window.vue.bShowUserSettings = true;">
-                <i class="fas fa-user" title="User settings"></i>
+            <a class="navbar-item navbar-item-icon" href="javascript:void(0);" onclick="{{ ((AuthModel::isAuthenticated()) ? 'window.vue.bShowUserSettings = true;' : 'location.href = window.location.origin + \'/auth\';') }}">
+                <i class="fas fa-user" title="{{ ((AuthModel::isAuthenticated()) ? 'User settings' : 'Login') }}"></i>
                 <span>User Settings</span>
             </a>
 
+            @if (AuthModel::isAuthenticated())
             <a class="navbar-item navbar-item-icon" href="{{ url('/logout') }}">
                 <i class="fas fa-sign-out-alt" title="Logout"></i>
                 <span>Logout</span>

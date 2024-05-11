@@ -31,7 +31,7 @@ class BaseController extends Asatru\Controller\Controller {
 			} catch (\Exception $e) {
 				$url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-				$allowed_urls = array('/getapp', '/news', '/imprint', '/privacy', '/contact');
+				$allowed_urls = array('/getapp', '/news', '/imprint', '/privacy', '/contact', '/user/reset', '/user/recover');
 
 				if (($url !== '/auth') && ($url !== '/login') && (!in_array($url, $allowed_urls)) && (strpos($url, '/cronjob/') === false)) {
 					header('Location: /auth');

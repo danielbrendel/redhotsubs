@@ -24,8 +24,13 @@ return [
     array('/news', 'GET', 'index@news'),
     array('/getapp', 'GET', 'index@app'),
     array('/auth', 'GET', 'index@view_auth'),
+    array('/register', 'POST', 'index@register'),
     array('/login', 'POST', 'index@login'),
     array('/logout', 'ANY', 'index@logout'),
+    array('/user/confirm', 'ANY', 'index@confirm_user_account'),
+    array('/user/recover', 'POST', 'index@recover_user_password'),
+    array('/user/reset', 'GET', 'index@view_reset_password'),
+    array('/user/reset', 'POST', 'index@reset_user_password'),
     array('/user/settings/update', 'POST', 'index@update_user_settings'),
     array('/sitemap', 'GET', 'index@sitemap'),
 

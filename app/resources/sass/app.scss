@@ -948,14 +948,33 @@ a.dropdown-item:hover {
 
 .auth-hint {
     position: relative;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    color: rgb(100, 100, 100);
+}
+
+.auth-register {
+    position: relative;
     margin-top: 35px;
     margin-bottom: 45px;
     color: rgb(100, 100, 100);
 }
 
+.auth-register span {
+    position: relative;
+    display: inline-block;
+}
+
 .auth-info {
     position: relative;
     margin-bottom: 43px;
+}
+
+.auth-info-success {
+    color: rgb(55, 155, 67);
+}
+
+.auth-info-error {
     color: rgb(154, 73, 69);
 }
 
@@ -967,10 +986,15 @@ a.dropdown-item:hover {
     width: 100%;
 }
 
-.auth-contact {
+.auth-reset {
     position: relative;
     margin-top: 50px;
     color: rgb(100, 100, 100);
+}
+
+.auth-reset span {
+    position: relative;
+    display: inline-block;
 }
 
 .auth-footer {

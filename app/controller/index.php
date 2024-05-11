@@ -5,6 +5,11 @@
  */
 class IndexController extends BaseController {
 	/**
+	 * @var array
+	 */
+	private $captcha = [];
+
+	/**
 	 * Perform base initialization
 	 * 
 	 * @return void
@@ -12,6 +17,11 @@ class IndexController extends BaseController {
 	public function __construct()
 	{
 		parent::__construct($this->layout);
+
+		if ($_SERVER['REQUEST_METHOD'] === 'GET') { 
+			$this->captcha = CaptchaModel::createSum(session_id());
+			setGlobalCaptcha($this->captcha);
+		}
 	}
 
 	/**
@@ -112,7 +122,7 @@ class IndexController extends BaseController {
 			['navdesktop', 'navdesktop']
 		], [
 			'page_title' => 'Contact',
-			'captcha' => CaptchaModel::createSum(session_id()),
+			'captcha' => $this->captcha,
 			'subjects' => ContactSubjectModel::getAll(),
 			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
 		]);
@@ -216,7 +226,7 @@ class IndexController extends BaseController {
 	 */
 	public function view_auth($request)
 	{
-		if ((!env('APP_PRIVATEMODE')) || (AuthModel::getAuthUser() !== null)) {
+		if (AuthModel::isAuthenticated()) {
 			return redirect('/');
 		}
 
@@ -225,6 +235,68 @@ class IndexController extends BaseController {
 		$view->setVars(['view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())]);
 
 		return $view;
+	}
+
+	/**
+	 * Handles URL: /register
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function register($request)
+	{
+		try {
+			if (env('APP_PRIVATEMODE')) {
+				throw new \Exception('Private mode is currently enabled.');
+			}
+
+			$email = $request->params()->query('email', null);
+			$password = $request->params()->query('password', null);
+			$password_confirmation = $request->params()->query('password_confirmation', null);
+			$captcha = $request->params()->query('captcha', null);
+
+			$sum = CaptchaModel::querySum(session_id());
+			if ($sum != $captcha) {
+				throw new \Exception('Please enter the correct captcha');
+			}
+
+			if ($password !== $password_confirmation) {
+				throw new \Exception('The passwords do not match.');
+			}
+			
+			AuthModel::register($email, $password);
+
+			FlashMessage::setMsg('success', 'Welcome aboard! An e-mail was dispatched to your inbox. Please verify your e-mail address before logging in.');
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return back();
+		}
+	}
+
+	/**
+	 * Handles URL: /user/confirm
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function confirm_user_account($request)
+	{
+		try {
+			if (env('APP_PRIVATEMODE')) {
+				throw new \Exception('Private mode is currently enabled.');
+			}
+
+			$token = $request->params()->query('token', null);
+
+			AuthModel::confirm($token);
+
+			FlashMessage::setMsg('success', 'Your account was successfully verified. You can now log in with your credentials.');
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return redirect('/');
+		}
 	}
 
 	/**
@@ -244,7 +316,7 @@ class IndexController extends BaseController {
 			return redirect('/');
 		} catch (\Exception $e) {
 			FlashMessage::setMsg('error', $e->getMessage());
-			return back();
+			return redirect('/auth');
 		}
 	}
 
@@ -263,6 +335,81 @@ class IndexController extends BaseController {
 		} catch (\Exception $e) {
 			FlashMessage::setMsg('error', $e->getMessage());
 			return back();
+		}
+	}
+
+	/**
+	 * Handles URL: POST /user/recover
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function recover_user_password($request)
+	{
+		try {
+			$email = $request->params()->query('email', null);
+			
+			AuthModel::recoverPassword($email);
+
+			FlashMessage::setMsg('success', 'A reset e-mail was dispatched to your inbox.');
+
+			return redirect('/auth');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return redirect('/auth');
+		}
+	}
+
+	/**
+	 * Handles URL: GET /user/reset
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\ViewHandler
+	 */
+	public function view_reset_password($request)
+	{
+		$token = $request->params()->query('token', null);
+		
+		$view = new Asatru\View\ViewHandler();
+		$view->setLayout('pwreset');
+		$view->setVars([
+			'token' => $token,
+			'view_count' => UtilsModule::countAsString(ViewCountModel::acquireCount())
+		]);
+
+		return $view;
+	}
+
+	/**
+	 * Handles URL: POST /user/reset
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function reset_user_password($request)
+	{
+		try {
+			$token = $request->params()->query('token', null);
+			$password = $request->params()->query('password', null);
+			$password_confirmation = $request->params()->query('password_confirmation', null);
+
+			if ($password !== $password_confirmation) {
+				throw new \Exception('The passwords do not match');
+			}
+			
+			AuthModel::resetPassword($token, $password);
+
+			FlashMessage::setMsg('success', 'Your password was updated. You can now login with your new password.');
+
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+
+			if (isset($token)) {
+				return redirect('/user/reset?token=' . $token);
+			} else {
+				return redirect('/auth');
+			}
 		}
 	}
 

@@ -15,5 +15,5 @@
 */
 
 return [
-    '/helper/TestHelper.php'
+    '/helper/UtilityHelper.php'
 ];
