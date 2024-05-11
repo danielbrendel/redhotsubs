@@ -21,6 +21,7 @@ class TwitterModule
     {
         try {
             $connection = new TwitterOAuth(env('TWITTERBOT_APIKEY',), env('TWITTERBOT_APISECRET'), env('TWITTERBOT_ACCESS_TOKEN'), env('TWITTERBOT_ACCESS_TOKEN_SECRET'));  
+            $connection->setApiVersion(2);
             $connection->setTimeouts(30, 50);
             
             if (strlen($title) > env('TWITTERBOT_MAX_TITLE_LENGTH', self::MAX_TITLE_LENGTH)) {
@@ -30,11 +31,12 @@ class TwitterModule
             $status = $title . "\n\n" . $link . "\n\n" . env('TWITTERBOT_TAGS');
 
             $parameters = [
-                'status' => $status
+                'text' => $status
             ];
 
-            $result = $connection->post('statuses/update', $parameters);
-            if (!isset($result->id)) {
+            $result = $connection->post('tweets', $parameters);
+            
+            if (!isset($result->data->id)) {
                 throw new Exception('Failed to post status to Twitter: ' . print_r($result, true));
             }
         } catch (Exception $e) {

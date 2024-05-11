@@ -43,6 +43,17 @@ import Chart from 'chart.js/auto';
             }
         },
 
+        toggleNavbarDropdown: function(elem) {
+            let obj = document.getElementById(elem);
+            if (obj) {
+                if ((obj.style.display === '') || (obj.style.display === 'none')) {
+                    obj.style.display = 'block';
+                } else {
+                    obj.style.display = 'none';
+                }
+            }
+        },
+
         ajaxRequest: function (method, url, data = {}, successfunc = function(data){}, finalfunc = function(){}, config = {})
         {
             let func = window.axios.get;
@@ -89,9 +100,23 @@ import Chart from 'chart.js/auto';
             document.getElementById('cookie-consent').style.display = 'none';
         },
 
+        showAgeConsent: function() {
+            let mediaContent = document.getElementById('media-content');
+            if (mediaContent) {
+                mediaContent.style.filter = 'blur(10px)';
+            }
+
+            window.vue.bShowAgeConsent = true;
+        },
+
         markAgeConsent: function() {
             let expDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 365);
             document.cookie = 'ageconsent=1; path=/; expires=' + expDate.toUTCString() + ';';
+
+            let mediaContent = document.getElementById('media-content');
+            if (mediaContent) {
+                mediaContent.style.filter = 'unset';
+            }
 
             this.bShowAgeConsent = false;
         },
@@ -648,6 +673,12 @@ import Chart from 'chart.js/auto';
 
                 location.reload();
             });
+        },
+
+        deleteUserAccount: function() {
+            if (confirm('Are you sure that you want to remove your account?')) {
+                location.href = window.location.origin + '/user/account/delete';
+            }
         },
 
         renderStats: function(pw, elem, start, end = '') {

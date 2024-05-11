@@ -101,13 +101,13 @@
 							<div class="modal-card">
 								<header class="modal-card-head is-stretched">
 									<p class="modal-card-title">Please verify your age</p>
-									<!--button class="delete" aria-label="close" onclick="vue.bShowAgeConsent = false;"></button-->
 								</header>
 								<section class="modal-card-body is-stretched">
 									{!! AppSettingsModel::getAgeConsent() !!}
 								</section>
 								<footer class="modal-card-foot is-stretched">
 									<button class="button is-success" onclick="window.vue.markAgeConsent();">Confirm and continue</button>
+									<button class="button" onclick="location.href = '{{ env('APP_AGECONSENTLEAVEURL') }}';">Leave</button>
 								</footer>
 							</div>
 						</div>
@@ -142,6 +142,12 @@
 											<label class="label">Password (confirmation)</label>
 											<div class="control">
 												<input type="password" class="input" name="password_confirmation"/>
+											</div>
+										</div>
+
+										<div class="field">
+											<div class="control">
+												<a class="is-link-red" href="javascript:void(0);" onclick="window.vue.deleteUserAccount();">Delete Account</a>
 											</div>
 										</div>
 									</form>
@@ -255,6 +261,8 @@
 									elNavbarDesktop.style.display = 'none';
 								}
 							}
+						} else {
+							window.vue.toggleNavbarDropdown('navbar-dropdown-toggle');
 						}
 					};
 					elDropdown.onmouseover = function() {
@@ -285,7 +293,7 @@
 
 				@if (env('APP_SHOWAGECONSENT'))
 					if (!window.vue.isAgeConsentMarked()) {
-						window.vue.bShowAgeConsent = true;
+						window.vue.showAgeConsent();
 					}
 				@endif
 

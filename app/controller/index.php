@@ -438,6 +438,26 @@ class IndexController extends BaseController {
 	}
 
 	/**
+	 * Handles URL: /user/account/delete
+	 * 
+	 * @param Asatru\Controller\ControllerArg $request
+	 * @return Asatru\View\RedirectHandler
+	 */
+	public function delete_user_account($request)
+	{
+		try {
+			AuthModel::deleteAuthUser();
+
+			FlashMessage::setMsg('success', 'Your account was successfully deleted.');
+
+			return redirect('/');
+		} catch (\Exception $e) {
+			FlashMessage::setMsg('error', $e->getMessage());
+			return redirect('/');
+		}
+	}
+
+	/**
 	 * Handles URL: /sitemap
 	 * 
 	 * @param Asatru\Controller\ControllerArg $request

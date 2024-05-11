@@ -73,6 +73,10 @@ a:hover {
     margin-top: 30px;
 }
 
+.has-no-underline:hover {
+    text-decoration: none;
+}
+
 .navbar {
     background-color: rgba(255, 255, 255, 0.0);
 }
@@ -82,12 +86,32 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
     color: rgb(180, 180, 180) !important;
 }
 
+a.is-title-font:hover {
+    color: rgb(245, 245, 245) !important;
+}
+
 .navbar-item, .navbar-burger, .navbar-link {
     color: rgb(190, 190, 190);
 }
 
 .navbar-dropdown {
     background-color: rgb(50, 50, 48);
+}
+
+.navbar-item {
+    @media screen and (max-width: 1087px) {
+        &.has-dropdown {
+            .navbar-dropdown {
+                display: none;
+            }
+            
+            &.is-active {
+                .navbar-dropdown {
+                    display: block;
+                }
+            }
+        }
+    }
 }
 
 .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
@@ -107,19 +131,18 @@ a.navbar-item:hover, a.navbar-item.is-active, .navbar-link:hover, .navbar-link.i
 }
 
 .navbar-item-icon {
-    position: relative;
+    display: inline-block;
+    min-width: 24px;
 }
 
-.navbar-item-icon i {
+.navbar-item-label {
     @media screen and (max-width: 1087px) {
-        display: none;
+        margin-left: 5px;
     }
 }
 
-.navbar-item-icon span {
-    @media screen and (min-width: 1089px) {
-        display: none;
-    }
+.navbar-item-hover-color:hover {
+    color: rgb(200, 200, 200);
 }
 
 .navbar-desktop {
@@ -358,6 +381,10 @@ a.dropdown-item:hover {
 
 .info-content-blue strong {
     color: rgb(185, 185, 185);
+}
+
+a.is-link-red, a.is-link-red:hover {
+    color: rgb(206, 79, 72);
 }
 
 .media-frame {
@@ -701,6 +728,12 @@ a.dropdown-item:hover {
 
 .non-mobile {
     @media screen and (max-width: 768px) {
+        display: none;
+    }
+}
+
+.is-mobile-only {
+    @media screen and (min-width: 1089px) {
         display: none;
     }
 }

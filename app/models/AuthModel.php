@@ -225,6 +225,23 @@ class AuthModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return void
+     * @throws \Exception
+     */
+    public static function deleteAuthUser()
+    {
+        try {
+            $user = static::getAuthUser();
+
+            SessionModel::logoutSession(session_id());
+
+            static::raw('DELETE FROM `' . self::tableName() . '` WHERE id = ?', [$user->get('id')]);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
      * Return the associated table name of the migration
      * 
      * @return string

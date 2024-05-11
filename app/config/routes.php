@@ -32,6 +32,7 @@ return [
     array('/user/reset', 'GET', 'index@view_reset_password'),
     array('/user/reset', 'POST', 'index@reset_user_password'),
     array('/user/settings/update', 'POST', 'index@update_user_settings'),
+    array('/user/account/delete', 'ANY', 'index@delete_user_account'),
     array('/sitemap', 'GET', 'index@sitemap'),
 
 	array('/content/fetch', 'ANY', 'content@queryContent'),
