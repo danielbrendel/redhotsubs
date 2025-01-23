@@ -883,7 +883,16 @@ a.is-link-red, a.is-link-red:hover {
 .favorite-item {
     position: relative;
     display: inline-block;
-    margin-bottom: 15px;
+    @media screen and (max-width: 450px) {
+        width: 49%;
+    }
+}
+
+.favorite-item .media-card-item {
+    @media screen and (max-width: 450px) {
+        width: 100%;
+        padding-bottom: 100%;
+    }
 }
 
 .favorite-actions {
@@ -900,8 +909,12 @@ a.is-link-red, a.is-link-red:hover {
 }
 
 .creators, .favorites {
+    padding: 20px;
     @media screen and (max-width: 450px) {
         text-align: center;
+        padding: unset;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
