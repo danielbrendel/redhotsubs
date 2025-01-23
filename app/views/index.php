@@ -96,6 +96,7 @@
 			@endif
 		@endif
 
+		@if (env('APP_SHOWINDEXSUBS'))
 		<div class="media-list">
 			<?php $lastCat = ''; ?>
 			@foreach ($subs as $sub)
@@ -134,6 +135,7 @@
 				</div>
 			@endforeach
 		</div>
+		@endif
 
 		@if (env('APP_INFOTEXTPOS', 'top') === 'bottom')
 		<div class="media-info no-padding-top">
