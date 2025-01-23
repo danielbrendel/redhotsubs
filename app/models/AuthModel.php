@@ -18,7 +18,7 @@ class AuthModel extends \Asatru\Database\Model
                 return null;
             }
 
-            $data = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE id = ? AND account_confirm = ?', [$session->get('userId'), self::ACCOUNT_CONFIRMED])->first();
+            $data = static::raw('SELECT * FROM `@THIS` WHERE id = ? AND account_confirm = ?', [$session->get('userId'), self::ACCOUNT_CONFIRMED])->first();
             if (!$data) {
                 return null;
             }
@@ -59,7 +59,7 @@ class AuthModel extends \Asatru\Database\Model
     public static function register($email, $password)
     {
         try {
-            $exists = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE email = ?', [$email])->first();
+            $exists = static::raw('SELECT * FROM `@THIS` WHERE email = ?', [$email])->first();
             if ($exists) {
                 throw new \Exception('E-Mail address is already in use.');
             }
@@ -67,7 +67,7 @@ class AuthModel extends \Asatru\Database\Model
             $password = password_hash($password, PASSWORD_BCRYPT);
             $account_confirm = md5($email . date('Y-m-d H:i:s') . random_bytes(55));
 
-            static::raw('INSERT INTO `' . self::tableName() . '` (email, password, account_confirm) VALUES(?, ?, ?)', [
+            static::raw('INSERT INTO `@THIS` (email, password, account_confirm) VALUES(?, ?, ?)', [
                 $email, $password, $account_confirm
             ]);
 
@@ -90,12 +90,12 @@ class AuthModel extends \Asatru\Database\Model
     public static function confirm($token)
     {
         try {
-            $user = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE account_confirm = ?', [$token])->first();
+            $user = static::raw('SELECT * FROM `@THIS` WHERE account_confirm = ?', [$token])->first();
             if (!$user) {
                 throw new \Exception('No user associated with the given token.');
             }
 
-            static::raw('UPDATE `' . self::tableName() . '` SET account_confirm = ? WHERE account_confirm = ?', [
+            static::raw('UPDATE `@THIS` SET account_confirm = ? WHERE account_confirm = ?', [
                 self::ACCOUNT_CONFIRMED, $token
             ]);
         } catch (\Exception $e) {
@@ -112,7 +112,7 @@ class AuthModel extends \Asatru\Database\Model
     public static function login($email, $password)
     {
         try {
-            $data = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE email = ? AND account_confirm = ?', [$email, self::ACCOUNT_CONFIRMED])->first();
+            $data = static::raw('SELECT * FROM `@THIS` WHERE email = ? AND account_confirm = ?', [$email, self::ACCOUNT_CONFIRMED])->first();
             if (!$data) {
                 throw new \Exception('E-Mail address ' . $email . ' not found or account not yet activated');
             }
@@ -148,14 +148,14 @@ class AuthModel extends \Asatru\Database\Model
     public static function recoverPassword($email)
     {
         try {
-            $user = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE email = ? AND account_confirm = ?', [$email, self::ACCOUNT_CONFIRMED])->first();
+            $user = static::raw('SELECT * FROM `@THIS` WHERE email = ? AND account_confirm = ?', [$email, self::ACCOUNT_CONFIRMED])->first();
             if (!$user) {
                 throw new \Exception('User not found or not activated');
             }
 
             $password_reset = md5($email . date('Y-m-d H:i:s') . random_bytes(55));
 
-            static::raw('UPDATE `' . self::tableName() . '` SET password_reset = ? WHERE email = ?', [
+            static::raw('UPDATE `@THIS` SET password_reset = ? WHERE email = ?', [
                 $password_reset, $email
             ]);
 
@@ -179,14 +179,14 @@ class AuthModel extends \Asatru\Database\Model
     public static function resetPassword($token, $password)
     {
         try {
-            $user = static::raw('SELECT * FROM `' . self::tableName() . '` WHERE password_reset = ? AND account_confirm = ?', [$token, self::ACCOUNT_CONFIRMED])->first();
+            $user = static::raw('SELECT * FROM `@THIS` WHERE password_reset = ? AND account_confirm = ?', [$token, self::ACCOUNT_CONFIRMED])->first();
             if (!$user) {
                 throw new \Exception('User not found or not activated');
             }
 
             $password = password_hash($password, PASSWORD_BCRYPT);
 
-            static::raw('UPDATE `' . self::tableName() . '` SET password = ?, password_reset = NULL WHERE password_reset = ?', [
+            static::raw('UPDATE `@THIS` SET password = ?, password_reset = NULL WHERE password_reset = ?', [
                 $password, $token
             ]);
         } catch (\Exception $e) {
@@ -221,7 +221,7 @@ class AuthModel extends \Asatru\Database\Model
         try {
             $user = static::getAuthUser();
 
-            static::raw('UPDATE `' . self::tableName() . '` SET email = ? WHERE id = ?', [$email, $user->get('id')]);
+            static::raw('UPDATE `@THIS` SET email = ? WHERE id = ?', [$email, $user->get('id')]);
             
             if ($password) {
 				if ($password !== $password_confirmation) {
@@ -230,7 +230,7 @@ class AuthModel extends \Asatru\Database\Model
 
                 $password = password_hash($password, PASSWORD_BCRYPT);
 
-				static::raw('UPDATE `' . self::tableName() . '` SET password = ? WHERE id = ?', [$password, $user->get('id')]);
+				static::raw('UPDATE `@THIS` SET password = ? WHERE id = ?', [$password, $user->get('id')]);
 			}
         } catch (\Exception $e) {
             throw $e;
@@ -248,19 +248,9 @@ class AuthModel extends \Asatru\Database\Model
 
             SessionModel::logoutSession(session_id());
 
-            static::raw('DELETE FROM `' . self::tableName() . '` WHERE id = ?', [$user->get('id')]);
+            static::raw('DELETE FROM `@THIS` WHERE id = ?', [$user->get('id')]);
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'auth';
     }
 }

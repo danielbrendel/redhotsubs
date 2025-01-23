@@ -26,7 +26,7 @@ class AppSettingsModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('appsettings', $this->connection);
+        $this->database = new Asatru\Database\Migration('AppSettingsModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('imprint TEXT NOT NULL');

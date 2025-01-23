@@ -159,19 +159,9 @@ class AppSettingsModel extends \Asatru\Database\Model
     public static function getSettings($item = 1)
     {
         try {
-            return AppSettingsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE id = ?', [$item])->first();
+            return AppSettingsModel::raw('SELECT * FROM `@THIS` WHERE id = ?', [$item])->first();
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'appsettings';
     }
 }
