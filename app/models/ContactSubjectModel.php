@@ -12,19 +12,9 @@ class ContactSubjectModel extends \Asatru\Database\Model
     public static function getAll()
     {
         try {
-            return ContactSubjectModel::raw('SELECT * FROM `' . self::tableName() . '`');
+            return ContactSubjectModel::raw('SELECT * FROM `@THIS`');
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'contactsubject';
     }
 }
