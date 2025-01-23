@@ -5,7 +5,7 @@
 
 <p align="center">
     A free NSFW client for Reddit<br/>
-    (C) 2022 - 2024 by Daniel Brendel
+    (C) 2022 - 2025 by Daniel Brendel
 </p>
 
 <p align="center">
