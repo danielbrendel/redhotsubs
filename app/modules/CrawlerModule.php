@@ -253,4 +253,12 @@ class CrawlerModule
             throw $e;
         }
     }
+
+    /**
+     * @return string
+     */
+    public static function getRemoteUrl()
+    {
+        return RFCrawler::URL_REDDIT;
+    }
 }

@@ -94,7 +94,7 @@ class UtilsModule {
     public static function userValid($username)
     {
         try {
-            $response_code = UtilsModule::getResponseCode(RFCrawler::URL_REDDIT . '/user/' . $username . '/about/.json');
+            $response_code = UtilsModule::getResponseCode(CrawlerModule::getRemoteUrl() . '/user/' . $username . '/about/.json');
             
             if ($response_code != 200) {
                 return false;
