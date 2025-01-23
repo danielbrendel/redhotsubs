@@ -421,6 +421,9 @@ a.is-link-red, a.is-link-red:hover {
     padding: 20px;
     @media screen and (max-width: 450px) {
         text-align: center;
+        padding: unset;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
@@ -446,12 +449,9 @@ a.is-link-red, a.is-link-red:hover {
         height: 312px;
     }
     @media screen and (max-width: 450px) {
-        width: 175px;
-        height: 175px;
-    }
-    @media screen and (max-width: 412px) {
-        width: 154px;
-        height: 154px;
+        width: 49%;
+        height: 0;
+        padding-bottom: 49%;
     }
 }
 
@@ -481,10 +481,8 @@ a.is-link-red, a.is-link-red:hover {
     height: 100%;
     transition: transform 0.3s ease;
     @media screen and (max-width: 450px) {
-        height: 76%;
-    }
-    @media screen and (max-width: 412px) {
-        height: 73%;
+        height: 0;
+        padding-bottom: 100%;
     }
 }
 
