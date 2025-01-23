@@ -26,7 +26,7 @@ class SubsModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('subs', $this->connection);
+        $this->database = new Asatru\Database\Migration('SubsModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('sub_ident VARCHAR(512) NOT NULL');

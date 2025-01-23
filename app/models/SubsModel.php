@@ -14,7 +14,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function getAllSubs()
     {
         try {
-            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` ORDER BY cat_order, sub_ident ASC');
+            return SubsModel::raw('SELECT * FROM `@THIS` ORDER BY cat_order, sub_ident ASC');
         } catch (Exception $e) {
             return null;
         }
@@ -27,7 +27,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function  getFeatureSubs($which)
     {
         try {
-            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE featured = ? ORDER BY sub_ident ASC', [$which]);
+            return SubsModel::raw('SELECT * FROM `@THIS` WHERE featured = ? ORDER BY sub_ident ASC', [$which]);
         } catch (Exception $e) {
             return null;
         }
@@ -39,7 +39,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function getSubsForTwitter()
     {
         try {
-            return SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE twitter_posting = 1 ORDER BY sub_ident ASC');
+            return SubsModel::raw('SELECT * FROM `@THIS` WHERE twitter_posting = 1 ORDER BY sub_ident ASC');
         } catch (Exception $e) {
             return null;
         }
@@ -52,7 +52,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function subExists($sub)
     {
         try {
-            $result = SubsModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE sub_ident = ?', [$sub]);
+            $result = SubsModel::raw('SELECT COUNT(*) AS count FROM `@THIS` WHERE sub_ident = ?', [$sub]);
             return $result->get(0)->get('count') > 0;
         } catch (Exception $e) {
             return false;
@@ -67,7 +67,7 @@ class SubsModel extends \Asatru\Database\Model
     public static function getSubData($ident)
     {
         try {
-            $result = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE sub_ident = ?', [$ident]);
+            $result = SubsModel::raw('SELECT * FROM `@THIS` WHERE sub_ident = ?', [$ident]);
             return $result;
         } catch (Exception $e) {
             throw $e;
@@ -83,7 +83,7 @@ class SubsModel extends \Asatru\Database\Model
     {
         try {
             $inq = implode(',', array_fill(0, count($cats), '?'));
-            $result = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE LOWER(category) IN (' . $inq . ') AND cat_video = 1 ORDER BY RAND() LIMIT 1', $cats);
+            $result = SubsModel::raw('SELECT * FROM `@THIS` WHERE LOWER(category) IN (' . $inq . ') AND cat_video = 1 ORDER BY RAND() LIMIT 1', $cats);
             return $result;
         } catch (Exception $e) {
             throw $e;
@@ -100,10 +100,10 @@ class SubsModel extends \Asatru\Database\Model
         try {
             $result = [];
 
-            $subs = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE last_check IS NULL LIMIT ' . $limit);
+            $subs = SubsModel::raw('SELECT * FROM `@THIS` WHERE last_check IS NULL LIMIT ' . $limit);
 
             if ($subs->count() == 0) {
-                //SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = NULL');
+                //SubsModel::raw('UPDATE `@THIS` SET last_check = NULL');
                 return $result;
             }
 
@@ -122,7 +122,7 @@ class SubsModel extends \Asatru\Database\Model
                     ];
                 }
 
-                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_check = CURRENT_TIMESTAMP WHERE id = ?', [
+                SubsModel::raw('UPDATE `@THIS` SET last_check = CURRENT_TIMESTAMP WHERE id = ?', [
                     $sub->get('id')
                 ]);
             }
@@ -142,10 +142,10 @@ class SubsModel extends \Asatru\Database\Model
     public static function updateSubDescriptions($limit = 1, $hours = 24, $maxlen = 30)
     {
         try {
-            $subs = SubsModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE last_desc IS NULL OR TIMESTAMPDIFF(HOUR, last_desc, NOW()) >= ? LIMIT ' . $limit, [$hours]);
+            $subs = SubsModel::raw('SELECT * FROM `@THIS` WHERE last_desc IS NULL OR TIMESTAMPDIFF(HOUR, last_desc, NOW()) >= ? LIMIT ' . $limit, [$hours]);
 
             if ($subs->count() == 0) {
-                //SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_desc = NULL');
+                //SubsModel::raw('UPDATE `@THIS` SET last_desc = NULL');
             }
 
             foreach ($subs as $sub) {
@@ -156,12 +156,12 @@ class SubsModel extends \Asatru\Database\Model
                 
                 $description = CrawlerModule::querySubDescription($subname);
                 if ((is_string($description)) && (strlen($description) > 0)) {
-                    SubsModel::raw('UPDATE `' . self::tableName() . '` SET description = ? WHERE id = ?', [
+                    SubsModel::raw('UPDATE `@THIS` SET description = ? WHERE id = ?', [
                         ((strlen($description) > $maxlen) ? substr($description, 0, $maxlen - 3) . '...' : $description), $sub->get('id')
                     ]);
                 }
 
-                SubsModel::raw('UPDATE `' . self::tableName() . '` SET last_desc = CURRENT_TIMESTAMP WHERE id = ?', [
+                SubsModel::raw('UPDATE `@THIS` SET last_desc = CURRENT_TIMESTAMP WHERE id = ?', [
                     $sub->get('id')
                 ]);
             }
@@ -221,15 +221,5 @@ class SubsModel extends \Asatru\Database\Model
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'subs';
     }
 }

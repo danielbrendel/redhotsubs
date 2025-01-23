@@ -26,7 +26,7 @@ class TrendingUserModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('trendinguser', $this->connection);
+        $this->database = new Asatru\Database\Migration('TrendingUserModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('username VARCHAR(512) NOT NULL');

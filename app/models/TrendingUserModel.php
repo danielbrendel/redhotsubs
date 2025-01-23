@@ -21,13 +21,13 @@ class TrendingUserModel extends \Asatru\Database\Model
                 $user = substr($user, strpos($user, '/') + 1);
             }
 
-            $exists = TrendingUserModel::raw('SELECT COUNT(*) as count FROM `' . self::tableName() . '` WHERE token = ? AND username = ? AND DATE(created_at) = CURDATE()', [
+            $exists = TrendingUserModel::raw('SELECT COUNT(*) as count FROM `@THIS` WHERE token = ? AND username = ? AND DATE(created_at) = CURDATE()', [
                 $token,
                 $user
             ])->first();
             
             if ($exists->get('count') == 0) {
-                TrendingUserModel::raw('INSERT INTO `' . self::tableName() . '` (username, token, created_at) VALUES(?, ?, CURRENT_TIMESTAMP)', [
+                TrendingUserModel::raw('INSERT INTO `@THIS` (username, token, created_at) VALUES(?, ?, CURRENT_TIMESTAMP)', [
                     $user, $token
                 ]);
             }
@@ -53,11 +53,11 @@ class TrendingUserModel extends \Asatru\Database\Model
             }
 
             if ($paginate === null) {
-                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `' . self::tableName() . '` WHERE DATE(created_at) > ? GROUP BY username ORDER BY count DESC LIMIT ' . $limit, [
+                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `@THIS` WHERE DATE(created_at) > ? GROUP BY username ORDER BY count DESC LIMIT ' . $limit, [
                     $fromDate
                 ]);
             } else {
-                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `' . self::tableName() . '` WHERE DATE(created_at) > ? GROUP BY username HAVING count < ? ORDER BY count DESC LIMIT ' . $limit, [
+                $rows = TrendingUserModel::raw('SELECT COUNT(username) AS count, username FROM `@THIS` WHERE DATE(created_at) > ? GROUP BY username HAVING count < ? ORDER BY count DESC LIMIT ' . $limit, [
                     $fromDate,
                     (int)$paginate
                 ]);
@@ -67,15 +67,5 @@ class TrendingUserModel extends \Asatru\Database\Model
         } catch (\Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'trendinguser';
     }
 }
