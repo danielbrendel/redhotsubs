@@ -3,22 +3,21 @@
 /*
     Asatru PHP (dnyAsatruPHP) developed by Daniel Brendel
     
-    (C) 2019 - 2022 by Daniel Brendel
+    (C) 2019 - 2025 by Daniel Brendel
     
-    Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
     GitHub: https://github.com/danielbrendel/
     
     Released under the MIT license
 */
 
-//Set application root directory path
-define('ASATRU_APP_ROOT', __DIR__ . '/../..');
-
 //If composer is installed we utilize its autoloader
 if (file_exists(__DIR__ . '/../../vendor/autoload.php')) {
     require_once __DIR__ . '/../../vendor/autoload.php';
 }
+
+//Set application root directory path
+define('ASATRU_APP_ROOT', __DIR__ . '/../..');
 
 //Fetch constants
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/constants.php';
@@ -35,8 +34,17 @@ require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/dot
 //Require autoload component
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/autoload.php';
 
+//Require config component
+require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/config.php';
+
 //Require helpers
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/helper.php';
+
+//Require Html helper
+require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/html.php';
+
+//Require form helper
+require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/forms.php';
 
 //Require mail wrapper
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/mailwrapper.php';
@@ -53,9 +61,17 @@ if (file_exists(__DIR__ . '/../../.env.testing')) {
 $_ENV['APP_DEBUG'] = true;
 error_reporting(E_ALL);
 
-
 //Check if we shall create/continue a session
-if ((isset($_ENV['APP_SESSION'])) && ($_ENV['APP_SESSION'])) {
+if ((isset($_ENV['SESSION_ENABLE'])) && ($_ENV['SESSION_ENABLE'])) {
+    if ((isset($_ENV['SESSION_DURATION'])) && ($_ENV['SESSION_DURATION'] !== null) && (is_numeric($_ENV['SESSION_DURATION']))) {
+        ini_set('session.cookie_lifetime', $_ENV['SESSION_DURATION']);
+        ini_set('session.gc_maxlifetime', $_ENV['SESSION_DURATION']);
+    }
+
+    if ((isset($_ENV['SESSION_NAME'])) && (is_string($_ENV['SESSION_NAME'])) && (strlen($_ENV['SESSION_NAME']) > 0)) {
+        session_name($_ENV['SESSION_NAME']);
+    }
+
     if (!session_start()) {
         throw new Exception('Failed to create/continue the session');
     }
@@ -72,9 +88,11 @@ if ((isset($_ENV['APP_SESSION'])) && ($_ENV['APP_SESSION'])) {
 //Require localization
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/locale.php';
 
-
 //Require database management
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/database.php';
+
+//Require modules
+require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/modules.php';
 
 //Require event manager
 require_once __DIR__ . '/../../vendor/danielbrendel/asatru-php-framework/src/events.php';
@@ -85,3 +103,4 @@ $auto->load();
 
 //Load validators if any
 Asatru\Controller\CustomPostValidators::load(__DIR__ . '/../validators');
+        

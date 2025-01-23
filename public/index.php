@@ -3,9 +3,8 @@
 /*
     Asatru PHP (dnyAsatruPHP) developed by Daniel Brendel
     
-    (C) 2019 - 2022 by Daniel Brendel
+    (C) 2019 - 2025 by Daniel Brendel
     
-    Version: 1.0
     Contact: dbrendel1988<at>gmail<dot>com
     GitHub: https://github.com/danielbrendel/
     

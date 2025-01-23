@@ -19,9 +19,9 @@
     "prefer-stable": true,
 	"require": {
         "php": "^8.0",
-		"danielbrendel/asatru-php-framework": "dev-main",
+		"danielbrendel/asatru-php-framework": "^1.5",
         "phpmailer/phpmailer": "^6.1",
-        "nesbot/carbon": "^2.0",
+        "nesbot/carbon": "^3.0",
         "abraham/twitteroauth": "^4.0"
     },
 	"scripts": {
