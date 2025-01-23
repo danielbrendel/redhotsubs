@@ -110,10 +110,17 @@
             </a>
 
             @if (AuthModel::isAuthenticated())
-            <a class="navbar-item has-no-underline" href="{{ url('/logout') }}">
-                <span class="navbar-item-icon"><i class="fas fa-sign-out-alt" title="Logout"></i></span>
-                <span class="navbar-item-label is-mobile-only">Logout</span>
-            </a>
+                @if (AuthModel::isPrivileged())
+                <a class="navbar-item has-no-underline" href="{{ url('/stats/' . env('APP_STATSPASSWORD')) }}">
+                    <span class="navbar-item-icon"><i class="fas fa-chart-line" title="Statistics"></i></span>
+                    <span class="navbar-item-label is-mobile-only">Stats</span>
+                </a>
+                @endif
+
+                <a class="navbar-item has-no-underline" href="{{ url('/logout') }}">
+                    <span class="navbar-item-icon"><i class="fas fa-sign-out-alt" title="Logout"></i></span>
+                    <span class="navbar-item-label is-mobile-only">Logout</span>
+                </a>
             @endif
         </div>
     </div>

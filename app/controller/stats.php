@@ -12,6 +12,13 @@ class StatsController extends BaseController {
 	public function __construct()
 	{
 		parent::__construct($this->layout);
+
+		if (env('APP_PRIVATEMODE')) {
+			if (!AuthModel::isPrivileged()) {
+				http_response_code(403);
+				exit('Access denied.');
+			}
+		}
 	}
 
     /**

@@ -38,6 +38,19 @@ class AuthModel extends \Asatru\Database\Model
     }
 
     /**
+     * @return bool
+     */
+    public static function isPrivileged()
+    {
+        $user = static::getAuthUser();
+        if (!$user) {
+            return false;
+        }
+
+        return $user->get('privileged');
+    }
+
+    /**
      * @param $email
      * @param $password
      * @return void
