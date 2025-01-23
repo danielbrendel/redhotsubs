@@ -13,7 +13,7 @@ class FeaturedUserModel extends \Asatru\Database\Model
     public static function getSelection($count)
     {
         try {
-            $data = FeaturedUserModel::raw('SELECT * FROM `' . self::tableName() . '` AS t1 JOIN (SELECT id FROM `' . self::tableName() . '` WHERE active = 1 ORDER BY RAND() LIMIT ?) as t2 ON t1.id = t2.id', [$count]);
+            $data = FeaturedUserModel::raw('SELECT * FROM `@THIS` AS t1 JOIN (SELECT id FROM `@THIS` WHERE active = 1 ORDER BY RAND() LIMIT ?) as t2 ON t1.id = t2.id', [$count]);
             return $data;
         } catch (Exception $e) {
             throw $e;
@@ -27,20 +27,10 @@ class FeaturedUserModel extends \Asatru\Database\Model
     public static function getAll()
     {
         try {
-            $data = FeaturedUserModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE active = 1');
+            $data = FeaturedUserModel::raw('SELECT * FROM `@THIS` WHERE active = 1');
             return $data;
         } catch (Exception $e) {
             throw $e;
         }
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'featureduser';
     }
 }

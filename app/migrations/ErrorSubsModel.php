@@ -26,7 +26,7 @@ class ErrorSubsModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('errorsubs', $this->connection);
+        $this->database = new Asatru\Database\Migration('ErrorSubsModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('subname VARCHAR(512) NOT NULL');

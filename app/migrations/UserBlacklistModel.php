@@ -26,7 +26,7 @@ class UserBlacklistModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('userblacklist', $this->connection);
+        $this->database = new Asatru\Database\Migration('UserBlacklistModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('username VARCHAR(512) NOT NULL');

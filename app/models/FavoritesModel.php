@@ -19,7 +19,7 @@ class FavoritesModel extends \Asatru\Database\Model
             return;
         }
 
-        FavoritesModel::raw('INSERT INTO `' . self::tableName() . '` (userid, ident) VALUES(?, ?)', [
+        FavoritesModel::raw('INSERT INTO `@THIS` (userid, ident) VALUES(?, ?)', [
             $user->get('id'),
             $ident
         ]);
@@ -34,9 +34,9 @@ class FavoritesModel extends \Asatru\Database\Model
         $user = AuthModel::getAuthUser();
 
         if ($paginate !== null) {
-            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? AND id < ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id'), $paginate]);
+            return FavoritesModel::raw('SELECT * FROM `@THIS` WHERE userid = ? AND id < ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id'), $paginate]);
         } else {
-            return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id')]);
+            return FavoritesModel::raw('SELECT * FROM `@THIS` WHERE userid = ? ORDER BY id DESC LIMIT ' . self::COUNT_PACKET, [$user->get('id')]);
         }
     }
 
@@ -48,7 +48,7 @@ class FavoritesModel extends \Asatru\Database\Model
     {
         $user = AuthModel::getAuthUser();
 
-        FavoritesModel::raw('DELETE FROM `' . self::tableName() . '` WHERE userid = ? AND ident = ?', [
+        FavoritesModel::raw('DELETE FROM `@THIS` WHERE userid = ? AND ident = ?', [
             $user->get('id'),
             $ident
         ]);
@@ -73,7 +73,7 @@ class FavoritesModel extends \Asatru\Database\Model
             $ident = substr($ident, 0, strlen($ident) - 1);
         }
         
-        $result = FavoritesModel::raw('SELECT COUNT(*) AS count FROM `' . self::tableName() . '` WHERE userid = ? AND ident = ?', [
+        $result = FavoritesModel::raw('SELECT COUNT(*) AS count FROM `@THIS` WHERE userid = ? AND ident = ?', [
             $user->get('id'),
             $ident
         ])->first();
@@ -91,16 +91,6 @@ class FavoritesModel extends \Asatru\Database\Model
             $user = AuthModel::getAuthUser();
         }
 
-        return FavoritesModel::raw('SELECT * FROM `' . self::tableName() . '` WHERE userid = ? ORDER BY id ASC', [$user->get('id')]);
-    }
-
-    /**
-     * Return the associated table name of the migration
-     * 
-     * @return string
-     */
-    public static function tableName()
-    {
-        return 'favorites';
+        return FavoritesModel::raw('SELECT * FROM `@THIS` WHERE userid = ? ORDER BY id ASC', [$user->get('id')]);
     }
 }

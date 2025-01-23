@@ -26,7 +26,7 @@ class TwitterHistoryModel_Migration
      */
     public function up()
     {
-        $this->database = new Asatru\Database\Migration('twitterhistory', $this->connection);
+        $this->database = new Asatru\Database\Migration('TwitterHistoryModel', $this->connection);
         $this->database->drop();
         $this->database->add('id INT NOT NULL AUTO_INCREMENT PRIMARY KEY');
         $this->database->add('ident VARCHAR(512) NOT NULL');
