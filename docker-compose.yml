@@ -1,0 +1,22 @@
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./datadir:/var/lib/mysql
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+      MARIADB_DATABASE: asatru
+
+  curatedsubs:
+    build: .
+    restart: always
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - .env:/build/.env
+
+
